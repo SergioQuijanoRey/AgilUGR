@@ -85,9 +85,21 @@ fun mainBox(api: FocusAPI){
 
     // Muestro los valores
     Column{
-        Text(text = "En modo focus durante $duration_hours:$duration_minutes:$duration_seconds", color = MaterialTheme.colors.onBackground)
-        Text(text = "La sesión empezó a las $start_time", color = MaterialTheme.colors.onBackground)
-        Text(text = "Llevas $running_minutes minutos en modo focus", color = MaterialTheme.colors.onBackground)
+        Text(
+            text = "En modo focus durante $duration_hours:$duration_minutes:$duration_seconds",
+            color = MaterialTheme.colors.onBackground,
+            style = MaterialTheme.typography.h6
+        )
+        Text(
+            text = "La sesión empezó a las $start_time",
+            color = MaterialTheme.colors.onBackground,
+            style = MaterialTheme.typography.h6
+        )
+        Text(
+            text = "Llevas $running_minutes minutos en modo focus",
+            color = MaterialTheme.colors.onBackground,
+            style = MaterialTheme.typography.h6
+        )
     }
 
 }
