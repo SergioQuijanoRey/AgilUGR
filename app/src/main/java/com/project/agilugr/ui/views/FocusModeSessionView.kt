@@ -1,5 +1,6 @@
 package com.project.agilugr.ui.views
 
+import android.graphics.Point
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.project.agilugr.FocusAPIInterface
 import com.project.agilugr.ui.theme.AgilUGRTheme
+import android.util.DisplayMetrics
+import android.view.Display
+
 
 /** Clase para representar la vista dentro del modo focus, cuando estamos corriendo una sesion */
 class FocusModeSessionView(val focus_api: FocusAPIInterface) {
@@ -22,34 +26,37 @@ class FocusModeSessionView(val focus_api: FocusAPIInterface) {
     @Composable
     fun getView(){
         Column(
-
             // Esta columna, que engloba a toda nuestra vista, la centramos en la pantalla
-            modifier = Modifier.
-                fillMaxSize().
+            modifier = Modifier
+                .fillMaxSize()
 
                 // Para centrar la columna verticalmente en la pantalla
-                padding(vertical = 200.dp),
+                // TODO -- valor hardcodeado. Tomar las dimensiones en dp del movil y dividir por 2
+                .padding(vertical = 200.dp),
 
             // Damos espacio vertical entre los elementos
             verticalArrangement = Arrangement.spacedBy(10.dp),
 
             // Centramos la columna horizontalmente en la pantalla
             horizontalAlignment = Alignment.CenterHorizontally,
-
-
-
         ){
             mainBox(focus_api)
             Row {
                 stopButton(
                     backgroundColor =  MaterialTheme.colors.primary,
-                    contentColor = MaterialTheme.colors.secondary,
-                    modifier = Modifier.padding(10.dp).height(50.dp).width(80.dp)
+                    contentColor = MaterialTheme.colors.onPrimary,
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .height(50.dp)
+                        .width(80.dp)
                 )
                 exitButton(
                     backgroundColor = MaterialTheme.colors.primary,
-                    contentColor = MaterialTheme.colors.secondary,
-                    modifier = Modifier.padding(10.dp).height(50.dp).width(80.dp)
+                    contentColor = MaterialTheme.colors.onPrimary,
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .height(50.dp)
+                        .width(80.dp)
                 )
             }
         }
@@ -80,9 +87,9 @@ fun mainBox(api: FocusAPIInterface){
 
     // Muestro los valores
     Column{
-        Text(text = "En modo focus durante $duration_hours:$duration_minutes:$duration_seconds")
-        Text(text = "La sesión empezó a las $start_time")
-        Text(text = "Llevas $running_minutes minutos en modo focus")
+        Text(text = "En modo focus durante $duration_hours:$duration_minutes:$duration_seconds", color = MaterialTheme.colors.onBackground)
+        Text(text = "La sesión empezó a las $start_time", color = MaterialTheme.colors.onBackground)
+        Text(text = "Llevas $running_minutes minutos en modo focus", color = MaterialTheme.colors.onBackground)
     }
 
 }
