@@ -2,10 +2,7 @@ package com.project.agilugr.ui.views
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
@@ -14,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.project.agilugr.FocusAPIInterface
 import com.project.agilugr.ui.theme.AgilUGRTheme
 
@@ -26,17 +24,36 @@ class FocusModeSessionView(val focus_api: FocusAPIInterface) {
         Column(
 
             // Esta columna, que engloba a toda nuestra vista, la centramos en la pantalla
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        
+            modifier = Modifier.
+                fillMaxSize().
+
+                // Para centrar la columna verticalmente en la pantalla
+                padding(vertical = 200.dp),
+
+            // Damos espacio vertical entre los elementos
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+
+            // Centramos la columna horizontalmente en la pantalla
+            horizontalAlignment = Alignment.CenterHorizontally,
+
+
+
         ){
             mainBox(focus_api)
             Row {
-                stopButton(backgroundColor =  MaterialTheme.colors.primary, contentColor = MaterialTheme.colors.secondary)
-                exitButton(backgroundColor = MaterialTheme.colors.primary, contentColor = MaterialTheme.colors.secondary)
+                stopButton(
+                    backgroundColor =  MaterialTheme.colors.primary,
+                    contentColor = MaterialTheme.colors.secondary,
+                    modifier = Modifier.padding(10.dp).height(50.dp).width(80.dp)
+                )
+                exitButton(
+                    backgroundColor = MaterialTheme.colors.primary,
+                    contentColor = MaterialTheme.colors.secondary,
+                    modifier = Modifier.padding(10.dp).height(50.dp).width(80.dp)
+                )
             }
         }
+
     }
 }
 
@@ -73,7 +90,7 @@ fun mainBox(api: FocusAPIInterface){
 /** Funcion que coloca el boton para parar la sesion */
 // TODO -- deberiamos estar usando el tema del sistema, y no ciertos colores
 @Composable
-fun stopButton(backgroundColor: Color, contentColor: Color){
+fun stopButton(backgroundColor: Color, contentColor: Color, modifier: Modifier){
     AgilUGRTheme {
         Button(
             onClick = {
@@ -82,7 +99,8 @@ fun stopButton(backgroundColor: Color, contentColor: Color){
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = backgroundColor,
                 contentColor = contentColor
-            )
+            ),
+            modifier = modifier
         ){
             Text("Stop")
         }
@@ -91,7 +109,7 @@ fun stopButton(backgroundColor: Color, contentColor: Color){
 
 /** Funcion que coloca el boton para salir de la sesion*/
 @Composable
-fun exitButton(backgroundColor: Color, contentColor: Color){
+fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier){
     Button(
         onClick = {
             // TODO -- no estamos haciendo nada
@@ -99,7 +117,8 @@ fun exitButton(backgroundColor: Color, contentColor: Color){
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = backgroundColor,
             contentColor = contentColor
-        )
+        ),
+        modifier = modifier
     ){
         Text("Exit")
     }
