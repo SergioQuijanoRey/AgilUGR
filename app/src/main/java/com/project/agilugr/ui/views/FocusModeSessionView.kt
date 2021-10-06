@@ -22,8 +22,8 @@ class FocusModeSessionView(val focus_api: FocusAPIInterface) {
         Column {
             mainBox(focus_api)
             Row {
-                stopButton(backgroundColor =  MaterialTheme.colors.primary)
-                exitButton(backgroundColor = MaterialTheme.colors.primary)
+                stopButton(backgroundColor =  MaterialTheme.colors.primary, contentColor = MaterialTheme.colors.secondary)
+                exitButton(backgroundColor = MaterialTheme.colors.primary, contentColor = MaterialTheme.colors.secondary)
             }
         }
     }
@@ -62,14 +62,15 @@ fun mainBox(api: FocusAPIInterface){
 /** Funcion que coloca el boton para parar la sesion */
 // TODO -- deberiamos estar usando el tema del sistema, y no ciertos colores
 @Composable
-fun stopButton(backgroundColor: Color){
+fun stopButton(backgroundColor: Color, contentColor: Color){
     AgilUGRTheme {
         Button(
             onClick = {
                 // TODO -- no estamos haciendo nada
             },
             colors = ButtonDefaults.textButtonColors(
-                backgroundColor = backgroundColor
+                backgroundColor = backgroundColor,
+                contentColor = contentColor
             )
         ){
             Text("Stop")
@@ -79,13 +80,14 @@ fun stopButton(backgroundColor: Color){
 
 /** Funcion que coloca el boton para salir de la sesion*/
 @Composable
-fun exitButton(backgroundColor: Color){
+fun exitButton(backgroundColor: Color, contentColor: Color){
     Button(
         onClick = {
             // TODO -- no estamos haciendo nada
         },
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = backgroundColor
+            backgroundColor = backgroundColor,
+            contentColor = contentColor
         )
     ){
         Text("Exit")
