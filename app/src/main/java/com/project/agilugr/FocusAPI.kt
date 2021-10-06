@@ -3,6 +3,7 @@ package com.project.agilugr
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.time.LocalTime
+import java.time.temporal.ChronoUnit
 
 /**
  * Interfaz que deben implementar las clases que trabajen con las APIs de FocusMode
@@ -20,6 +21,7 @@ interface FocusAPIInterface{
 }
 
 /** Clase que representa la duracion de una sesion de focus*/
+// TODO -- mover a una carpeta con utilidades
 data class SessionDuration(val hours: Int, val minutes: Int, val seconds: Int)
 
 /**
@@ -49,6 +51,14 @@ class FocusSession(
      * */
     @RequiresApi(Build.VERSION_CODES.O)
     val start_time: LocalTime = LocalTime.now()
+
+    /** Devuelve los minutos que llevamos dentro de esta sesion*/
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getRunningMinutes(): Int{
+        val now_time = LocalTime.now()
+        val running_minutes = ChronoUnit.MINUTES.between(now_time, start_time)
+        return running_minutes.toInt()
+    }
 }
 
 /**
