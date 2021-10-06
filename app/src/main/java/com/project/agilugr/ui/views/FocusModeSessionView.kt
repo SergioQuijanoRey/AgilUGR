@@ -1,5 +1,7 @@
 package com.project.agilugr.ui.views
 
+import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.graphics.Point
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -15,9 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.project.agilugr.FocusAPIInterface
 import com.project.agilugr.ui.theme.AgilUGRTheme
-import android.util.DisplayMetrics
-import android.view.Display
-
+import com.project.agilugr.utils.phone_dimensions
 
 /** Clase para representar la vista dentro del modo focus, cuando estamos corriendo una sesion */
 class FocusModeSessionView(val focus_api: FocusAPIInterface) {
@@ -25,14 +25,15 @@ class FocusModeSessionView(val focus_api: FocusAPIInterface) {
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun getView(){
+
         Column(
             // Esta columna, que engloba a toda nuestra vista, la centramos en la pantalla
             modifier = Modifier
                 .fillMaxSize()
 
                 // Para centrar la columna verticalmente en la pantalla
-                // TODO -- valor hardcodeado. Tomar las dimensiones en dp del movil y dividir por 2
-                .padding(vertical = 200.dp),
+                // Bajamos la mitad del tamaño de la pantalla
+                .padding(vertical = phone_dimensions().getHalfHeightDP()),
 
             // Damos espacio vertical entre los elementos
             verticalArrangement = Arrangement.spacedBy(10.dp),
