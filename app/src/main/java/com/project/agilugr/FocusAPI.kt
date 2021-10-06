@@ -3,8 +3,6 @@ package com.project.agilugr
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.time.LocalTime
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 
 /**
  * Interfaz que deben implementar las clases que trabajen con las APIs de FocusMode
@@ -21,14 +19,17 @@ interface FocusAPIInterface{
     fun runFocusMode(config: FocusConfig)
 }
 
+/** Clase que representa la duracion de una sesion de focus*/
+data class SessionDuration(val hours: Int, val minutes: Int, val seconds: Int)
+
 /**
  * Clase que representa una configuracion del focus mode
  *
  * TODO -- no me gusta este @Experimental, asi que buscar una alternativa
  * */
-class FocusConfig @ExperimentalTime constructor(
+class FocusConfig (
     /** Duracion de la sesion que queremos iniciar */
-    val duration: Duration
+    val duration: SessionDuration
 ) {
 }
 
@@ -78,4 +79,16 @@ class MockFocusAPI(
         current_focus_session = FocusSession(config)
     }
 
+}
+
+/** Devuelve una MockFocusAPI ya instanciada correctamente */
+@kotlin.time.ExperimentalTime
+fun getMockFocusAPI(): MockFocusAPI{
+    var focus_session = FocusSession(
+        focus_config = FocusConfig(
+            duration = SessionDuration(hours = 0, minutes = 45, seconds = 0)
+        )
+    )
+    var mock = MockFocusAPI(focus_configs = emptyList(), current_focus_session = focus_session)
+    return mock
 }
