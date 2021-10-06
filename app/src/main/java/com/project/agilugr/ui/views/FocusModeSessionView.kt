@@ -2,19 +2,34 @@ package com.project.agilugr.ui.views
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PointMode
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.ui.theme.AgilUGRTheme
 import com.project.agilugr.utils.phone_dimensions
+import kotlinx.coroutines.delay
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 /** Clase para representar la vista dentro del modo focus, cuando estamos corriendo una sesion */
 class FocusModeSessionView(val focus_api: FocusAPI) {
@@ -80,8 +95,9 @@ fun mainBox(api: FocusAPI){
     val duration_seconds = duration.seconds
 
     // Tomo el tiempo en el que empezo la sesion y el tiempo que llevamos dentro de la sesion
+    // Uso remember para poder modificar el estado de la variable en la vista
     val start_time = session.start_time
-    val running_minutes = session.getRunningMinutes()
+    val running_minutes by remember { mutableStateOf(session.getRunningMinutes()) }
 
     // Muestro los valores
     Column{

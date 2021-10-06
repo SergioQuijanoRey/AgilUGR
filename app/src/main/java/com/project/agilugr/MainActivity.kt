@@ -1,5 +1,6 @@
 package com.project.agilugr
 
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,7 +23,10 @@ class MainActivity : ComponentActivity() {
     // Funcion principal
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Llamamos al onCreate del parent
         super.onCreate(savedInstanceState)
+
+        // Establecemos la UI de la aplicacion
         setContent {
             AgilUGRTheme {
                 Column{
