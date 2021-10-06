@@ -14,7 +14,7 @@ import kotlin.time.ExperimentalTime
 class MainActivity : ComponentActivity() {
 
     // API que vamos a usar para interactuar con la sesion del modo focus
-    val focus_api_interface: FocusAPIInterface = getMockFocusAPI()
+    val focus_api_interface: FocusAPI = MockFocusAPI.getMockFocusAPI()
 
     // View para la sesion del focus mode
     val focus_mode_session_view = FocusModeSessionView(this.focus_api_interface)

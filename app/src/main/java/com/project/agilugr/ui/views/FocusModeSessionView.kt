@@ -1,8 +1,5 @@
 package com.project.agilugr.ui.views
 
-import android.app.Activity
-import android.app.PendingIntent.getActivity
-import android.graphics.Point
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
@@ -15,12 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.project.agilugr.FocusAPIInterface
+import com.project.agilugr.FocusAPI
 import com.project.agilugr.ui.theme.AgilUGRTheme
 import com.project.agilugr.utils.phone_dimensions
 
 /** Clase para representar la vista dentro del modo focus, cuando estamos corriendo una sesion */
-class FocusModeSessionView(val focus_api: FocusAPIInterface) {
+class FocusModeSessionView(val focus_api: FocusAPI) {
     /** Devuelve los elementos de compose que componen esta vista */
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
@@ -69,7 +66,7 @@ class FocusModeSessionView(val focus_api: FocusAPIInterface) {
 // TODO -- estoy poniendo mucha logica en una vista
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun mainBox(api: FocusAPIInterface){
+fun mainBox(api: FocusAPI){
     // En primer lugar consulto los valores que me hacen falta para la esta vista
     // Tomo la configuracion asociada a la sesion que esta corriendo ahora y la sesion en si
     // que esta corriendo

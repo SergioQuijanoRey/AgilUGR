@@ -2,13 +2,14 @@ package com.project.agilugr
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.project.agilugr.utils.SessionDuration
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 
 /**
  * Interfaz que deben implementar las clases que trabajen con las APIs de FocusMode
  * */
-interface FocusAPIInterface{
+interface FocusAPI{
 
     /** Devuelve la sesion Focus Mode que esta corriendo actualmente */
     fun getRunningFocusMode(): FocusSession?
@@ -19,10 +20,6 @@ interface FocusAPIInterface{
     /** Corre una sesion de Focus Mode */
     fun runFocusMode(config: FocusConfig)
 }
-
-/** Clase que representa la duracion de una sesion de focus*/
-// TODO -- mover a una carpeta con utilidades
-data class SessionDuration(val hours: Int, val minutes: Int, val seconds: Int)
 
 /**
  * Clase que representa una configuracion del focus mode
@@ -67,7 +64,7 @@ class FocusSession(
 class MockFocusAPI(
     var focus_configs: List<FocusConfig> = emptyList(),
     var current_focus_session: FocusSession? = null
-): FocusAPIInterface{
+): FocusAPI{
 
     override fun getRunningFocusMode(): FocusSession?{
         return current_focus_session
@@ -89,16 +86,19 @@ class MockFocusAPI(
         current_focus_session = FocusSession(config)
     }
 
+    companion object{
+        /** Devuelve una MockFocusAPI ya instanciada correctamente */
+        @kotlin.time.ExperimentalTime
+        fun getMockFocusAPI(): MockFocusAPI{
+            var focus_session = FocusSession(
+                focus_config = FocusConfig(
+                    duration = SessionDuration(hours = 0, minutes = 45, seconds = 0)
+                )
+            )
+            var mock = MockFocusAPI(focus_configs = emptyList(), current_focus_session = focus_session)
+            return mock
+        }
+    }
 }
 
-/** Devuelve una MockFocusAPI ya instanciada correctamente */
-@kotlin.time.ExperimentalTime
-fun getMockFocusAPI(): MockFocusAPI{
-    var focus_session = FocusSession(
-        focus_config = FocusConfig(
-            duration = SessionDuration(hours = 0, minutes = 45, seconds = 0)
-        )
-    )
-    var mock = MockFocusAPI(focus_configs = emptyList(), current_focus_session = focus_session)
-    return mock
-}
+
