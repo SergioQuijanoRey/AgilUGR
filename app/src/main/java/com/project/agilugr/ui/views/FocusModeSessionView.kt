@@ -2,13 +2,17 @@ package com.project.agilugr.ui.views
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.project.agilugr.FocusAPIInterface
 import com.project.agilugr.ui.theme.AgilUGRTheme
@@ -19,7 +23,14 @@ class FocusModeSessionView(val focus_api: FocusAPIInterface) {
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun getView(){
-        Column {
+        Column(
+
+            // Esta columna, que engloba a toda nuestra vista, la centramos en la pantalla
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        
+        ){
             mainBox(focus_api)
             Row {
                 stopButton(backgroundColor =  MaterialTheme.colors.primary, contentColor = MaterialTheme.colors.secondary)
