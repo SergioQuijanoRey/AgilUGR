@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.project.agilugr.FocusAPI
+import com.project.agilugr.ui.navigation.NavigationMapper
 import com.project.agilugr.ui.theme.AgilUGRTheme
 import com.project.agilugr.utils.phone_dimensions
 import kotlinx.coroutines.delay
@@ -148,7 +149,7 @@ fun stopButton(backgroundColor: Color, contentColor: Color, modifier: Modifier){
 fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, navControler: NavController){
     Button(
         onClick = {
-            navControler.navigate("focus_mode_selector")
+            navControler.navigate(route = NavigationMapper.FOCUS_MODE_SELECTOR.route)
         },
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = backgroundColor,

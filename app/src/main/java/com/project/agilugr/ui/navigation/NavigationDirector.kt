@@ -41,16 +41,16 @@ class NavigationDirector(val focus_api: FocusAPI){
             navController = navController,
 
             // La vista inicial
-            startDestination = "focus_mode_selector"
+            startDestination = NavigationMapper.FOCUS_MODE_SELECTOR.route
         ){
 
             // Vista del selector de configuraciones del focus mode
-            composable(route = "focus_mode_selector"){
+            composable(route = NavigationMapper.FOCUS_MODE_SELECTOR.route){
                 FocusModeSelector(MockFocusAPI.getMockFocusAPI(), navController = navController ).getView()
             }
 
             // Vista desde dentro de una sesion de focus mode
-            composable(route = "focus_mode_session"){
+            composable(route = NavigationMapper.FOCUS_MODE_SESSION.route){
                 FocusModeSessionView(MockFocusAPI.getMockFocusAPI(), navController = navController).getView()
             }
         }
