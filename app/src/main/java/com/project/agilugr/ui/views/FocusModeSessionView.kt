@@ -63,7 +63,10 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
                     modifier = Modifier
                         .padding(10.dp)
                         .height(50.dp)
-                        .width(80.dp)
+                        .width(80.dp),
+
+                    // TODO -- no estamos haciendo ninguna accion con este boton
+                    on_click = {}
                 )
                 exitButton(
                     backgroundColor = MaterialTheme.colors.primary,
@@ -72,7 +75,10 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
                         .padding(10.dp)
                         .height(50.dp)
                         .width(80.dp),
-                    navControler = navController
+
+                    // Cuando hago click, navego al selector del modo focus
+                    // Cambiando la lambda podemos cambiar a donde navegamos en el exit
+                    on_click = { navController.navigate(NavigationMapper.FOCUS_MODE_SELECTOR.route) }
                 )
             }
         }
@@ -81,7 +87,6 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
 }
 
 /** Esta funcion dibuja la caja central de esta vista*/
-// TODO -- estoy poniendo mucha logica en una vista
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun mainBox(api: FocusAPI){
@@ -124,17 +129,16 @@ fun mainBox(api: FocusAPI){
 }
 
 /** Funcion que coloca el boton para parar la sesion */
-// TODO -- deberiamos estar usando el tema del sistema, y no ciertos colores
 @Composable
-fun stopButton(backgroundColor: Color, contentColor: Color, modifier: Modifier){
+fun stopButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, on_click: () -> Unit){
     AgilUGRTheme {
         Button(
             onClick = {
-                // TODO -- no estamos haciendo nada
+                on_click()
             },
             colors = ButtonDefaults.textButtonColors(
-                backgroundColor = backgroundColor,
-                contentColor = contentColor
+                backgroundColor = MaterialTheme.colors.primary,
+                contentColor = MaterialTheme.colors.onPrimary,
             ),
             modifier = modifier
         ){
@@ -143,17 +147,20 @@ fun stopButton(backgroundColor: Color, contentColor: Color, modifier: Modifier){
     }
 }
 
-// TODO -- en vez de pasar el navcontroller como parametro, pasar una lambda que realice dicha accion
-/** Funcion que coloca el boton para salir de la sesion*/
+/**
+ * Funcion que coloca el boton para salir de la sesion
+ *
+ * @param on_click funcion a la que llamamos para hacer click. Para manejar la navegacion
+ * */
 @Composable
-fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, navControler: NavController){
+fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, on_click: () -> Unit){
     Button(
         onClick = {
-            navControler.navigate(route = NavigationMapper.FOCUS_MODE_SELECTOR.route)
+            on_click()
         },
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = backgroundColor,
-            contentColor = contentColor
+            backgroundColor = MaterialTheme.colors.primary,
+            contentColor = MaterialTheme.colors.onPrimary
         ),
         modifier = modifier
     ){
