@@ -71,7 +71,7 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
                         .padding(10.dp)
                         .height(50.dp)
                         .width(80.dp),
-                    navControler = navController8
+                    navControler = navController
                 )
             }
         }
