@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.ui.theme.AgilUGRTheme
 import com.project.agilugr.utils.phone_dimensions
@@ -32,7 +33,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /** Clase para representar la vista dentro del modo focus, cuando estamos corriendo una sesion */
-class FocusModeSessionView(val focus_api: FocusAPI) {
+class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavController) {
     /** Devuelve los elementos de compose que componen esta vista */
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
@@ -69,7 +70,8 @@ class FocusModeSessionView(val focus_api: FocusAPI) {
                     modifier = Modifier
                         .padding(10.dp)
                         .height(50.dp)
-                        .width(80.dp)
+                        .width(80.dp),
+                    navControler = navController8
                 )
             }
         }
@@ -140,12 +142,13 @@ fun stopButton(backgroundColor: Color, contentColor: Color, modifier: Modifier){
     }
 }
 
+// TODO -- en vez de pasar el navcontroller como parametro, pasar una lambda que realice dicha accion
 /** Funcion que coloca el boton para salir de la sesion*/
 @Composable
-fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier){
+fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, navControler: NavController){
     Button(
         onClick = {
-            // TODO -- no estamos haciendo nada
+            navControler.navigate("focus_mode_selector")
         },
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = backgroundColor,
