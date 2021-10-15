@@ -11,28 +11,21 @@ import com.project.agilugr.ui.navigation.NavigationDirector
 import com.project.agilugr.ui.navigation.NavigationMapper
 
 /** Interfaz que define lo que debe implementar un manager de gestos */
-interface GestureManager{
+@RequiresApi(Build.VERSION_CODES.M)
+interface GestureManager:
 
-    /** Procesa un evento simple sobre la pantalla del dispositivo */
+    // Interfaces superiores que estamos agregando en nuestra interfaz custom
+    GestureDetector.OnGestureListener,
+    GestureDetector.OnDoubleTapListener,
+    GestureDetector.OnContextClickListener
+{
+
+    /**
+     * Gestionar eventos de dedos sobre la pantalla que no gestionemos con las tres interfaces
+     * superiores que estamos agregando. No gestionar aqui eventos que ya gestionamos con las
+     * interfaces superiores.
+     * */
     fun onTouch(event: MotionEvent): Boolean
-
-    /**
-     * Gestiona el evento de cuando ponemos el dedo sobre la pantalla. Casi todos los eventos
-     * procesan este evento en primer lugar, asi que no puede ser bloqueado
-     * */
-    fun onDown(event: MotionEvent): Boolean
-
-    /** Evento que se lanza cuando dejamos pulsado sobre la pantalla durante un tiempo largo */
-    fun onLongPress(event: MotionEvent)
-
-    /** Evento que se lanza cuando hacemos dos toques seguidos en la pantalla */
-    fun onDoubleTap(event: MotionEvent): Boolean
-
-    /**
-     * TODO -- No se cual es la intencion de esta funcion pero necesitamos implementarla para
-     * que funcione la herencia que luego hacemos
-     * */
-    fun onShowPress(event: MotionEvent)
 }
 
 /**
@@ -46,10 +39,8 @@ interface GestureManager{
  * */
 @RequiresApi(Build.VERSION_CODES.M)
 class DefaultGestureManager(val navigationDirector: NavigationDirector):
+    // Para poder usar el gestor por defecto que da android para los eventos que nosotros no gestionamis
     ComponentActivity(),
-    GestureDetector.OnGestureListener,
-    GestureDetector.OnDoubleTapListener,
-    GestureDetector.OnContextClickListener,
     GestureManager
 {
 
@@ -57,8 +48,6 @@ class DefaultGestureManager(val navigationDirector: NavigationDirector):
      * Define como gestionamos los eventos de dedos sobre la pantalla
      * Solo tenemos que gestionar los eventos que no gestionamos por otras funciones que
      * no sean onTouch
-     *
-     * @param event el evento que tenemos que procesar
      * */
     override fun onTouch(event: MotionEvent): Boolean {
         val action: Int = MotionEventCompat.getActionMasked(event)
