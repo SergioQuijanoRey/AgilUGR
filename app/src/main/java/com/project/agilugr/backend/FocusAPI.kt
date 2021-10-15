@@ -19,6 +19,9 @@ interface FocusAPI{
 
     /** Corre una sesion de Focus Mode */
     fun runFocusMode(config: FocusConfig)
+
+    /** Devuelve todas las configuraciones que tiene guardado el usuario */
+    fun getAllConfigs(): List<FocusConfig>
 }
 
 /**
@@ -30,6 +33,12 @@ class FocusConfig (
     /** Duracion de la sesion que queremos iniciar */
     val duration: SessionDuration
 ) {
+
+    /** Para que se muestren mejor cuando lo pasamos a string */
+    override fun toString(): String {
+        val msg = "Duracion(${duration.hours}, ${duration.minutes}, ${duration.seconds})"
+        return msg
+    }
 }
 
 /**
@@ -86,16 +95,28 @@ class MockFocusAPI(
         current_focus_session = FocusSession(config)
     }
 
+    override fun getAllConfigs(): List<FocusConfig> {
+        return this.focus_configs
+    }
+
     companion object{
         /** Devuelve una MockFocusAPI ya instanciada correctamente */
         @kotlin.time.ExperimentalTime
         fun getMockFocusAPI(): MockFocusAPI{
-            var focus_session = FocusSession(
-                focus_config = FocusConfig(
-                    duration = SessionDuration(hours = 0, minutes = 45, seconds = 0)
-                )
+
+            // Hardcodeamos las distintas configuraciones que tiene almacenado el usuario
+            val all_configs = listOf<FocusConfig>(
+                FocusConfig(SessionDuration(0, 45, 0)),
+                FocusConfig(SessionDuration(1, 0, 0)),
+                FocusConfig(SessionDuration(0, 25, 0))
             )
-            var mock = MockFocusAPI(focus_configs = emptyList(), current_focus_session = focus_session)
+
+            // La focuss session que estamos corriendo ahora mismo tiene la primera configuracion
+            // que hemos hardcodeado
+            var focus_session = FocusSession(focus_config = all_configs[0])
+
+            // Generamos la instancia mock
+            var mock = MockFocusAPI(focus_configs = all_configs, current_focus_session = focus_session)
             return mock
         }
     }

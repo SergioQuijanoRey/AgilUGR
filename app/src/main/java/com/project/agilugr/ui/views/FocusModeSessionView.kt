@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.project.agilugr.FocusAPI
+import com.project.agilugr.ui.navigation.NavigationMapper
 import com.project.agilugr.ui.theme.AgilUGRTheme
 import com.project.agilugr.utils.phone_dimensions
 import kotlinx.coroutines.delay
@@ -32,7 +34,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /** Clase para representar la vista dentro del modo focus, cuando estamos corriendo una sesion */
-class FocusModeSessionView(val focus_api: FocusAPI) {
+class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavController) {
     /** Devuelve los elementos de compose que componen esta vista */
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
@@ -61,7 +63,10 @@ class FocusModeSessionView(val focus_api: FocusAPI) {
                     modifier = Modifier
                         .padding(10.dp)
                         .height(50.dp)
-                        .width(80.dp)
+                        .width(80.dp),
+
+                    // TODO -- no estamos haciendo ninguna accion con este boton
+                    on_click = {}
                 )
                 exitButton(
                     backgroundColor = MaterialTheme.colors.primary,
@@ -69,7 +74,11 @@ class FocusModeSessionView(val focus_api: FocusAPI) {
                     modifier = Modifier
                         .padding(10.dp)
                         .height(50.dp)
-                        .width(80.dp)
+                        .width(80.dp),
+
+                    // Cuando hago click, navego al selector del modo focus
+                    // Cambiando la lambda podemos cambiar a donde navegamos en el exit
+                    on_click = { navController.navigate(NavigationMapper.FOCUS_MODE_SELECTOR.route) }
                 )
             }
         }
@@ -78,7 +87,6 @@ class FocusModeSessionView(val focus_api: FocusAPI) {
 }
 
 /** Esta funcion dibuja la caja central de esta vista*/
-// TODO -- estoy poniendo mucha logica en una vista
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun mainBox(api: FocusAPI){
@@ -121,17 +129,16 @@ fun mainBox(api: FocusAPI){
 }
 
 /** Funcion que coloca el boton para parar la sesion */
-// TODO -- deberiamos estar usando el tema del sistema, y no ciertos colores
 @Composable
-fun stopButton(backgroundColor: Color, contentColor: Color, modifier: Modifier){
+fun stopButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, on_click: () -> Unit){
     AgilUGRTheme {
         Button(
             onClick = {
-                // TODO -- no estamos haciendo nada
+                on_click()
             },
             colors = ButtonDefaults.textButtonColors(
-                backgroundColor = backgroundColor,
-                contentColor = contentColor
+                backgroundColor = MaterialTheme.colors.primary,
+                contentColor = MaterialTheme.colors.onPrimary,
             ),
             modifier = modifier
         ){
@@ -140,16 +147,20 @@ fun stopButton(backgroundColor: Color, contentColor: Color, modifier: Modifier){
     }
 }
 
-/** Funcion que coloca el boton para salir de la sesion*/
+/**
+ * Funcion que coloca el boton para salir de la sesion
+ *
+ * @param on_click funcion a la que llamamos para hacer click. Para manejar la navegacion
+ * */
 @Composable
-fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier){
+fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, on_click: () -> Unit){
     Button(
         onClick = {
-            // TODO -- no estamos haciendo nada
+            on_click()
         },
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = backgroundColor,
-            contentColor = contentColor
+            backgroundColor = MaterialTheme.colors.primary,
+            contentColor = MaterialTheme.colors.onPrimary
         ),
         modifier = modifier
     ){
