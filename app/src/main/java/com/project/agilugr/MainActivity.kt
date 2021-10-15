@@ -2,12 +2,15 @@ package com.project.agilugr
 
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.MotionEventCompat
 import com.project.agilugr.ui.navigation.NavigationDirector
+import com.project.agilugr.ui.navigation.NavigationMapper
 import com.project.agilugr.ui.theme.AgilUGRTheme
 import com.project.agilugr.ui.views.FocusModeSessionView
 import kotlin.time.ExperimentalTime
@@ -36,6 +39,33 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+        // TODO -- mover a una gestion de eventos propia
+        override fun onTouchEvent(event: MotionEvent): Boolean {
+
+            val action: Int = MotionEventCompat.getActionMasked(event)
+
+            return when (action) {
+                MotionEvent.ACTION_DOWN -> {
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    this.navigation_director.navigate(NavigationMapper.FOCUS_MODE_SESSION)
+                    true
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    true
+                }
+                MotionEvent.ACTION_OUTSIDE -> {
+                    true
+                }
+                else -> super.onTouchEvent(event)
+            }
+        }
+
 
 }
 

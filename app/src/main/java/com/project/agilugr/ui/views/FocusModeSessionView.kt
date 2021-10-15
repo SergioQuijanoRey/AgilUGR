@@ -170,16 +170,3 @@ fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, 
         Text("Exit")
     }
 }
-
-@RequiresApi(Build.VERSION_CODES.O)
-@ExperimentalTime
-@Preview
-@Composable
-fun test_view(){
-    val focus_api = MockFocusAPI.getMockFocusAPI()
-    val navigation_director = NavigationDirector(focus_api = focus_api)
-    val navController = navigation_director.navController!!
-
-    val view = FocusModeSessionView(focus_api, navController)
-    view.getView()
-}
