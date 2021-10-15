@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -28,7 +29,7 @@ class NavigationDirector(val focus_api: FocusAPI){
     @RequiresApi(Build.VERSION_CODES.O)
     @ExperimentalTime
     @Composable
-    fun buildNavigationAndStartUI(){
+    fun buildNavigationAndStartUI(): NavHostController {
 
         // El controlador que necesitamos para controlar en detalle la navegacion
         // No estamos entrando en detalle, pero modificando esta variable podemos acceder a ello
@@ -53,6 +54,8 @@ class NavigationDirector(val focus_api: FocusAPI){
             composable(route = NavigationMapper.FOCUS_MODE_SESSION.route){
                 FocusModeSessionView(MockFocusAPI.getMockFocusAPI(), navController = navController).getView()
             }
+
+            return navController
         }
     }
 }

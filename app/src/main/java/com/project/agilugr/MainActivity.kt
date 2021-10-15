@@ -5,8 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.project.agilugr.ui.navigation.NavigationDirector
 import com.project.agilugr.ui.theme.AgilUGRTheme
+import com.project.agilugr.ui.views.FocusModeSessionView
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -35,6 +38,5 @@ class MainActivity : ComponentActivity() {
     }
 
 }
-
 
 

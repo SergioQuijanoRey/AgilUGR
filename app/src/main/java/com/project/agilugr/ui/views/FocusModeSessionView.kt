@@ -19,12 +19,15 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.project.agilugr.FocusAPI
+import com.project.agilugr.MockFocusAPI
+import com.project.agilugr.ui.navigation.NavigationDirector
 import com.project.agilugr.ui.navigation.NavigationMapper
 import com.project.agilugr.ui.theme.AgilUGRTheme
 import com.project.agilugr.utils.phone_dimensions
@@ -32,6 +35,7 @@ import kotlinx.coroutines.delay
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.time.ExperimentalTime
 
 /** Clase para representar la vista dentro del modo focus, cuando estamos corriendo una sesion */
 class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavController) {
@@ -82,6 +86,9 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
                 )
             }
         }
+
+
+
 
     }
 }
@@ -166,4 +173,21 @@ fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, 
     ){
         Text("Exit")
     }
+}
+
+/** Probamos la vista de forma comoda */
+@ExperimentalTime
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview
+@Composable
+fun pruebas(){
+    // APIs que vamos a consumir para tomar los datos del backend
+    val focus_api = MockFocusAPI.getMockFocusAPI()
+
+    // Tomamos el director de navegacion para que lance la interfaz grafica
+    val navigation_director = NavigationDirector(focus_api = focus_api)
+
+    // Instancio la vista que quiero probar
+    val view = FocusModeSessionView(focus_api, navigation_director.buildNavigationAndStartUI())
+    view.getView()
 }
