@@ -86,10 +86,6 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
                 )
             }
         }
-
-
-
-
     }
 }
 
@@ -175,19 +171,15 @@ fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, 
     }
 }
 
-/** Probamos la vista de forma comoda */
-@ExperimentalTime
 @RequiresApi(Build.VERSION_CODES.O)
+@ExperimentalTime
 @Preview
 @Composable
-fun pruebas(){
-    // APIs que vamos a consumir para tomar los datos del backend
+fun test_view(){
     val focus_api = MockFocusAPI.getMockFocusAPI()
-
-    // Tomamos el director de navegacion para que lance la interfaz grafica
     val navigation_director = NavigationDirector(focus_api = focus_api)
+    val navController = navigation_director.navController!!
 
-    // Instancio la vista que quiero probar
-    val view = FocusModeSessionView(focus_api, navigation_director.buildNavigationAndStartUI())
+    val view = FocusModeSessionView(focus_api, navController)
     view.getView()
 }
