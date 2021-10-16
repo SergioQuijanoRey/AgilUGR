@@ -61,7 +61,6 @@ class MockPerfilAPI(
 
             // Hardcodeamos las distintas configuraciones que tiene almacenado el usuario
             var perfil= PerfilUsuario(nombre="Jose Martinez Salas", carrera="Ingeniería Informática", correo="jmsalas@correo.ugr.es")
-
             // Generamos la instancia mock
             var mock = MockPerfilAPI(usuario = perfil)
             return mock
