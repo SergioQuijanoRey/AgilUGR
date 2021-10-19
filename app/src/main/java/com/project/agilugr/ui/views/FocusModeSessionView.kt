@@ -1,6 +1,7 @@
 package com.project.agilugr.ui.views
 
 import android.os.Build
+import android.view.MotionEvent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.MotionEventCompat
 import androidx.navigation.NavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.MockFocusAPI
@@ -169,17 +171,4 @@ fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, 
     ){
         Text("Exit")
     }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@ExperimentalTime
-@Preview
-@Composable
-fun test_view(){
-    val focus_api = MockFocusAPI.getMockFocusAPI()
-    val navigation_director = NavigationDirector(focus_api = focus_api)
-    val navController = navigation_director.navController!!
-
-    val view = FocusModeSessionView(focus_api, navController)
-    view.getView()
 }

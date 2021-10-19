@@ -22,11 +22,8 @@ import kotlin.time.ExperimentalTime
 /** Clase que maneja toda la navegacion de nuestra aplicacion */
 class NavigationDirector(val focus_api: FocusAPI){
 
-    var navController: NavController?
-        get() {
-            return navController
-        }
-        set(value) {navController = value}
+    /** Variable que vamos a usar para navegar por las distintas vistas */
+    var navController: NavController? = null
 
     /**
      * Construye la navigacion para nuestra aplicacion
@@ -40,10 +37,11 @@ class NavigationDirector(val focus_api: FocusAPI){
     @RequiresApi(Build.VERSION_CODES.O)
     @ExperimentalTime
     @Composable
-    fun buildNavigationAndStartUI() {
+    fun buildNavigationAndStartUI(){
 
         // El controlador que necesitamos para controlar en detalle la navegacion
         // No estamos entrando en detalle, pero modificando esta variable podemos acceder a ello
+        // Ademas, podemos usar este atributo para navegar a otras vistas
         this.navController = rememberNavController()
 
         // El NavHost define las vistas que disponemos y como navegamos entre ellas
@@ -66,17 +64,14 @@ class NavigationDirector(val focus_api: FocusAPI){
             }
 
             // Vista desde dentro de una sesion de focus mode
-            composable(route = NavigationMapper.FOCUS_MODE_SESSION.route) {
-                FocusModeSessionView(
-                    MockFocusAPI.getMockFocusAPI(),
-                    navController = navController as NavHostController
-                ).getView()
+            composable(route = NavigationMapper.FOCUS_MODE_SESSION.route){
+                FocusModeSessionView(MockFocusAPI.getMockFocusAPI(), navController = navController as NavHostController).getView()
             }
         }
     }
 
-    /** Navega a una vista de destino dada */
-    fun navigate(dest: NavigationMapper){
-        this.navController!!.navigate(dest.route)
+    /** Navega a un destino dado */
+    fun navigate(destination: NavigationMapper){
+        this.navController!!.navigate(destination.route)
     }
 }
