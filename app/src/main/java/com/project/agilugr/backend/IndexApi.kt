@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit
  * */
 interface IndexAPI{
 
-    /** Devuelve la sesion Focus Mode que esta corriendo actualmente */
+    /** Devuelve el conjunto de alertas actuales */
     fun getAlert(): List<String>
 
 }
@@ -29,6 +29,12 @@ class MockedProfile() : IndexAPI{
             "But today you have a lovely day <3"
         )
         return output
+    }
+    companion object {
+        @kotlin.time.ExperimentalTime
+        fun getMockIndexAPI (): IndexAPI {
+            return MockedProfile()
+        }
     }
 }
 

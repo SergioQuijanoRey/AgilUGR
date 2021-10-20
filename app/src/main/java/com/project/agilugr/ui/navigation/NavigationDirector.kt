@@ -51,12 +51,12 @@ class NavigationDirector(val focus_api: FocusAPI){
             navController = this.navController as NavHostController,
 
             // La vista inicial
-            startDestination = NavigationMapper.FOCUS_MODE_SELECTOR.route
+            startDestination = NavigationMapper.MAIN_VIEW.route
         ){
             // Vista principal, índice de selección de otras vistas
             composable(route = NavigationMapper.MAIN_VIEW.route) {
                 // TODO add MockedProfile correctly
-                IndexSelector( MockedProfile, navController = navController as NavHostController).getView()
+                IndexSelector( MockedProfile.getMockIndexAPI(), navController = navController as NavHostController).getView()
             }
             // Vista del selector de configuraciones del focus mode
             composable(route = NavigationMapper.FOCUS_MODE_SELECTOR.route){

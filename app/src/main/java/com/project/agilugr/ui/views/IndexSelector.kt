@@ -1,5 +1,7 @@
 package com.project.agilugr.ui.views
 
+import com.project.agilugr.ui.components.AlertBox
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -10,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.project.agilugr.FocusAPI
@@ -32,13 +35,19 @@ class IndexSelector (val indexApi : IndexAPI, val navController: NavController){
 
             // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
             modifier = Modifier
-                .padding(vertical = 100.dp, horizontal = 20.dp),
+                .padding(vertical = 0.dp, horizontal = 20.dp),
         ) {
             Header(
                 backgroundColor = MaterialTheme.colors.primary,
                 textColor = MaterialTheme.colors.onPrimary,
             ).getComponent()
-            // Todo Alerts
+
+            AlertBox(
+                alerts = indexApi.getAlert() ,
+                cardBackgroundColor = Color.Red,
+                textColor = Color.White
+            ).getComponent()
+
             // Todo Icons pannel
         }
 
