@@ -23,6 +23,8 @@ import com.project.agilugr.ui.navigation.NavigationMapper
 import com.project.agilugr.utils.phone_dimensions
 
 import com.project.agilugr.ui.components.Header
+import com.project.agilugr.ui.components.NavButton
+
 /**
  * Esta clase representa la vista printipal en la que se selecciona
  * la funcionalidad
@@ -48,7 +50,7 @@ class IndexSelector (val indexApi : IndexAPI, val navController: NavController){
                 textColor = Color.White
             ).getComponent()
 
-            // Todo Icons pannel
+            NavButton(navController = navController)
         }
 
     }

@@ -12,11 +12,14 @@ import androidx.navigation.compose.rememberNavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.MockFocusAPI
 import com.project.agilugr.backend.IndexAPI
+import com.project.agilugr.backend.MockPerfilAPI
 import com.project.agilugr.backend.MockedProfile
+import com.project.agilugr.backend.PerfilAPI
 import com.project.agilugr.constants.MainView
 import com.project.agilugr.ui.views.FocusModeSelector
 import com.project.agilugr.ui.views.FocusModeSessionView
 import com.project.agilugr.ui.views.IndexSelector
+import com.project.agilugr.ui.views.PerfilMode
 import kotlin.time.ExperimentalTime
 
 /** Clase que maneja toda la navegacion de nuestra aplicacion */
@@ -57,6 +60,11 @@ class NavigationDirector(val focus_api: FocusAPI){
             composable(route = NavigationMapper.MAIN_VIEW.route) {
                 // TODO add MockedProfile correctly
                 IndexSelector( MockedProfile.getMockIndexAPI(), navController = navController as NavHostController).getView()
+            }
+            // Vista del perfil
+            composable(route = NavigationMapper.PERFIL_MODE.route) {
+                // TODO add MockedProfile correctly
+                PerfilMode( MockPerfilAPI.getMockPerfilAPI(), navController = navController as NavHostController).getView()
             }
             // Vista del selector de configuraciones del focus mode
             composable(route = NavigationMapper.FOCUS_MODE_SELECTOR.route){

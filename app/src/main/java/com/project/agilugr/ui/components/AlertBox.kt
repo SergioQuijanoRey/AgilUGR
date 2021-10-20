@@ -27,6 +27,7 @@ class AlertBox (
     override fun getComponent() {
         Column {
            alerts.forEach {
+
                 Card(
                     backgroundColor= cardBackgroundColor,
                     modifier = Modifier
