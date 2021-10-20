@@ -4,18 +4,26 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.MockFocusAPI
+import com.project.agilugr.backend.IndexAPI
+import com.project.agilugr.backend.MockedProfile
+import com.project.agilugr.constants.MainView
 import com.project.agilugr.ui.views.FocusModeSelector
 import com.project.agilugr.ui.views.FocusModeSessionView
+import com.project.agilugr.ui.views.IndexSelector
 import kotlin.time.ExperimentalTime
 
 /** Clase que maneja toda la navegacion de nuestra aplicacion */
 class NavigationDirector(val focus_api: FocusAPI){
+
+    /** Variable que vamos a usar para navegar por las distintas vistas */
+    var navController: NavController? = null
 
     /**
      * Construye la navigacion para nuestra aplicacion
@@ -29,33 +37,41 @@ class NavigationDirector(val focus_api: FocusAPI){
     @RequiresApi(Build.VERSION_CODES.O)
     @ExperimentalTime
     @Composable
-    fun buildNavigationAndStartUI(): NavHostController {
+    fun buildNavigationAndStartUI(){
 
         // El controlador que necesitamos para controlar en detalle la navegacion
         // No estamos entrando en detalle, pero modificando esta variable podemos acceder a ello
-        val navController = rememberNavController()
+        // Ademas, podemos usar este atributo para navegar a otras vistas
+        this.navController = rememberNavController()
 
         // El NavHost define las vistas que disponemos y como navegamos entre ellas
         NavHost(
 
             // El controlador que vamos a usar para la navegacion
-            navController = navController,
+            navController = this.navController as NavHostController,
 
             // La vista inicial
-            startDestination = NavigationMapper.FOCUS_MODE_SELECTOR.route
+            startDestination = NavigationMapper.MAIN_VIEW.route
         ){
-
+            // Vista principal, índice de selección de otras vistas
+            composable(route = NavigationMapper.MAIN_VIEW.route) {
+                // TODO add MockedProfile correctly
+                IndexSelector( MockedProfile.getMockIndexAPI(), navController = navController as NavHostController).getView()
+            }
             // Vista del selector de configuraciones del focus mode
             composable(route = NavigationMapper.FOCUS_MODE_SELECTOR.route){
-                FocusModeSelector(MockFocusAPI.getMockFocusAPI(), navController = navController ).getView()
+                FocusModeSelector(MockFocusAPI.getMockFocusAPI(), navController = navController as NavHostController).getView()
             }
 
             // Vista desde dentro de una sesion de focus mode
             composable(route = NavigationMapper.FOCUS_MODE_SESSION.route){
-                FocusModeSessionView(MockFocusAPI.getMockFocusAPI(), navController = navController).getView()
+                FocusModeSessionView(MockFocusAPI.getMockFocusAPI(), navController = navController as NavHostController).getView()
             }
-
-            return navController
         }
+    }
+
+    /** Navega a un destino dado */
+    fun navigate(destination: NavigationMapper){
+        this.navController!!.navigate(destination.route)
     }
 }

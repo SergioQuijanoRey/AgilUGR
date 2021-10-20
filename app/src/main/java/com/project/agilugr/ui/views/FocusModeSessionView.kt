@@ -1,6 +1,7 @@
 package com.project.agilugr.ui.views
 
 import android.os.Build
+import android.view.MotionEvent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.MotionEventCompat
 import androidx.navigation.NavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.MockFocusAPI
@@ -86,10 +88,6 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
                 )
             }
         }
-
-
-
-
     }
 }
 
@@ -173,21 +171,4 @@ fun exitButton(backgroundColor: Color, contentColor: Color, modifier: Modifier, 
     ){
         Text("Exit")
     }
-}
-
-/** Probamos la vista de forma comoda */
-@ExperimentalTime
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview
-@Composable
-fun pruebas(){
-    // APIs que vamos a consumir para tomar los datos del backend
-    val focus_api = MockFocusAPI.getMockFocusAPI()
-
-    // Tomamos el director de navegacion para que lance la interfaz grafica
-    val navigation_director = NavigationDirector(focus_api = focus_api)
-
-    // Instancio la vista que quiero probar
-    val view = FocusModeSessionView(focus_api, navigation_director.buildNavigationAndStartUI())
-    view.getView()
 }
