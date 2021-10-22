@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.project.agilugr.R
 import com.project.agilugr.backend.PerfilAPI
 
+// TODO -- estaria bien poder incluir titulos para cada seccion
 /** Componente para mostrar la cabecera de la App*/
 class Header(
     /** Colores que vamos a usar en el header */
@@ -49,10 +50,8 @@ class Header(
     }
 }
 
-// TODO -- el nombre no me queda muy claro. Por que se llama header2 si lo que hace es mostrar
-// tarjetas en la vista del perfil
-/** Componente para mostrar tarjetas en la vista de Perfil*/
-class Header2(
+/** Componente para mostrar un header concreto para la vista del perfil*/
+class HeaderForProfile(
     /** Colores que vamos a usar en el header */
     val backgroundColor: Color,
     val textColor: Color,
@@ -72,7 +71,7 @@ class Header2(
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 // TODO add to constants structure (I do not know which is the most suitable structure needed)
-                Text( text = "Euler Sanchez",
+                Text(text = "Euler Sanchez",
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp)
                 Text(text = "euler@correo.ugr.es")
