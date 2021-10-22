@@ -1,5 +1,5 @@
 package com.project.agilugr.ui.components
-import com.project.agilugr.constants.MainView
+import com.project.agilugr.constants.ConstantsRepo
 
 import androidx.compose.foundation.*
 import androidx.compose.runtime.Composable
@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 
 /**  Funciones para poder trabajar con imágenes */
 import com.project.agilugr.R
-import com.project.agilugr.backend.PerfilAPI
 
 // TODO -- estaria bien poder incluir titulos para cada seccion
 /** Componente para mostrar la cabecera de la App*/
@@ -40,10 +39,10 @@ class Header(
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally
                     ){
-                Text( text = MainView.AppTitle.text,
+                Text( text = ConstantsRepo.AppTitle.text,
                     fontWeight = FontWeight.Bold,
                 fontSize = 30.sp)
-                Text(text = MainView.ProfileName.text)
+                Text(text = ConstantsRepo.ProfileName.text)
             }
         }
     }
@@ -69,11 +68,11 @@ class HeaderForProfile(
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Text(text = MainView.ProfileName.text,
+                Text(text = ConstantsRepo.ProfileName.text,
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp)
-                Text(text = MainView.ProfileMail.text)
-                Text(text = MainView.Degree.text)
+                Text(text = ConstantsRepo.ProfileMail.text)
+                Text(text = ConstantsRepo.Degree.text)
             }
         }
     }

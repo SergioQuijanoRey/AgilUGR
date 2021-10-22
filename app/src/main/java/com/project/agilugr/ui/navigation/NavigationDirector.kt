@@ -2,7 +2,6 @@ package com.project.agilugr.ui.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -11,11 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.MockFocusAPI
-import com.project.agilugr.backend.IndexAPI
 import com.project.agilugr.backend.MockPerfilAPI
 import com.project.agilugr.backend.MockedProfile
-import com.project.agilugr.backend.PerfilAPI
-import com.project.agilugr.constants.MainView
 import com.project.agilugr.ui.views.FocusModeSelector
 import com.project.agilugr.ui.views.FocusModeSessionView
 import com.project.agilugr.ui.views.IndexSelector
