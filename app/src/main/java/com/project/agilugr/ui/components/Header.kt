@@ -1,5 +1,5 @@
 package com.project.agilugr.ui.components
-import com.project.agilugr.constants.MainView
+import com.project.agilugr.constants.ConstantsRepo
 
 import androidx.compose.foundation.*
 import androidx.compose.runtime.Composable
@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.sp
 
 /**  Funciones para poder trabajar con imágenes */
 import com.project.agilugr.R
-import com.project.agilugr.backend.PerfilAPI
 
+// TODO -- estaria bien poder incluir titulos para cada seccion
 /** Componente para mostrar la cabecera de la App*/
 class Header(
     /** Colores que vamos a usar en el header */
@@ -39,18 +39,17 @@ class Header(
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally
                     ){
-                // TODO add to constants structure (I do not know which is the most suitable structure needed)
-                Text( text = "Agil UGR",
+                Text( text = ConstantsRepo.AppTitle.text,
                     fontWeight = FontWeight.Bold,
                 fontSize = 30.sp)
-                Text(text = "Euler Sanchez")
+                Text(text = ConstantsRepo.ProfileName.text)
             }
         }
     }
 }
 
-/** Componente para mostrar tarjetas en la vista de Perfil*/
-class Header2(
+/** Componente para mostrar un header concreto para la vista del perfil*/
+class HeaderForProfile(
     /** Colores que vamos a usar en el header */
     val backgroundColor: Color,
     val textColor: Color,
@@ -69,12 +68,11 @@ class Header2(
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                // TODO add to constants structure (I do not know which is the most suitable structure needed)
-                Text( text = "Euler Sanchez",
+                Text(text = ConstantsRepo.ProfileName.text,
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp)
-                Text(text = "euler@correo.ugr.es")
-                Text(text = "Ingeniería Informática")
+                Text(text = ConstantsRepo.ProfileMail.text)
+                Text(text = ConstantsRepo.Degree.text)
             }
         }
     }

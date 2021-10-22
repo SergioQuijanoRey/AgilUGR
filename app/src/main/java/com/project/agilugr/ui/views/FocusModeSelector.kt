@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.ui.components.CardComponent
+import com.project.agilugr.ui.components.Header
 import com.project.agilugr.ui.navigation.NavigationDirector
 import com.project.agilugr.ui.navigation.NavigationMapper
 import com.project.agilugr.utils.phone_dimensions
@@ -28,8 +29,14 @@ class FocusModeSelector(val focus_api: FocusAPI, val navController: NavControlle
 
             // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
             modifier = Modifier
-                .padding(vertical = 100.dp, horizontal = 20.dp),
+                .padding(vertical = 10.dp, horizontal = 20.dp),
         ) {
+
+            // Barra vertical que mostramos en toda la app
+            Header(
+                backgroundColor = MaterialTheme.colors.primary,
+                textColor = MaterialTheme.colors.onPrimary,
+            ).getComponent()
 
             // Titulo de esta vista
             // TODO -- igual deberiamos sustituirlo por la barra vertical
