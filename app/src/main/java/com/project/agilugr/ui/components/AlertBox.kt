@@ -52,37 +52,3 @@ class AlertBox (
        }
     }
 }
-
-
-
-    /**
-     *
-
-    @Composable
-        getComponent() {
-            alerts.map{
-                Text(
-                    text = it
-                )
-            }
-        }
-
-}
-
-@Composable
-fun AlertBox( alert: String, textColor: Color) {
-    Card(
-        backgroundColor = cardBackgroundColor,
-    ){
-        Text(
-            text = alert,
-            modifier = Modifier.padding(16.dp)
-                    color = textColor
-        )
-
-    }
-    Spacer(modifier = Modifier.size(width = 10.dp, height = 0.dp))
-}
-}
-
-     */

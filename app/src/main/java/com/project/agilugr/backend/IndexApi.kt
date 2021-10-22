@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit
 
 
 /**
- * Interfaz que deben implementar las clases que trabajen con las APIs de FocusMode
+ * Interfaz que deben implementar las clases que trabajen con las APIs de Index
  * */
 interface IndexAPI{
 

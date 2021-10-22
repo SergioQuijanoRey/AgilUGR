@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.project.agilugr.R
 import com.project.agilugr.backend.PerfilAPI
 
-/** Componente para mostrar tarjetas*/
+/** Componente para mostrar la cabecera de la App*/
 class Header(
     /** Colores que vamos a usar en el header */
     val backgroundColor: Color,

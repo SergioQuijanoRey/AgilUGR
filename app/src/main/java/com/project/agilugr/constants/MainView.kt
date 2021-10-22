@@ -1,10 +1,10 @@
 package com.project.agilugr.constants
 
 /**
- * Content constant variables used in the app, such as:
- *  - Name of the app
- *  - User profile
- *  - User's degree
+ * Variables constantes usadas en la app:
+ *  - Nombre de la app
+ *  - perfil de usuario
+ *  - Carrera del usuario
  *  ...
  */
 enum class MainView (val text: String){
