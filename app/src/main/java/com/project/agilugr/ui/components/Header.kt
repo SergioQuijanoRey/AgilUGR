@@ -40,11 +40,10 @@ class Header(
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally
                     ){
-                // TODO add to constants structure (I do not know which is the most suitable structure needed)
-                Text( text = "Agil UGR",
+                Text( text = MainView.AppTitle.text,
                     fontWeight = FontWeight.Bold,
                 fontSize = 30.sp)
-                Text(text = "Euler Sanchez")
+                Text(text = MainView.ProfileName.text)
             }
         }
     }
@@ -70,12 +69,11 @@ class HeaderForProfile(
             Column (
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                // TODO add to constants structure (I do not know which is the most suitable structure needed)
-                Text(text = "Euler Sanchez",
+                Text(text = MainView.ProfileName.text,
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp)
-                Text(text = "euler@correo.ugr.es")
-                Text(text = "Ingeniería Informática")
+                Text(text = MainView.ProfileMail.text)
+                Text(text = MainView.Degree.text)
             }
         }
     }
