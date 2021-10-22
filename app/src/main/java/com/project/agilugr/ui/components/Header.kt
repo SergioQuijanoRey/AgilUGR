@@ -49,6 +49,8 @@ class Header(
     }
 }
 
+// TODO -- el nombre no me queda muy claro. Por que se llama header2 si lo que hace es mostrar
+// tarjetas en la vista del perfil
 /** Componente para mostrar tarjetas en la vista de Perfil*/
 class Header2(
     /** Colores que vamos a usar en el header */
