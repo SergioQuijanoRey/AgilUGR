@@ -86,7 +86,12 @@ class NavigationDirector(val focus_api: FocusAPI){
 
     @JvmName("getCurrentView1")
     fun getCurrentView(): NavigationMapper? {
-        return this.currentView
+
+        // Tomamos la ruta actual directamente desde el navController
+        val current_route = this.navController!!.currentBackStackEntry!!.destination.route!!
+
+        // Mappeamos dicha ruta a una de las vista que podemos interpretar
+        return stringToEnum(current_route)
     }
 }
 
