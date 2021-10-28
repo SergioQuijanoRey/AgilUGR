@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,7 +24,8 @@ class NavigationDirector(val focus_api: FocusAPI){
 
     /** Variable que vamos a usar para navegar por las distintas vistas */
     var navController: NavController? = null
-
+    //var currentView: String? = "main_view"
+    var currentView: NavigationMapper? = NavigationMapper.MAIN_VIEW
     /**
      * Construye la navigacion para nuestra aplicacion
      *
@@ -76,6 +78,15 @@ class NavigationDirector(val focus_api: FocusAPI){
 
     /** Navega a un destino dado */
     fun navigate(destination: NavigationMapper){
+        //Navegamos a esta vista
         this.navController!!.navigate(destination.route)
+        //Actualizamos la vista actual en la que nos encontramos
+        this.currentView = destination
+    }
+
+    @JvmName("getCurrentView1")
+    fun getCurrentView(): NavigationMapper? {
+        return this.currentView
     }
 }
+

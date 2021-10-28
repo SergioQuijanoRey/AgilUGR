@@ -58,6 +58,9 @@ class MainActivity : ComponentActivity() {
     // Gestion simple de gestos
     private class MyGestureListener(val navigationDirector: NavigationDirector): GestureDetector.SimpleOnGestureListener() {
 
+        private val SWIPE_THRESHOLD = 100
+        private val SWIPE_VELOCITY_THRESHOLD = 100
+
         override fun onDown(event: MotionEvent): Boolean {
             return true
         }
@@ -67,9 +70,78 @@ class MainActivity : ComponentActivity() {
             return true
         }
 
+        override fun onFling(
+            e1: MotionEvent?,
+            e2: MotionEvent?,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            val result = false
+            try {
+                val diffY = e2!!.y - e1!!.y
+                val diffX = e2.x - e1.x
+
+
+                if (this.navigationDirector.getCurrentView()==NavigationMapper.MAIN_VIEW){
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
+                                this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SELECTOR)
+                            } else {
+                                //Poner la vista del calendario
+                            }
+                        }
+                    } else {
+                        if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffY > 0) {
+                                this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
+                            } else {
+                                this.navigationDirector.navigate(NavigationMapper.PERFIL_MODE)
+                            }
+                        }
+                    }
+                }
+
+                if (this.navigationDirector.getCurrentView()==NavigationMapper.PERFIL_MODE) {
+                    if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (diffY > 0) {
+                            this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
+
+                        }
+                    }
+                }
+
+                if (this.navigationDirector.getCurrentView()==NavigationMapper.FOCUS_MODE_SELECTOR) {
+                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (diffY > 0) {
+                            this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
+
+                        }
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+
+            return result
+        }
 
     }
 
 }
-
 
