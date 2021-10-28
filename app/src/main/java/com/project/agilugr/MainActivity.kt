@@ -82,7 +82,7 @@ class MainActivity : ComponentActivity() {
                 val diffX = e2.x - e1.x
 
 
-                if (this.navigationDirector.getCurrentView()==NavigationMapper.MAIN_VIEW.route){
+                if (this.navigationDirector.getCurrentView()==NavigationMapper.MAIN_VIEW){
                     if (Math.abs(diffX) > Math.abs(diffY)) {
                         if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                             if (diffX > 0) {
@@ -102,7 +102,7 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                if (this.navigationDirector.getCurrentView()==NavigationMapper.PERFIL_MODE.route) {
+                if (this.navigationDirector.getCurrentView()==NavigationMapper.PERFIL_MODE) {
                     if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffY > 0) {
                             this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
@@ -111,7 +111,7 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                if (this.navigationDirector.getCurrentView()==NavigationMapper.FOCUS_MODE_SELECTOR.route) {
+                if (this.navigationDirector.getCurrentView()==NavigationMapper.FOCUS_MODE_SELECTOR) {
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffY > 0) {
                             this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
