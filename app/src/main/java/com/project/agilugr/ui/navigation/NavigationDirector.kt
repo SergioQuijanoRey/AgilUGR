@@ -2,13 +2,14 @@ package com.project.agilugr.ui.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.MockFocusAPI
 import com.project.agilugr.backend.MockPerfilAPI
@@ -18,6 +19,7 @@ import com.project.agilugr.ui.views.FocusModeSessionView
 import com.project.agilugr.ui.views.IndexSelector
 import com.project.agilugr.ui.views.PerfilMode
 import kotlin.time.ExperimentalTime
+import com.google.accompanist.navigation.animation.composable
 
 /** Clase que maneja toda la navegacion de nuestra aplicacion */
 class NavigationDirector(val focus_api: FocusAPI){
@@ -34,6 +36,7 @@ class NavigationDirector(val focus_api: FocusAPI){
      * Gracias al parametro startDestination, la funcion devuelve la vista desde la que parte
      * nuestra aplicacion, y con ello comienza la interfaz grafica de nuestra aplicacion
      * */
+    @ExperimentalAnimationApi
     @RequiresApi(Build.VERSION_CODES.O)
     @ExperimentalTime
     @Composable
@@ -42,10 +45,10 @@ class NavigationDirector(val focus_api: FocusAPI){
         // El controlador que necesitamos para controlar en detalle la navegacion
         // No estamos entrando en detalle, pero modificando esta variable podemos acceder a ello
         // Ademas, podemos usar este atributo para navegar a otras vistas
-        this.navController = rememberNavController()
+        this.navController = rememberAnimatedNavController()
 
         // El NavHost define las vistas que disponemos y como navegamos entre ellas
-        NavHost(
+        AnimatedNavHost(
 
             // El controlador que vamos a usar para la navegacion
             navController = this.navController as NavHostController,
@@ -58,13 +61,21 @@ class NavigationDirector(val focus_api: FocusAPI){
                 // TODO add MockedProfile correctly
                 IndexSelector( MockedProfile.getMockIndexAPI(), navController = navController as NavHostController).getView()
             }
+
             // Vista del perfil
             composable(route = NavigationMapper.PERFIL_MODE.route) {
                 // TODO add MockedProfile correctly
                 PerfilMode( MockPerfilAPI.getMockPerfilAPI(), navController = navController as NavHostController).getView()
             }
+
             // Vista del selector de configuraciones del focus mode
-            composable(route = NavigationMapper.FOCUS_MODE_SELECTOR.route){
+            composable(
+                route = NavigationMapper.FOCUS_MODE_SELECTOR.route,
+                enterTransition = { _, _ ->
+                    // Let's make for a really long fade in
+                    fadeIn(animationSpec = tween(2000))
+                }
+            ){
                 FocusModeSelector(MockFocusAPI.getMockFocusAPI(), navController = navController as NavHostController).getView()
             }
 

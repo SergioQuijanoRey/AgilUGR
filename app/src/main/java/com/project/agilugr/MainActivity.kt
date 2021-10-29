@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.core.view.GestureDetectorCompat
 import com.project.agilugr.ui.navigation.NavigationDirector
 import com.project.agilugr.ui.navigation.NavigationMapper
@@ -27,6 +28,7 @@ class MainActivity : ComponentActivity() {
 
 
     // Funcion principal
+    @ExperimentalAnimationApi
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         // Llamamos al onCreate del parent

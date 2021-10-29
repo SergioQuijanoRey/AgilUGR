@@ -71,4 +71,8 @@ dependencies {
     // Dependencias para poder correr tests unitarios
     testImplementation 'junit:junit:4.13.1'
     testImplementation "com.google.truth:truth:1.1"
+
+    // Para las animaciones en la navegacion
+    implementation "com.google.accompanist:accompanist-navigation-animation:0.21.0-beta"
+
 }
