@@ -18,12 +18,12 @@ class NavigationMapperTest {
     /** Comprobamos que se lanza una excepcion para valores que no tengan sentido*/
     @Test
     fun test_string_to_enum_fails_in_some_cases(){
-        var badRoute = "route_no_valida"
-
-        val exception = assertThrows(Exception::class.java) {
-            val enumValue = stringToEnum(badRoute)
+        var badRoutes = listOf("route_no_valida", "sergio", "ruta_imposible")
+        for(badRoute in badRoutes) {
+            val exception = assertThrows(Exception::class.java) {
+                val enumValue = stringToEnum(badRoute)
+            }
+            assertEquals("La ruta $badRoute no es valida", exception.message)
         }
-        assertEquals("La ruta $badRoute no es valida", exception.message)
-
     }
 }
