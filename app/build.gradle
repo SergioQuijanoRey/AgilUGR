@@ -67,4 +67,8 @@ dependencies {
     // Dependencia necesaria para usar los elementos de navegacion
     implementation "androidx.navigation:navigation-compose:2.4.0-alpha09"
 
+
+    // Dependencias para poder correr tests unitarios
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation "com.google.truth:truth:1.1"
 }
