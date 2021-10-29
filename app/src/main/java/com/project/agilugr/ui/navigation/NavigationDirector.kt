@@ -24,8 +24,7 @@ class NavigationDirector(val focus_api: FocusAPI){
 
     /** Variable que vamos a usar para navegar por las distintas vistas */
     var navController: NavController? = null
-    //var currentView: String? = "main_view"
-    var currentView: NavigationMapper? = NavigationMapper.MAIN_VIEW
+
     /**
      * Construye la navigacion para nuestra aplicacion
      *
@@ -80,12 +79,12 @@ class NavigationDirector(val focus_api: FocusAPI){
     fun navigate(destination: NavigationMapper){
         //Navegamos a esta vista
         this.navController!!.navigate(destination.route)
-        //Actualizamos la vista actual en la que nos encontramos
-        this.currentView = destination
+
     }
 
+    /** Tomamos el enumerado que representa la vista en la que nos encontramos actualmente */
     @JvmName("getCurrentView1")
-    fun getCurrentView(): NavigationMapper? {
+    fun getCurrentView(): NavigationMapper {
 
         // Tomamos la ruta actual directamente desde el navController
         val current_route = this.navController!!.currentBackStackEntry!!.destination.route!!

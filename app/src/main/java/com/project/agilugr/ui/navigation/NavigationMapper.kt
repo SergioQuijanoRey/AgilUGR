@@ -5,14 +5,15 @@ enum class NavigationMapper(val route: String){
     FOCUS_MODE_SELECTOR(route = "focus_mode_selector_view"),
     FOCUS_MODE_SESSION(route = "focus_mode_session_view"),
     MAIN_VIEW(route="main_view"),
-    PERFIL_MODE(route="perfil_view");
-
-
+    PERFIL_MODE(route="perfil_view")
 }
 
 // TODO -- Debe de haber alguna funcion de kotlin para hacer esto
+// TODO -- recorrer con un for para ser mas metodicos
+// TODO -- escribir algunos test
 /**
  * Dado un string representando una ruta en la APP, devuelve el valor del enumerado asociado
+ * Levanta una excepcion cuando no existe ningun valor del enumerado asociado a la ruta pasada
  * */
 fun stringToEnum(route: String): NavigationMapper{
     if(route == "focus_mode_selector_view"){
