@@ -91,7 +91,9 @@ fun Tui ( ) {
 fun IconMail() {
     val context = LocalContext.current
     val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://webmailest.ugr.es/")) }
-    IconButton(modifier = Modifier.padding(50.dp) .size(100.dp), onClick = { context.startActivity(intent) }) {
+    IconButton(modifier = Modifier
+        .padding(50.dp)
+        .size(100.dp), onClick = { context.startActivity(intent) }) {
         Column() {
             //Icon(
             //    Icons.Filled.Email, contentDescription = "Localized description",
@@ -108,7 +110,9 @@ fun IconMail() {
 fun IconPrado() {
     val context = LocalContext.current
     val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://pradogrado2122.ugr.es/")) }
-    IconButton(modifier = Modifier.padding(50.dp) .size(100.dp), onClick = { context.startActivity(intent) }) {
+    IconButton(modifier = Modifier
+        .padding(50.dp)
+        .size(100.dp), onClick = { context.startActivity(intent) }) {
         Column() {
             Image(painter = painterResource(id = R.drawable.prado), contentDescription ="Correo")
         }
@@ -119,11 +123,7 @@ fun IconPrado() {
 
 /////////////// Lo que viene ahora hay que entenderlo bien
 
-val images = mutableStateListOf(
-        R.drawable.tui,
-        R.drawable.reversotui,
 
-    )
 
 
 @Composable
@@ -131,10 +131,17 @@ fun TuiCard(
     advance: ()-> Unit = {},
 ){
     val coroutineScope = rememberCoroutineScope()
+    val images = remember {
+        mutableStateListOf(
+            R.drawable.tui,
+            R.drawable.reversotui,
+
+            )
+    }
     Box(
         modifier = Modifier.size(400.dp,200.dp)
     ) {
-        images.take(2).reversed().forEach {
+        images.take(10).reversed().forEach {
             key(it) {
                 Card(id = it) {
                     images.add(
@@ -152,21 +159,14 @@ fun Card(
     advance: ()-> Unit = {},
 ){
     val coroutineScope = rememberCoroutineScope()
-    var offsetX = remember(id) { Animatable(4f) }
 
     Box(
         modifier = Modifier
-            .offset { IntOffset(offsetX.value.roundToInt(), 0) }
             .fillMaxSize()
             .background(color = Color.White)
             .clickable {
                 coroutineScope.launch {
-                    offsetX.animateTo(
-                        targetValue = 3000F
-                    )
-                }
-                coroutineScope.launch {
-                    delay(400)
+                    delay(300)
                     advance()
                 }
             }
