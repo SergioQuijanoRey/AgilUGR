@@ -9,7 +9,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -17,15 +16,14 @@ import androidx.navigation.NavController
 import com.project.agilugr.R
 import com.project.agilugr.backend.PerfilAPI
 import com.project.agilugr.ui.components.*
-import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.IntOffset
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
+
 /**
  * Esta clase representa la vista printipal en la que se selecciona
  * la funcionalidad
@@ -34,10 +32,21 @@ import kotlin.math.roundToInt
 class PerfilMode (val perfilApi : PerfilAPI, val navController: NavController){
     @Composable
     fun getView() {
-        HeaderForProfile(
-            backgroundColor = MaterialTheme.colors.primary,
-            textColor = MaterialTheme.colors.onPrimary,
-        ).getComponent()
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            HeaderForProfile(
+                backgroundColor = MaterialTheme.colors.primary,
+                textColor = MaterialTheme.colors.onPrimary,
+            ).getComponent()
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Image(painter = painterResource(id = R.drawable.logo), contentDescription = "Logo", modifier = Modifier
+                .size(200.dp)
+                .clip(
+                    RoundedCornerShape(10.dp)
+                ) )
+
+        }
 
         Column(
             // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
@@ -74,20 +83,6 @@ class PerfilMode (val perfilApi : PerfilAPI, val navController: NavController){
 }
 
 @Composable
-fun Tui ( ) {
-    return (
-            Image(
-                painter = painterResource(id = R.drawable.tui),
-                contentDescription = "Tui Picture",
-                modifier = Modifier
-                    .clip(RectangleShape)
-                    .fillMaxSize()
-            )
-            )
-}
-
-
-@Composable
 fun IconMail() {
     val context = LocalContext.current
     val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://webmailest.ugr.es/")) }
@@ -100,7 +95,7 @@ fun IconMail() {
             //    Modifier.size(80.dp)
             //)
             
-            Image(painter = painterResource(id = R.drawable.correo1), contentDescription ="Correo")
+            Image(painter = painterResource(id = R.drawable.correo), contentDescription ="Correo")
         }
 
     }
@@ -119,12 +114,6 @@ fun IconPrado() {
 
     }
 }
-
-
-/////////////// Lo que viene ahora hay que entenderlo bien
-
-
-
 
 @Composable
 fun TuiCard(
