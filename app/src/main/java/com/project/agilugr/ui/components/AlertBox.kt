@@ -1,10 +1,7 @@
 package com.project.agilugr.ui.components
 
 import androidx.compose.animation.expandVertically
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -15,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
+import com.project.agilugr.backend.IndexAPI
 
 class AlertBox (
     val alerts : List<String>,
@@ -26,6 +24,7 @@ class AlertBox (
 
     @Composable
     override fun getComponent() {
+
         Column {
            alerts.forEach {
                Spacer(modifier = Modifier.height(8.dp))
@@ -53,3 +52,5 @@ class AlertBox (
        }
     }
 }
+
+
