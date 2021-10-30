@@ -26,7 +26,23 @@ class MockedProfile() : IndexAPI{
     override fun getAlert(): List<String> {
         val output= listOf<String>(
             "Tomorrow you have your NPI project defense",
-            "But today you have a lovely day <3"
+            "But today you have a lovely day <3",
+            "Hola caracola",
+            "Qué pasa contigo",
+            "A ver si apruebas algo",
+            "Que ganas de vacaciones",
+            "Quiero comer algo",
+            "jejeje",
+            "Hola buenas",
+            "Tomorrow you have your NPI project defense",
+            "But today you have a lovely day <3",
+            "Hola caracola",
+            "Qué pasa contigo",
+            "A ver si apruebas algo",
+            "Que ganas de vacaciones",
+            "Quiero comer algo",
+            "jejeje",
+            "Hola buenas"
         )
         return output
     }
@@ -37,6 +53,7 @@ class MockedProfile() : IndexAPI{
         }
     }
 }
+
 
 
 
