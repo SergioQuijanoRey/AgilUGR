@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.material.Text
 import androidx.compose.material.Card
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 
@@ -27,7 +28,7 @@ class AlertBox (
     override fun getComponent() {
         Column {
            alerts.forEach {
-
+               Spacer(modifier = Modifier.height(8.dp))
                 Card(
                     backgroundColor= cardBackgroundColor,
                     modifier = Modifier
