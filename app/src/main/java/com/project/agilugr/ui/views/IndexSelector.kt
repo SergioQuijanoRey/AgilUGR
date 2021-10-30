@@ -154,7 +154,7 @@ fun Alertas ( indexApi : IndexAPI, alerts : List<String>,
         val listFecha = listOf<String>("17/11", "13/12", "3/12", "21/11", "16/12")
 
         Box(
-            modifier = Modifier.size(400.dp,240.dp)
+            modifier = Modifier.size(400.dp,270.dp)
         ) {
             Column(modifier = Modifier.verticalScroll(scrollState)) {
 
