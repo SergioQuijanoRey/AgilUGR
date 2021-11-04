@@ -36,7 +36,7 @@ class FocusConfig (
 
     /** Para que se muestren mejor cuando lo pasamos a string */
     override fun toString(): String {
-        val msg = "Duracion(${duration.hours}, ${duration.minutes}, ${duration.seconds})"
+        val msg = "Duracion (${duration.hours}, ${duration.minutes}, ${duration.seconds})"
         return msg
     }
 }
@@ -111,6 +111,8 @@ class MockFocusAPI(
                 FocusConfig(SessionDuration(0, 25, 0)),
                 FocusConfig(SessionDuration(0, 30, 0)),
                 FocusConfig(SessionDuration(1, 20, 0)),
+                FocusConfig(SessionDuration(0, 35, 50)),
+                FocusConfig(SessionDuration(1, 50, 0)),
                 FocusConfig(SessionDuration(2, 0, 0))
             )
 

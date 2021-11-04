@@ -1,19 +1,26 @@
 package com.project.agilugr.ui.views
 
-import androidx.compose.foundation.ScrollState
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.foundation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.backend.IndexAPI
@@ -38,19 +45,22 @@ class FocusModeSelector(val focus_api: FocusAPI, val navController: NavControlle
         ) {
 
             // Barra vertical que mostramos en toda la app
-            Header(
-                backgroundColor = MaterialTheme.colors.primary,
-                textColor = MaterialTheme.colors.onPrimary,
-            ).getComponent()
+            Column() {
+                Header(
+                    backgroundColor = MaterialTheme.colors.primary,
+                    textColor = MaterialTheme.colors.onPrimary,
+                ).getComponent()
 
+                Spacer(modifier = Modifier.size(width = 0.dp, height = 7.dp))
+                // Titulo de esta vista
+                // TODO -- igual deberiamos sustituirlo por la barra vertical
+                Text(
+                    "Selector Sesión Focus",
+                    color = MaterialTheme.colors.onBackground,
+                    style = MaterialTheme.typography.h5,
+                )
+            }
 
-            // Titulo de esta vista
-            // TODO -- igual deberiamos sustituirlo por la barra vertical
-            Text(
-                "Selector de config Focus Session",
-                color = MaterialTheme.colors.onBackground,
-                style = MaterialTheme.typography.h5,
-            )
             Spacer(modifier = Modifier.size(width = 0.dp, height = 15.dp))
 
 
@@ -90,17 +100,19 @@ fun Cards(navController: NavController, focus_api: FocusAPI)
     val scrollState: ScrollState = rememberScrollState()
 
     Box(
-        modifier = Modifier.size(400.dp,270.dp)
+        modifier = Modifier.size(400.dp,370.dp)
     ) {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
             focus_api.getAllConfigs().forEach{ config ->
 
                 // Añadimos la card
                 CardComponent(
+                    //Text(text = config.toString(), fontSize = 20.sp),
+
                     text = config.toString(),
 
-                    backgroundColor = MaterialTheme.colors.primary,
-                    textColor = MaterialTheme.colors.onPrimary,
+                    backgroundColor = Color.DarkGray,
+                    textColor = Color.White,
                     circleColor = Color.LightGray,
 
                     // TODO -- no estamos usando la configuracion correcta
@@ -119,34 +131,23 @@ fun Cards(navController: NavController, focus_api: FocusAPI)
 
 @Composable
 fun GenerarEvento (){
-    Box(
-        modifier = Modifier.size(400.dp,270.dp)
-    ) {
+
+
         Column(modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally)
         {
-            Text(text = "Nombre: ",
-                color = Color.LightGray,
-                fontWeight = FontWeight.Bold)
-            Text(text = "Tiempo: ",
-                color = Color.LightGray,
-                fontWeight = FontWeight.Bold)
-            Row(){
-                Text(text = "Horas: ",
-                    color = Color.LightGray,
-                    fontWeight = FontWeight.Bold )
-                Spacer(modifier = Modifier.size(60.dp))
-                Text(text = "Minutos: ",
-                    color = Color.LightGray,
-                    fontWeight = FontWeight.Bold )
-                Spacer(modifier = Modifier.size(60.dp))
-                Text(text = "Segundos: ",
-                    color = Color.LightGray,
-                    fontWeight = FontWeight.Bold )
-                Spacer(modifier = Modifier.size(60.dp))
-            }
-        }
+                Button(
+                    onClick = { },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(170.dp, 120.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text(text = "Nuevo modo", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold)
+                }
+            Spacer(modifier = Modifier.size(width = 0.dp, height = 15.dp))
 
-    }
+        }
 }
