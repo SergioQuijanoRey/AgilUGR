@@ -14,12 +14,9 @@ import com.project.agilugr.FocusAPI
 import com.project.agilugr.MockFocusAPI
 import com.project.agilugr.backend.MockPerfilAPI
 import com.project.agilugr.backend.MockedProfile
-import com.project.agilugr.ui.views.FocusModeSelector
-import com.project.agilugr.ui.views.FocusModeSessionView
-import com.project.agilugr.ui.views.IndexSelector
-import com.project.agilugr.ui.views.PerfilMode
 import kotlin.time.ExperimentalTime
 import com.google.accompanist.navigation.animation.composable
+import com.project.agilugr.ui.views.*
 
 /** Clase que maneja toda la navegacion de nuestra aplicacion */
 class NavigationDirector(val focus_api: FocusAPI){
@@ -82,6 +79,15 @@ class NavigationDirector(val focus_api: FocusAPI){
             // Vista desde dentro de una sesion de focus mode
             composable(route = NavigationMapper.FOCUS_MODE_SESSION.route){
                 FocusModeSessionView(MockFocusAPI.getMockFocusAPI(), navController = navController as NavHostController).getView()
+            }
+
+            // Vista de la TUI
+            composable(route = NavigationMapper.TUI_VIEW.route,
+                enterTransition = { _, _ ->
+                // Let's make for a really long fade in
+                fadeIn(animationSpec = tween(2000))
+            }){
+                TuiView(navController = navController as NavHostController).getView()
             }
         }
     }
