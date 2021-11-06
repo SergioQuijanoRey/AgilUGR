@@ -1,5 +1,7 @@
 package com.project.agilugr
 
+import android.app.Activity
+import android.content.ContentValues.TAG
 import android.os.Build
 import android.os.Bundle
 import android.view.GestureDetector
@@ -13,9 +15,18 @@ import com.project.agilugr.ui.navigation.NavigationDirector
 import com.project.agilugr.ui.navigation.NavigationMapper
 import com.project.agilugr.ui.theme.AgilUGRTheme
 import kotlin.time.ExperimentalTime
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.util.Log
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast;
 
 @ExperimentalTime
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     // APIs que vamos a consumir para tomar los datos del backend
     val focus_api = MockFocusAPI.getMockFocusAPI()
@@ -25,6 +36,10 @@ class MainActivity : ComponentActivity() {
 
     // Detector de gestor
     private lateinit var mDetector: GestureDetectorCompat
+
+    // Sensor de proximidad
+    private var sensorManager: SensorManager? =null
+    private var mProximitySensor: Sensor? = null
 
 
     // Funcion principal
@@ -48,6 +63,14 @@ class MainActivity : ComponentActivity() {
 
         // Establecemos el detector de gestos
         mDetector = GestureDetectorCompat(this, MyGestureListener(navigation_director))
+
+        sensorManager = applicationContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager?
+        mProximitySensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+        if (mProximitySensor == null) {
+            //Toast.makeText(this,"Proximity sensor not available",5)
+        } else {
+            sensorManager!!.registerListener(MysensorListener(navigation_director), mProximitySensor, SensorManager.SENSOR_DELAY_NORMAL)
+        }
     }
 
     // Detectamos los gestos usando la clase privada que hemos desarrollado
@@ -60,7 +83,7 @@ class MainActivity : ComponentActivity() {
     // Gestion simple de gestos
     private class MyGestureListener(val navigationDirector: NavigationDirector): GestureDetector.SimpleOnGestureListener() {
 
-        private val SWIPE_THRESHOLD = 100
+        private val SWIPE_THRESHOLD = 50
         private val SWIPE_VELOCITY_THRESHOLD = 100
 
         override fun onDown(event: MotionEvent): Boolean {
@@ -68,7 +91,7 @@ class MainActivity : ComponentActivity() {
         }
 
         override fun onDoubleTap(e: MotionEvent?): Boolean {
-            this.navigationDirector.navigate(NavigationMapper.PERFIL_MODE)
+            this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
             return true
         }
 
@@ -122,25 +145,29 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             }catch (exception: Exception) {
                 exception.printStackTrace()
             }
 
             return result
+        }
+
+    }
+
+    private class MysensorListener (val navigationDirector: NavigationDirector): SensorEventListener{
+        override fun onSensorChanged(event: SensorEvent?) {
+            if (event != null) {
+                if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
+
+                    if (event.values[0] == 0f) {
+                        this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SESSION)
+                    }
+                }
+            }
+        }
+
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+
         }
 
     }
