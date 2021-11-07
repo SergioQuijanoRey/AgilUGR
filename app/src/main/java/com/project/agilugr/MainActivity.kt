@@ -238,11 +238,6 @@ class MainActivity : AppCompatActivity() {
 
                         val Xmovement: Double = Math.abs(x - prevx).toDouble()
                         val mAccelCurrent: Double = Math.sqrt((x * x + y * y + z * z).toDouble())
-                        //val mAccel: Double = mAccel * 0.9f + mAccelCurrent * 0.1f
-                        Log.d("onSensorChanged",
-                            System.currentTimeMillis()
-                                .toString() + "," + mAccelCurrent + "," + Xmovement
-                        )
 
                         if (mAccelCurrent>=30 && Xmovement>=3F){
                             this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
