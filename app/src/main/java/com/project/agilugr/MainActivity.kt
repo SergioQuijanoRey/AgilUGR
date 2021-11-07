@@ -24,6 +24,8 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatDelegate
+import kotlin.coroutines.coroutineContext
 
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     // Sensor de proximidad
     private var sensorManager: SensorManager? =null
     private var mProximitySensor: Sensor? = null
+    private var accelerometerSensor: Sensor? = null
 
 
     // Funcion principal
@@ -48,7 +51,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Llamamos al onCreate del parent
         super.onCreate(savedInstanceState)
-
+        //Para que la app no se use en modo nocturno
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
 
         // Establecemos la UI de la aplicacion
@@ -64,12 +68,20 @@ class MainActivity : AppCompatActivity() {
         // Establecemos el detector de gestos
         mDetector = GestureDetectorCompat(this, MyGestureListener(navigation_director))
 
+        //Sensores
         sensorManager = applicationContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager?
+
+        //Sensor de Proximidad
         mProximitySensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_PROXIMITY)
         if (mProximitySensor == null) {
             //Toast.makeText(this,"Proximity sensor not available",5)
         } else {
             sensorManager!!.registerListener(MysensorListener(navigation_director), mProximitySensor, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+
+        //Sensor Acelerómetro
+        accelerometerSensor=sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER).also {
+            accelerometerSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),accelerometerSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
         }
     }
 
@@ -106,45 +118,45 @@ class MainActivity : AppCompatActivity() {
                 val diffY = e2!!.y - e1!!.y
                 val diffX = e2.x - e1.x
 
-
-                if (this.navigationDirector.getCurrentView()==NavigationMapper.MAIN_VIEW){
-                    if (Math.abs(diffX) > Math.abs(diffY)) {
-                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                            if (diffX > 0) {
-                                this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SELECTOR)
-                            } else {
-                                //Poner la vista del calendario
+                synchronized(this) {
+                    if (this.navigationDirector.getCurrentView() == NavigationMapper.MAIN_VIEW) {
+                        if (Math.abs(diffX) > Math.abs(diffY)) {
+                            if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                                if (diffX > 0) {
+                                    this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SELECTOR)
+                                } else {
+                                    //Poner la vista del calendario
+                                }
+                            }
+                        } else {
+                            if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                                if (diffY > 0) {
+                                    this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
+                                } else {
+                                    this.navigationDirector.navigate(NavigationMapper.PERFIL_MODE)
+                                }
                             }
                         }
-                    } else {
+                    }
+
+                    if (this.navigationDirector.getCurrentView() == NavigationMapper.PERFIL_MODE) {
                         if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                             if (diffY > 0) {
                                 this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
-                            } else {
-                                this.navigationDirector.navigate(NavigationMapper.PERFIL_MODE)
+
+                            }
+                        }
+                    }
+
+                    if (this.navigationDirector.getCurrentView() == NavigationMapper.FOCUS_MODE_SELECTOR) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffY > 0) {
+                                this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
+
                             }
                         }
                     }
                 }
-
-                if (this.navigationDirector.getCurrentView()==NavigationMapper.PERFIL_MODE) {
-                    if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffY > 0) {
-                            this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
-
-                        }
-                    }
-                }
-
-                if (this.navigationDirector.getCurrentView()==NavigationMapper.FOCUS_MODE_SELECTOR) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffY > 0) {
-                            this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
-
-                        }
-                    }
-                }
-
             }catch (exception: Exception) {
                 exception.printStackTrace()
             }
@@ -155,14 +167,91 @@ class MainActivity : AppCompatActivity() {
     }
 
     private class MysensorListener (val navigationDirector: NavigationDirector): SensorEventListener{
-        override fun onSensorChanged(event: SensorEvent?) {
-            if (event != null) {
-                if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
 
-                    if (event.values[0] == 0f) {
-                        this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SESSION)
+        var last_update=0
+        var last_movement=0
+        var prevx=0F
+        var prevy=0F
+        var prevz=0F
+        var curx=0F
+        var cury=0F
+        var curz=0F
+
+        override fun onSensorChanged(event: SensorEvent?) {
+            synchronized (this) {
+                if (event != null) {
+                    if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
+
+                        if (event.values[0] == 0f) {
+                            this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SESSION)
+                        }
                     }
+
+                    if (event.sensor.type == Sensor.TYPE_ACCELEROMETER){
+                        /*
+                        // Up/Down = Tilting phone up(10), flat (0), upside-down(-10)
+                        val upDown = event.values[1]
+
+                        // Sides = Tilting phone left(10) and right(-10)
+                        val sides = event.values[0]
+
+                        if (upDown.toInt()>=9){
+                            this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
+                        }
+                        */
+
+                            /*
+                        val current_time = event.timestamp
+
+                        curx = event.values[0]
+                        cury = event.values[1]
+                        curz = event.values[2]
+
+                        if (prevx == 0F && prevy == 0F && prevz == 0F) {
+                            last_update = current_time.toInt();
+                            last_movement = current_time.toInt();
+                            prevx = curx;
+                            prevy = cury;
+                            prevz = curz;
+                        }
+                        val time_difference = current_time - last_update
+
+                        if (time_difference > 0) {
+                            val Xmovement: Int = Math.abs(curx - prevx).toInt()
+                            val limit = 1500
+                            if (Xmovement >= 18) {
+                                if (current_time - last_movement >= limit) {
+                                    this.navigationDirector.navigate(NavigationMapper.PERFIL_MODE)
+                                }
+                                last_movement = current_time.toInt()
+                            }
+                            prevx = curx
+                            prevy = cury
+                            prevz = curz
+                            last_update = current_time.toInt()
+                        }
+                            */
+
+                        val x = event.values[0]
+                        val y = event.values[1]
+                        val z = event.values[2]
+
+                        val Xmovement: Double = Math.abs(x - prevx).toDouble()
+                        val mAccelCurrent: Double = Math.sqrt((x * x + y * y + z * z).toDouble())
+
+                        if (mAccelCurrent>=30 && Xmovement>=3F){
+                            this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
+                        }
+
+                        prevx =x
+                        prevy =y
+                        prevz =z
+                    }
+
                 }
+
+
+
             }
         }
 
