@@ -188,7 +188,8 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     if (event.sensor.type == Sensor.TYPE_ACCELEROMETER){
-                        // Up/Down = Tilting phone up(10), flat (0), upside-down(-10)/*
+                        /*
+                        // Up/Down = Tilting phone up(10), flat (0), upside-down(-10)
                         val upDown = event.values[1]
 
                         // Sides = Tilting phone left(10) and right(-10)
@@ -197,6 +198,7 @@ class MainActivity : AppCompatActivity() {
                         if (upDown.toInt()>=9){
                             this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
                         }
+                        */
 
                             /*
                         val current_time = event.timestamp
@@ -215,11 +217,9 @@ class MainActivity : AppCompatActivity() {
                         val time_difference = current_time - last_update
 
                         if (time_difference > 0) {
-                            val movement: Float =
-                                Math.abs(curx + cury + curz - (prevx - prevy - prevz)) / time_difference
+                            val Xmovement: Int = Math.abs(curx - prevx).toInt()
                             val limit = 1500
-                            val min_movement = 1E-6f
-                            if (movement > min_movement) {
+                            if (Xmovement >= 18) {
                                 if (current_time - last_movement >= limit) {
                                     this.navigationDirector.navigate(NavigationMapper.PERFIL_MODE)
                                 }
@@ -230,11 +230,30 @@ class MainActivity : AppCompatActivity() {
                             prevz = curz
                             last_update = current_time.toInt()
                         }
+                            */
 
-                             */
+                        val x = event.values[0]
+                        val y = event.values[1]
+                        val z = event.values[2]
 
+                        val Xmovement: Double = Math.abs(x - prevx).toDouble()
+                        val mAccelCurrent: Double = Math.sqrt((x * x + y * y + z * z).toDouble())
+                        //val mAccel: Double = mAccel * 0.9f + mAccelCurrent * 0.1f
+                        Log.d("onSensorChanged",
+                            System.currentTimeMillis()
+                                .toString() + "," + mAccelCurrent + "," + Xmovement
+                        )
+
+                        if (mAccelCurrent>=30 && Xmovement>=3F){
+                            this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
+                        }
+
+                        prevx =x
+                        prevy =y
+                        prevz =z
                     }
-            }
+
+                }
 
 
 
