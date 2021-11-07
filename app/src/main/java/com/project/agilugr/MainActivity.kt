@@ -85,6 +85,10 @@ class MainActivity : AppCompatActivity() {
 
         private val SWIPE_THRESHOLD = 50
         private val SWIPE_VELOCITY_THRESHOLD = 100
+        private var prevdiffX=0F
+        private var prevdiffY=0F
+        private var prevVelocityX=0F
+        private var prevVelocityY=0F
 
         override fun onDown(event: MotionEvent): Boolean {
             return true
@@ -105,6 +109,14 @@ class MainActivity : AppCompatActivity() {
             try {
                 val diffY = e2!!.y - e1!!.y
                 val diffX = e2.x - e1.x
+
+                if (this.navigationDirector.getCurrentView()==NavigationMapper.FOCUS_MODE_SESSION) {
+                    if (Math.abs(prevdiffX) > Math.abs(prevdiffY) && prevVelocityX>50) {
+                        if (Math.abs(diffY)> Math.abs(diffX) && prevVelocityY>50) {
+                          this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SELECTOR)
+                        }
+                    }
+                }
 
 
                 if (this.navigationDirector.getCurrentView()==NavigationMapper.MAIN_VIEW){
@@ -145,6 +157,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
+                prevdiffX=diffX
+                prevdiffY=diffY
+                prevVelocityX=velocityX
+                prevVelocityY=velocityY
             }catch (exception: Exception) {
                 exception.printStackTrace()
             }
