@@ -39,7 +39,8 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
 
         Surface(
             color = Color(0xFF101010),
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxWidth()
+                .height(600.dp)
         ) {
             Box(
                 contentAlignment = Alignment.Center

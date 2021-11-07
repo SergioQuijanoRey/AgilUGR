@@ -97,6 +97,10 @@ class MainActivity : AppCompatActivity() {
 
         private val SWIPE_THRESHOLD = 50
         private val SWIPE_VELOCITY_THRESHOLD = 100
+        private var prevdiffX=0F
+        private var prevdiffY=0F
+        private var prevVelocityX=0F
+        private var prevVelocityY=0F
 
         override fun onDown(event: MotionEvent): Boolean {
             return true
@@ -119,6 +123,13 @@ class MainActivity : AppCompatActivity() {
                 val diffX = e2.x - e1.x
 
                 synchronized(this) {
+                    if (this.navigationDirector.getCurrentView()==NavigationMapper.FOCUS_MODE_SESSION) {
+                        if (Math.abs(prevdiffX) > Math.abs(prevdiffY) && prevVelocityX>50) {
+                            if (Math.abs(diffY)> Math.abs(diffX) && prevVelocityY>50) {
+                                this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SELECTOR)
+                            }
+                        }
+                    }
                     if (this.navigationDirector.getCurrentView() == NavigationMapper.MAIN_VIEW) {
                         if (Math.abs(diffX) > Math.abs(diffY)) {
                             if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
@@ -157,6 +168,11 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+
+                prevdiffX=diffX
+                prevdiffY=diffY
+                prevVelocityX=velocityX
+                prevVelocityY=velocityY
             }catch (exception: Exception) {
                 exception.printStackTrace()
             }
@@ -188,49 +204,6 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     if (event.sensor.type == Sensor.TYPE_ACCELEROMETER){
-                        /*
-                        // Up/Down = Tilting phone up(10), flat (0), upside-down(-10)
-                        val upDown = event.values[1]
-
-                        // Sides = Tilting phone left(10) and right(-10)
-                        val sides = event.values[0]
-
-                        if (upDown.toInt()>=9){
-                            this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
-                        }
-                        */
-
-                            /*
-                        val current_time = event.timestamp
-
-                        curx = event.values[0]
-                        cury = event.values[1]
-                        curz = event.values[2]
-
-                        if (prevx == 0F && prevy == 0F && prevz == 0F) {
-                            last_update = current_time.toInt();
-                            last_movement = current_time.toInt();
-                            prevx = curx;
-                            prevy = cury;
-                            prevz = curz;
-                        }
-                        val time_difference = current_time - last_update
-
-                        if (time_difference > 0) {
-                            val Xmovement: Int = Math.abs(curx - prevx).toInt()
-                            val limit = 1500
-                            if (Xmovement >= 18) {
-                                if (current_time - last_movement >= limit) {
-                                    this.navigationDirector.navigate(NavigationMapper.PERFIL_MODE)
-                                }
-                                last_movement = current_time.toInt()
-                            }
-                            prevx = curx
-                            prevy = cury
-                            prevz = curz
-                            last_update = current_time.toInt()
-                        }
-                            */
 
                         val x = event.values[0]
                         val y = event.values[1]
