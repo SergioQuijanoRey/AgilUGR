@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
@@ -59,22 +60,38 @@ class HeaderForProfile(
 
     @Composable
     override fun getComponent(){
-        Row(
-            modifier = Modifier.padding(all = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            ProfileIcon()
-            Spacer(modifier = Modifier.width( 8.dp))
-            Column (
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Text(text = ConstantsRepo.ProfileName.text,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp)
-                Text(text = ConstantsRepo.ProfileMail.text)
-                Text(text = ConstantsRepo.Degree.text)
-            }
+
+        Box {
+            // This box works as background
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(
+                        Color.LightGray,
+                        // rounded corner to match with the OutlinedTextField
+                        shape = RoundedCornerShape(4.dp)
+                    )
+                    .fillMaxWidth()
+            )
+                Row(
+                    modifier = Modifier
+                        .padding(all = 8.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ){
+                    Spacer(modifier = Modifier.width( 8.dp))
+                    ProfileIcon()
+                    Spacer(modifier = Modifier.width( 8.dp))
+                    Column (
+                    ){
+                        Text(text = ConstantsRepo.ProfileName.text)
+                        Text(text = ConstantsRepo.ProfileMail.text)
+                        Text(text = ConstantsRepo.Degree.text)
+                    }
+                    Spacer(modifier = Modifier.width( 50.dp))
+                }
         }
+
     }
 }
 
