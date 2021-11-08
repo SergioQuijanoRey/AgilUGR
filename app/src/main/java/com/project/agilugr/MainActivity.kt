@@ -119,20 +119,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                
 
             }catch (exception: Exception) {
                 exception.printStackTrace()
