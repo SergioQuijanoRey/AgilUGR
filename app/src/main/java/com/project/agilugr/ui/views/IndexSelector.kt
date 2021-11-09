@@ -98,14 +98,17 @@ fun FocusIcon(navController:NavController) {
 @Composable
 /* Función que crea el botón-imagen que direcciona al calendario */
 /* TODO añadir la vista del calendario y direccionar bien el botón*/
-
+// TODO -- estoy navegando a la vista de estadisticas para poder hacer pruebas
 fun CalendarIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
-        .size(70.dp), onClick = { navController.navigate(NavigationMapper.FOCUS_MODE_SELECTOR.route)}
+        .size(70.dp), onClick = { navController.navigate(NavigationMapper.STATS_VIEW.route)}
     ) {
         Column(){
-            Image(painter = painterResource(id = R.drawable.iconocalendario), contentDescription ="IconoCalendario")
+            Image(
+                painter = painterResource(id = R.drawable.iconocalendario),
+                contentDescription ="IconoCalendario",
+            )
         }
     }
 }

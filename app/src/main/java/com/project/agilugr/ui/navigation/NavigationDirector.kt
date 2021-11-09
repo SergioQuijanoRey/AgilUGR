@@ -89,6 +89,15 @@ class NavigationDirector(val focus_api: FocusAPI){
             }){
                 TuiView(navController = navController as NavHostController).getView()
             }
+
+            // Vista de la TUI
+            composable(route = NavigationMapper.STATS_VIEW.route,
+                enterTransition = { _, _ ->
+                    // Let's make for a really long fade in
+                    fadeIn(animationSpec = tween(2000))
+                }){
+                StatsView(this as NavigationDirector).getView()
+            }
         }
     }
 

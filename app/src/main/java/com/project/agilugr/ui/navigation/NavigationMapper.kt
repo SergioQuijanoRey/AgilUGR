@@ -6,7 +6,8 @@ enum class NavigationMapper(val route: String){
     FOCUS_MODE_SESSION(route = "focus_mode_session_view"),
     MAIN_VIEW(route="main_view"),
     PERFIL_MODE(route="perfil_view"),
-    TUI_VIEW(route = "tui_view")
+    TUI_VIEW(route = "tui_view"),
+    STATS_VIEW(route = "stats_view")
 }
 
 // TODO -- Debe de haber alguna funcion de kotlin para hacer esto
