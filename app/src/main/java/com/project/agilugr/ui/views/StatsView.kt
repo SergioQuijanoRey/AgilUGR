@@ -1,5 +1,6 @@
 package com.project.agilugr.ui.views
 
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.project.agilugr.ui.navigation.NavigationDirector
@@ -9,6 +10,9 @@ class StatsView(navigationDirector: NavigationDirector) {
 
     @Composable
     fun getView(){
-        Text("Texto de pruebas")
+        OutlinedButton(onClick = {}) {
+            Text("Vista de estadisticas")
+        }
+
     }
 }
