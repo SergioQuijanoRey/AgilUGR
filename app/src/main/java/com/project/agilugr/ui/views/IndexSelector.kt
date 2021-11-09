@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import com.project.agilugr.ui.components.AlertBox
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +50,11 @@ class IndexSelector (val indexApi : IndexAPI, val navController: NavController){
 
 
             Alertas(indexApi, indexApi.getAlert(), Color.DarkGray, Color.LightGray, Color.White)
+
+            // TODO -- hacer algo mas bonito para ir a la vista de estadisticas
+            OutlinedButton(onClick = { navController.navigate(NavigationMapper.STATS_VIEW.route) }) {
+                Text("Vista de estadisticas")
+            }
 
 
 
