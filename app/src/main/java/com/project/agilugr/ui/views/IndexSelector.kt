@@ -49,14 +49,7 @@ class IndexSelector (val indexApi : IndexAPI, val navController: NavController){
 
 
             Alertas(indexApi, indexApi.getAlert(), Color.DarkGray, Color.LightGray, Color.White)
-            //ScrollableColumnDemo()
 
-
-            /*AlertBox(
-                alerts = indexApi.getAlert() ,
-                cardBackgroundColor = Color.Red,
-                textColor = Color.White
-            ).getComponent()*/
 
 
         }
@@ -73,8 +66,6 @@ class IndexSelector (val indexApi : IndexAPI, val navController: NavController){
                 CalendarIcon(navController = navController)
 
             }
-                //GPSIcon(navController = navController)
-
         }
 
     }
@@ -98,11 +89,10 @@ fun FocusIcon(navController:NavController) {
 @Composable
 /* Función que crea el botón-imagen que direcciona al calendario */
 /* TODO añadir la vista del calendario y direccionar bien el botón*/
-// TODO -- estoy navegando a la vista de estadisticas para poder hacer pruebas
 fun CalendarIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
-        .size(70.dp), onClick = { navController.navigate(NavigationMapper.STATS_VIEW.route)}
+        .size(70.dp), onClick = { navController.navigate(NavigationMapper.FOCUS_MODE_SELECTOR.route)}
     ) {
         Column(){
             Image(
