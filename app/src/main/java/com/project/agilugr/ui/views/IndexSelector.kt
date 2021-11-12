@@ -25,6 +25,7 @@ import com.project.agilugr.ui.components.ComponentAPI
 import com.project.agilugr.ui.components.Header
 import com.project.agilugr.ui.components.NavButton
 import com.project.agilugr.ui.theme.SoftGray
+import com.project.agilugr.utils.MainBackground
 import kotlin.random.Random
 
 
@@ -36,45 +37,48 @@ import kotlin.random.Random
 class IndexSelector (val indexApi : IndexAPI, val navController: NavController){
     @Composable
     fun getView() {
-        Column(
 
-            // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
-            modifier = Modifier
-                .padding(vertical = 0.dp, horizontal = 20.dp),
-        ) {
-            Header(
-                backgroundColor = MaterialTheme.colors.primary,
-                textColor = MaterialTheme.colors.onPrimary,
-            ).getComponent()
+        Box(Modifier.background(Color.White)){
+            Column(
 
-
-            Alertas(indexApi, indexApi.getAlert(), Color.DarkGray, Color.LightGray, Color.White)
-            //ScrollableColumnDemo()
+                // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
+                modifier = Modifier
+                    .padding(vertical = 0.dp, horizontal = 20.dp),
+            ) {
+                Header(
+                    backgroundColor = MaterialTheme.colors.primary,
+                    textColor = MaterialTheme.colors.onPrimary,
+                ).getComponent()
 
 
-            /*AlertBox(
-                alerts = indexApi.getAlert() ,
-                cardBackgroundColor = Color.Red,
-                textColor = Color.White
-            ).getComponent()*/
+                Alertas(indexApi, indexApi.getAlert(), Color.DarkGray, Color.LightGray, Color.White)
+                //ScrollableColumnDemo()
 
 
-        }
+                /*AlertBox(
+                    alerts = indexApi.getAlert() ,
+                    cardBackgroundColor = Color.Red,
+                    textColor = Color.White
+                ).getComponent()*/
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            PerfilIcon(navController = navController)
-            Row() {
-                FocusIcon(navController = navController)
-                Spacer(modifier = Modifier.size(60.dp))
-                CalendarIcon(navController = navController)
 
             }
+
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                PerfilIcon(navController = navController)
+                Row() {
+                    FocusIcon(navController = navController)
+                    Spacer(modifier = Modifier.size(60.dp))
+                    CalendarIcon(navController = navController)
+
+                }
                 //GPSIcon(navController = navController)
 
+            }
         }
 
     }
@@ -97,12 +101,10 @@ fun FocusIcon(navController:NavController) {
 
 @Composable
 /* Función que crea el botón-imagen que direcciona al calendario */
-/* TODO añadir la vista del calendario y direccionar bien el botón*/
-
 fun CalendarIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
-        .size(70.dp), onClick = { navController.navigate(NavigationMapper.FOCUS_MODE_SELECTOR.route)}
+        .size(70.dp), onClick = { navController.navigate(NavigationMapper.CALENDAR.route)}
     ) {
         Column(){
             Image(painter = painterResource(id = R.drawable.iconocalendario), contentDescription ="IconoCalendario")

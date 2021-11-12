@@ -6,6 +6,7 @@ enum class NavigationMapper(val route: String){
     FOCUS_MODE_SESSION(route = "focus_mode_session_view"),
     MAIN_VIEW(route="main_view"),
     PERFIL_MODE(route="perfil_view"),
+    CALENDAR(route="calendar_view"),
     TUI_VIEW(route = "tui_view")
 }
 

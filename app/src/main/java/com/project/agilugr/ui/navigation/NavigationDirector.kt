@@ -89,6 +89,14 @@ class NavigationDirector(val focus_api: FocusAPI){
             }){
                 TuiView(navController = navController as NavHostController).getView()
             }
+
+            composable(route = NavigationMapper.CALENDAR.route,
+                    enterTransition = { _, _ ->
+                        // Let's make for a really long fade in
+                        fadeIn(animationSpec = tween(2000))
+                    }){
+                Calendario(navController = navController as NavHostController).getView()
+            }
         }
     }
 
