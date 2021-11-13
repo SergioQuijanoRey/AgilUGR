@@ -5,11 +5,19 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
     primaryVariant = Purple700,
-    secondary = Teal200
+    secondary = Teal200,
+    background = SoftGray,
+
+    // Color de letras que se muestran encima de un background
+    onBackground = Color.White,
+
+    // Color qde letras que se muestran encima de un background con color primario
+    onPrimary = Color.White,
 )
 
 private val LightColorPalette = lightColors(
