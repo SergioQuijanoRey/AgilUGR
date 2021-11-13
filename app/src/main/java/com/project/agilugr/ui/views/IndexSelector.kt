@@ -8,24 +8,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.project.agilugr.ui.navigation.NavigationMapper
 import androidx.navigation.NavController
-import com.project.agilugr.ui.components.AlertBox
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.project.agilugr.R
 import com.project.agilugr.backend.IndexAPI
-import com.project.agilugr.ui.components.ComponentAPI
-
 import com.project.agilugr.ui.components.Header
-import com.project.agilugr.ui.components.NavButton
-import com.project.agilugr.ui.theme.SoftGray
 import com.project.agilugr.utils.MainBackground
+import com.project.agilugr.utils.events
+import com.project.agilugr.utils.headerBackground
 import kotlin.random.Random
 
 
@@ -38,47 +34,56 @@ class IndexSelector (val indexApi : IndexAPI, val navController: NavController){
     @Composable
     fun getView() {
 
-        Box(Modifier.background(Color.White)){
-            Column(
+        Box(modifier= Modifier
+            .background(Color(MainBackground))
+            .fillMaxSize()){
 
-                // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
-                modifier = Modifier
-                    .padding(vertical = 0.dp, horizontal = 20.dp),
-            ) {
-                Header(
-                    backgroundColor = MaterialTheme.colors.primary,
-                    textColor = MaterialTheme.colors.onPrimary,
-                ).getComponent()
+            Box(modifier = Modifier
+                .background(Color(headerBackground))
+                .fillMaxWidth()
+                .height(50.dp)
+                .clip(
+                    RoundedCornerShape(20.dp)
+                )) {
+                Column(
 
-
-                Alertas(indexApi, indexApi.getAlert(), Color.DarkGray, Color.LightGray, Color.White)
-                //ScrollableColumnDemo()
-
-
-                /*AlertBox(
-                    alerts = indexApi.getAlert() ,
-                    cardBackgroundColor = Color.Red,
-                    textColor = Color.White
-                ).getComponent()*/
-
-
-            }
-
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                PerfilIcon(navController = navController)
-                Row() {
-                    FocusIcon(navController = navController)
-                    Spacer(modifier = Modifier.size(60.dp))
-                    CalendarIcon(navController = navController)
+                    // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
+                    modifier = Modifier
+                        .padding(vertical = 0.dp, horizontal = 20.dp),
+                ) {
+                    Header().getComponent()
 
                 }
-                //GPSIcon(navController = navController)
-
             }
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Alertas(indexApi, indexApi.getAlert(), Color(events), Color.Black, Color.White)
+                    Spacer(modifier = Modifier.size(50.dp))
+                    Box(modifier= Modifier
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(
+                            Color.White
+                        )){
+                        Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
+                            PerfilIcon(navController = navController)
+                            Row() {
+                                FocusIcon(navController = navController)
+                                Spacer(modifier = Modifier.size(30.dp))
+                                CalendarIcon(navController = navController)
+
+                            }
+                            StatsIcon(navController = navController)
+
+                        }
+
+                    }
+
+
+                }
+
         }
 
     }
@@ -87,14 +92,13 @@ class IndexSelector (val indexApi : IndexAPI, val navController: NavController){
 
 @Composable
 /* Función que crea el botón-imagen que direcciona al modo focus */
-
 fun FocusIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
         .size(70.dp), onClick = { navController.navigate(NavigationMapper.FOCUS_MODE_SELECTOR.route)}
     ) {
         Column(){
-            Image(painter = painterResource(id = R.drawable.iconofocus), contentDescription ="IconoFocus")
+            Image(painter = painterResource(id = R.drawable.round_tungsten_black_48dp), contentDescription ="IconoFocus",Modifier.size(55.dp))
         }
     }
 }
@@ -107,7 +111,7 @@ fun CalendarIcon(navController:NavController) {
         .size(70.dp), onClick = { navController.navigate(NavigationMapper.CALENDAR.route)}
     ) {
         Column(){
-            Image(painter = painterResource(id = R.drawable.iconocalendario), contentDescription ="IconoCalendario")
+            Image(painter = painterResource(id = R.drawable.round_edit_calendar_black_48dp), contentDescription ="IconoCalendario",Modifier.size(50.dp))
         }
     }
 }
@@ -117,24 +121,24 @@ fun CalendarIcon(navController:NavController) {
 fun PerfilIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
-        .size(70.dp), onClick = { navController.navigate(NavigationMapper.PERFIL_MODE.route)}
+        , onClick = { navController.navigate(NavigationMapper.PERFIL_MODE.route)}
     ) {
         Column(){
-            Image(painter = painterResource(id = R.drawable.iconoperfil), contentDescription ="iconoPerfil")
+            Image(painter = painterResource(id = R.drawable.round_school_black_48dp), contentDescription ="iconoPerfil",Modifier.size(55.dp))
         }
     }
 }
 
 
 @Composable
-/* Función que genera el botón-imagen que direcciona al perfil*/
-fun GPSIcon(navController:NavController) {
+/* Función que genera el botón-imagen que direcciona a las estadísticas*/
+fun StatsIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
         .size(70.dp), onClick = { navController.navigate(NavigationMapper.PERFIL_MODE.route)}
     ) {
         Column(){
-            Image(painter = painterResource(id = R.drawable.iconogps), contentDescription ="iconoGPS")
+            Image(painter = painterResource(id = R.drawable.round_query_stats_black_48dp), contentDescription ="iconoStats",Modifier.size(55.dp))
         }
     }
 }
@@ -164,12 +168,7 @@ fun Alertas ( indexApi : IndexAPI, alerts : List<String>,
                     Spacer(modifier = Modifier.height(0.dp))
                     androidx.compose.material.Card(
                         backgroundColor = cardBackgroundColor,
-                        modifier = Modifier
-                            /*.border(
-                                brush = SolidColor(cardBackgroundColor),
-                                width = 5.dp,
-                                shape = RoundedCornerShape(10.dp)
-                            )*/
+                        modifier = Modifier .fillMaxWidth()
                             .padding(horizontal = 10.dp, vertical = 10.dp)
 
                     ) {

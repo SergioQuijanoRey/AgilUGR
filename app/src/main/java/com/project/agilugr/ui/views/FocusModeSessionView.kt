@@ -22,6 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.project.agilugr.FocusAPI
+import com.project.agilugr.utils.MainBackground
+import com.project.agilugr.utils.events
+import com.project.agilugr.utils.headerBackground
+import com.project.agilugr.utils.stopevent
 import kotlinx.coroutines.delay
 import kotlin.math.PI
 import kotlin.math.cos
@@ -38,7 +42,7 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
         val duration_minutes = duration.minutes
 
         Surface(
-            color = Color(0xFF101010),
+            color = Color(MainBackground),
             modifier = Modifier.fillMaxWidth()
                 .height(600.dp)
         ) {
@@ -51,9 +55,9 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
                 Timer(
                     minutes = duration_minutes* 1000L,
                     seconds = duration.seconds*1000L,
-                    handleColor = Color.Green,
-                    inactiveBarColor = Color.DarkGray,
-                    activeBarColor = Color(0xFF37B900),
+                    handleColor = Color(headerBackground),
+                    inactiveBarColor = Color.LightGray,
+                    activeBarColor = Color(events),
                     modifier = Modifier.size(200.dp)
                 )
             }
@@ -162,7 +166,7 @@ fun Timer(
             text = (currentMinutes / 1000L).toString()+":"+(currentSeconds / 1000L).toString(),
             fontSize = 44.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = Color.Black
         )
         // Boton para inicio y parada del temporizador
         Button(
@@ -178,9 +182,9 @@ fun Timer(
             // change button color
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = if (!isTimerRunning || (currentMinutes <= 0L || currentSeconds<=0L)) {
-                    Color.Green
+                    Color(events)
                 } else {
-                    Color.Red
+                    Color(stopevent)
                 }
             )
         ) {

@@ -5,22 +5,20 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.project.agilugr.R
-import com.project.agilugr.backend.PerfilAPI
 import com.project.agilugr.ui.components.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import com.project.agilugr.utils.MainBackground
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -29,53 +27,44 @@ import kotlinx.coroutines.launch
  * la funcionalidad
  *
  */
-class PerfilMode (val perfilApi : PerfilAPI, val navController: NavController){
+class PerfilMode (){
     @Composable
     fun getView() {
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            HeaderForProfile(
-                backgroundColor = MaterialTheme.colors.primary,
-                textColor = MaterialTheme.colors.onPrimary,
-            ).getComponent()
-            Spacer(modifier = Modifier.height(30.dp))
+        Box(modifier=Modifier.background(Color(MainBackground))){
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                HeaderForProfile().getComponent()
+                Spacer(modifier = Modifier.height(150.dp))
 
-            Image(painter = painterResource(id = R.drawable.logo), contentDescription = "Logo", modifier = Modifier
-                .size(200.dp)
-                .clip(
-                    RoundedCornerShape(10.dp)
-                ) )
+                Box(modifier= Modifier
+                    .background(Color.White)
+                    .size(350.dp)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(40.dp))){
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Image(painter = painterResource(id = R.drawable.logo), contentDescription = "Logo", modifier = Modifier
+                            .size(150.dp))
+                        Spacer(modifier = Modifier.height(5.dp))
+                        TuiCard()
+                        Spacer(modifier = Modifier.height(50.dp))
+                    }
 
-        }
 
-        Column(
-            // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+                }
+                Spacer(modifier = Modifier.height(150.dp))
 
-            TuiCard()
-        }
-
-        Column(
-            // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            Row() {
-                Column() {
-                    IconMail()
+                Box(modifier = Modifier.background(Color(0xFFC4D8E7)) .fillMaxWidth()){
+                    Row(modifier=Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        IconMail()
+                        IconPrado()
+                        IconAccesoIdentificado()
+                        IconComedor()
+                    }
                 }
 
-                Column() {
-                    IconPrado()
-                }
             }
-        }
 
+        }
 
 
     }
@@ -87,15 +76,9 @@ fun IconMail() {
     val context = LocalContext.current
     val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://webmailest.ugr.es/")) }
     IconButton(modifier = Modifier
-        .padding(50.dp)
         .size(100.dp), onClick = { context.startActivity(intent) }) {
         Column() {
-            //Icon(
-            //    Icons.Filled.Email, contentDescription = "Localized description",
-            //    Modifier.size(80.dp)
-            //)
-            
-            Image(painter = painterResource(id = R.drawable.correo), contentDescription ="Correo")
+            Image(painter = painterResource(id = R.drawable.round_email_black_48dp), contentDescription ="Correo")
         }
 
     }
@@ -106,10 +89,35 @@ fun IconPrado() {
     val context = LocalContext.current
     val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://pradogrado2122.ugr.es/")) }
     IconButton(modifier = Modifier
-        .padding(50.dp)
         .size(100.dp), onClick = { context.startActivity(intent) }) {
         Column() {
-            Image(painter = painterResource(id = R.drawable.prado), contentDescription ="Correo")
+            Image(painter = painterResource(id = R.drawable.round_local_florist_black_48dp), contentDescription ="Prado")
+        }
+
+    }
+}
+
+@Composable
+fun IconAccesoIdentificado() {
+    val context = LocalContext.current
+    val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://oficinavirtual.ugr.es/ai/")) }
+    IconButton(modifier = Modifier
+        .size(100.dp), onClick = { context.startActivity(intent) }) {
+        Column() {
+            Image(painter = painterResource(id = R.drawable.round_alternate_email_black_48dp), contentDescription ="Acceso Identificado")
+        }
+
+    }
+}
+
+@Composable
+fun IconComedor() {
+    val context = LocalContext.current
+    val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("http://scu.ugr.es/#__doku_menu_comedor\ns")) }
+    IconButton(modifier = Modifier
+        .size(100.dp), onClick = { context.startActivity(intent) }) {
+        Column() {
+            Image(painter = painterResource(id = R.drawable.round_restaurant_black_48dp), contentDescription ="Acceso Identificado")
         }
 
     }

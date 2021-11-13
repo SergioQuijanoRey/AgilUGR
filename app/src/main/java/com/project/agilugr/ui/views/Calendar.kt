@@ -23,22 +23,22 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.project.agilugr.R
-import com.project.agilugr.ui.navigation.NavigationMapper
+import com.project.agilugr.ui.components.Header
+import com.project.agilugr.utils.MainBackground
+import com.project.agilugr.utils.headerBackground
 import com.project.agilugr.utils.lightGrey
-import com.project.agilugr.utils.primaryAccent
 import java.time.format.DateTimeFormatter
 
 
@@ -130,13 +130,40 @@ class Calendario (val navController: NavController){
     @Composable
     fun getView() {
         var month by remember { mutableStateOf(YearMonth.now()) }
-        DefaultCalendar(
-                month = month,
-                actions = CalposeActions(
+
+        Box(modifier = Modifier
+            .background(Color(MainBackground))
+            .fillMaxSize()){
+            
+            Spacer(modifier = Modifier.height(100.dp))
+            Box(modifier = Modifier
+                .background(Color(headerBackground))
+                .fillMaxWidth()
+                .height(50.dp)
+                .clip(
+                    RoundedCornerShape(20.dp)
+                )) {
+                Column(
+
+                    // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
+                    modifier = Modifier
+                        .padding(vertical = 0.dp, horizontal = 20.dp),
+                ) {
+                    Header().getComponent()
+
+                }
+            }
+            Column() {
+                DefaultCalendar(
+                    month = month,
+                    actions = CalposeActions(
                         onClickedPreviousMonth = { month = month.minusMonths(1) },
                         onClickedNextMonth = { month = month.plusMonths(1) }
+                    )
                 )
-        )
+            }
+
+        }
 
     }
 
@@ -148,86 +175,86 @@ fun DefaultCalendar(
         month: YearMonth,
         actions: CalposeActions
 ) {
-    Calpose(
+        Calpose(
             month = month,
             actions = actions,
             widgets = CalposeWidgets(
-                    header = { month, todayMonth, actions ->
-                        DefaultHeader(month, todayMonth, actions)
-                    },
-                    headerDayRow = { headerDayList ->
-                        Row(
-                                modifier = Modifier
-                                    .fillMaxWidth(1f)
-                                    .padding(bottom = 16.dp),
-                        ) {
-                            headerDayList.forEach {
-                                DefaultDay(
-                                        text = it.name.first().toString(),
-                                        modifier = Modifier.weight(WEIGHT_7DAY_WEEK),
-                                        style = TextStyle(color = Color.Gray)
-                                )
-                            }
-                        }
-                    },
-                    day = { dayDate, todayDate ->
-                        val isToday = dayDate == todayDate
-                        val dayHasPassed = dayDate.day < todayDate.day
-                        val isCurrentMonth = dayDate.month == todayDate.month
-
-                        val widget: @Composable () -> Unit = {
-                            val weight = if (isToday) 1f else WEIGHT_7DAY_WEEK
+                header = { month, todayMonth, actions ->
+                    DefaultHeader(month, todayMonth, actions)
+                },
+                headerDayRow = { headerDayList ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(1f)
+                            .padding(bottom = 16.dp),
+                    ) {
+                        headerDayList.forEach {
                             DefaultDay(
-                                    text = dayDate.day.toString(),
-                                    modifier = Modifier
-                                        .padding(4.dp)
-                                        .weight(weight)
-                                        .fillMaxWidth(),
-                                    style = TextStyle(
-                                            color = when {
-                                                isCurrentMonth && dayHasPassed -> Color.Gray
-                                                isToday -> Color.White
-                                                else -> Color.Black
-                                            },
-                                            fontWeight = if (isToday) FontWeight.Bold else FontWeight.Normal
-                                    )
+                                text = it.name.first().toString(),
+                                modifier = Modifier.weight(WEIGHT_7DAY_WEEK),
+                                style = TextStyle(color = Color.Gray)
                             )
                         }
+                    }
+                },
+                day = { dayDate, todayDate ->
+                    val isToday = dayDate == todayDate
+                    val dayHasPassed = dayDate.day < todayDate.day
+                    val isCurrentMonth = dayDate.month == todayDate.month
 
-                        if (isToday) {
-                            Column(
-                                    modifier = Modifier.weight(WEIGHT_7DAY_WEEK),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Box(
-                                        modifier = Modifier
-                                            .size(28.dp)
-                                            .clip(CircleShape)
-                                            .background(Color(primaryAccent))
-                                ) {
-                                    widget()
-                                }
-                            }
-                        } else widget()
-                    },
-                    priorMonthDay = { dayDate ->
+                    val widget: @Composable () -> Unit = {
+                        val weight = if (isToday) 1f else WEIGHT_7DAY_WEEK
                         DefaultDay(
-                                text = dayDate.day.toString(),
-                                style = TextStyle(color = Color(lightGrey)),
-                                modifier = Modifier
-                                    .padding(4.dp)
-                                    .fillMaxWidth()
-                                    .weight(WEIGHT_7DAY_WEEK)
+                            text = dayDate.day.toString(),
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .weight(weight)
+                                .fillMaxWidth(),
+                            style = TextStyle(
+                                color = when {
+                                    isCurrentMonth && dayHasPassed -> Color.Gray
+                                    isToday -> Color.White
+                                    else -> Color.Black
+                                },
+                                fontWeight = if (isToday) FontWeight.Bold else FontWeight.Normal
+                            )
                         )
-                    },
-                    headerContainer = { header ->
-                        Card {
-                            header()
+                    }
+
+                    if (isToday) {
+                        Column(
+                            modifier = Modifier.weight(WEIGHT_7DAY_WEEK),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(28.dp)
+                                    .clip(CircleShape)
+                                    .background(Color(0xFF7ABEB8))
+                            ) {
+                                widget()
+                            }
                         }
-                    },
+                    } else widget()
+                },
+                priorMonthDay = { dayDate ->
+                    DefaultDay(
+                        text = dayDate.day.toString(),
+                        style = TextStyle(color = Color(lightGrey)),
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .fillMaxWidth()
+                            .weight(WEIGHT_7DAY_WEEK)
+                    )
+                },
+                headerContainer = { header ->
+                    Card {
+                        header()
+                    }
+                },
             )
-    )
+        )
 }
 
 
@@ -279,6 +306,24 @@ fun CalposeStatic(
                         }
                     })
     ) {
+        Box(modifier = Modifier
+            .background(Color(headerBackground))
+            .fillMaxWidth()
+            .height(50.dp)
+            .clip(
+                RoundedCornerShape(20.dp)
+            )) {
+            Column(
+
+                // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
+                modifier = Modifier
+                    .padding(vertical = 0.dp, horizontal = 20.dp),
+            ) {
+                Header().getComponent()
+
+            }
+        }
+        Spacer(modifier = Modifier.height(50.dp))
         CalposeHeader(month, todayMonth, actions, widgets)
         widgets.monthContainer { CalposeMonth(month, todayMonth, widgets) }
     }
@@ -417,7 +462,8 @@ fun DefaultHeader(
 @Composable
 fun leftIcon(actions:CalposeActions) {
     IconButton(modifier = Modifier
-        .padding(16.dp) .size(20.dp)
+        .padding(16.dp)
+        .size(20.dp)
         , onClick = { actions.onClickedPreviousMonth()}
     ) {
         Column(){
@@ -429,7 +475,8 @@ fun leftIcon(actions:CalposeActions) {
 @Composable
 fun rightIcon(actions:CalposeActions) {
     IconButton(modifier = Modifier
-        .padding(16.dp) .size(20.dp)
+        .padding(16.dp)
+        .size(20.dp)
         , onClick = { actions.onClickedNextMonth()}
     ) {
         Column(){
