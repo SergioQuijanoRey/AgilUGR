@@ -1,12 +1,9 @@
 package com.project.agilugr
 
-import android.app.Activity
-import android.content.ContentValues.TAG
 import android.os.Build
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -20,12 +17,8 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatDelegate
-import kotlin.coroutines.coroutineContext
 
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
@@ -136,7 +129,7 @@ class MainActivity : AppCompatActivity() {
                                 if (diffX > 0) {
                                     this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SELECTOR)
                                 } else {
-                                    //Poner la vista del calendario
+                                    this.navigationDirector.navigate(NavigationMapper.CALENDAR)
                                 }
                             }
                         } else {
@@ -162,6 +155,15 @@ class MainActivity : AppCompatActivity() {
                     if (this.navigationDirector.getCurrentView() == NavigationMapper.FOCUS_MODE_SELECTOR) {
                         if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                             if (diffY > 0) {
+                                this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
+
+                            }
+                        }
+                    }
+
+                    if (this.navigationDirector.getCurrentView() == NavigationMapper.CALENDAR) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
                                 this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
 
                             }

@@ -12,5 +12,5 @@ enum class ConstantsRepo (val text: String){
     AppTitle("Agil UGR"),
     ProfileName("Euler Sanchez"),
     ProfileMail("eulersanchez@ugr.es"),
-    Degree("Beautiful Art")
+    Degree("Matemáticas")
 }

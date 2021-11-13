@@ -13,7 +13,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.text.style.TextAlign
 
 /** Componente para mostrar tarjetas*/
 class CardComponent(
@@ -41,7 +40,7 @@ class CardComponent(
                 // TODO -- no esta funcionando
                 // Bordes redondeados
                 .border(brush = SolidColor(backgroundColor), width =  5.dp, shape = RoundedCornerShape(10.dp))
-
+                .fillMaxWidth()
         ) {
             Row(
                 modifier = Modifier

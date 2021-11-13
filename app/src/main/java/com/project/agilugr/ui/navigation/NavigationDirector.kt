@@ -12,7 +12,6 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.MockFocusAPI
-import com.project.agilugr.backend.MockPerfilAPI
 import com.project.agilugr.backend.MockedProfile
 import kotlin.time.ExperimentalTime
 import com.google.accompanist.navigation.animation.composable
@@ -62,7 +61,7 @@ class NavigationDirector(val focus_api: FocusAPI){
             // Vista del perfil
             composable(route = NavigationMapper.PERFIL_MODE.route) {
                 // TODO add MockedProfile correctly
-                PerfilMode( MockPerfilAPI.getMockPerfilAPI(), navController = navController as NavHostController).getView()
+                PerfilMode().getView()
             }
 
             // Vista del selector de configuraciones del focus mode
@@ -88,6 +87,14 @@ class NavigationDirector(val focus_api: FocusAPI){
                 fadeIn(animationSpec = tween(2000))
             }){
                 TuiView(navController = navController as NavHostController).getView()
+            }
+
+            composable(route = NavigationMapper.CALENDAR.route,
+                    enterTransition = { _, _ ->
+                        // Let's make for a really long fade in
+                        fadeIn(animationSpec = tween(2000))
+                    }){
+                Calendario(navController = navController as NavHostController).getView()
             }
         }
     }
