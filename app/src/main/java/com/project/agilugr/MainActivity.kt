@@ -210,7 +210,7 @@ class MainActivity : AppCompatActivity() {
 
             synchronized (this) {
                 if (event != null) {
-
+                    /*
                     if (event.sensor.type == Sensor.TYPE_ACCELEROMETER){
                         val x = event.values[0]
                         val y = event.values[1]
@@ -220,7 +220,7 @@ class MainActivity : AppCompatActivity() {
                         val Xmovement: Double = Math.abs(x - prevx).toDouble()
                         val Ymovement: Double = Math.abs(y - prevy).toDouble()
                         val Zmovement: Double = Math.abs(z - prevz).toDouble()
-                        Log.d("Posicion", "z=" + z)
+                        //Log.d("Posicion", "z=" + z)
 
                         val mAccelCurrent: Double = Math.sqrt((x * x + y * y + z * z).toDouble())
 
@@ -234,13 +234,41 @@ class MainActivity : AppCompatActivity() {
                         prevy =y
                         prevz =z
                     }
-
+                    */
                     if (event.sensor.type == Sensor.TYPE_ROTATION_VECTOR){
                         axisX = event.values[0]
                         axisY = event.values[1]
                         axisZ = event.values[2]
-                        if (axisZ >=-0.2  && axisZ<=0.1 ){
+                        Log.d("Posicion", "x=" + axisX)
+
+                        if (axisZ >=-0.2  && axisZ<=0.1 && axisX>=0.8){
                             this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SESSION)
+                        }
+
+                        if (axisY>=-0.1 && axisX<=0.25) {
+                            if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+                                val x = event.values[0]
+                                val y = event.values[1]
+                                val z = event.values[2]
+
+                                // extension property to get screen orientation
+                                val Xmovement: Double = Math.abs(x - prevx).toDouble()
+                                val Ymovement: Double = Math.abs(y - prevy).toDouble()
+                                val Zmovement: Double = Math.abs(z - prevz).toDouble()
+                                //Log.d("Posicion", "z=" + z)
+
+                                val mAccelCurrent: Double = Math.sqrt((x * x + y * y + z * z).toDouble())
+
+                                if (mAccelCurrent>=30 && Xmovement>=3F){
+                                    this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
+                                }
+
+
+
+                                prevx =x
+                                prevy =y
+                                prevz =z
+                            }
                         }
                     }
 
