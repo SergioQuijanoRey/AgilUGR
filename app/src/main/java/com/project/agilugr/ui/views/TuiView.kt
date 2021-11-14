@@ -17,11 +17,15 @@ import androidx.compose.ui.draw.rotate
 
 
 /**
- * Esta clase representa la vista printipal en la que se selecciona
- * la funcionalidad
- *
- */
-class TuiView (val navController: NavController){
+ * Vista en la que se muestra la TUI
+ * Esta vista de la TUI se va a usar para realizar pagos facilmente y otras gestiones
+ * */
+class TuiView (
+    /** Para poder controlar la navegacion a otras partes de la app */
+    val navController: NavController
+){
+
+    /** Devuelve la vista que representa esta clase */
     @Composable
     fun getView() {
 

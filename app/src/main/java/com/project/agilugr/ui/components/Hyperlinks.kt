@@ -13,6 +13,9 @@ import com.project.agilugr.ui.navigation.NavigationMapper
 import androidx.navigation.NavController
 
 
+/**
+ * Boton que nos va a llevar a la pagina de PRADO para acceder a contenido de la universidad
+ * */
 @Composable
 fun PradoButton() {
     val context = LocalContext.current
@@ -22,6 +25,9 @@ fun PradoButton() {
     }
 }
 
+/**
+ * Boton que nos va a llevar a la pagina del correo de la universidad
+ * */
 @Composable
 fun CorreoButton() {
     val context = LocalContext.current
@@ -31,6 +37,10 @@ fun CorreoButton() {
     }
 }
 
+/**
+ * Boton que nos sirve para navegar hacia la ruta del perfil, para poder navegar usando botones
+ * y no usando obligatoriamente los gestos
+ * */
 @Composable
 fun NavButton(navController:NavController ){
     Button(onClick = { navController.navigate(NavigationMapper.PERFIL_MODE.route) }) {

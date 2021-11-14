@@ -34,6 +34,11 @@ class MockedProfile() : IndexAPI{
         )
         return output
     }
+
+    /**
+     * Companion object que nos permite tener un metodo estatico para generar facilmente una instancia
+     * del mock que poder consumir en otras partes con los datos ya rellenados
+     * */
     companion object {
         @kotlin.time.ExperimentalTime
         fun getMockIndexAPI (): IndexAPI {
