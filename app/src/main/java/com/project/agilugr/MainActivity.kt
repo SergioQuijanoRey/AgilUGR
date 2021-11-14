@@ -1,5 +1,6 @@
 package com.project.agilugr
 
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.view.GestureDetector
@@ -17,8 +18,14 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.Log
+import android.view.Display
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import android.view.WindowManager
+import android.content.res.Configuration
+
+
 
 @ExperimentalTime
 class MainActivity : AppCompatActivity() {
@@ -32,11 +39,11 @@ class MainActivity : AppCompatActivity() {
     // Detector de gestor
     private lateinit var mDetector: GestureDetectorCompat
 
-    // Sensor de proximidad
+    // Sensores
     private var sensorManager: SensorManager? =null
     private var mProximitySensor: Sensor? = null
     private var accelerometerSensor: Sensor? = null
-
+    private var orientationSensor:Sensor?=null
 
     // Funcion principal
     @ExperimentalAnimationApi
@@ -75,6 +82,10 @@ class MainActivity : AppCompatActivity() {
         //Sensor Acelerómetro
         accelerometerSensor=sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER).also {
             accelerometerSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),accelerometerSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
+        }
+
+        orientationSensor=sensorManager!!.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR).also {
+                orientationSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),orientationSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
         }
     }
 
@@ -186,42 +197,53 @@ class MainActivity : AppCompatActivity() {
 
     private class MysensorListener (val navigationDirector: NavigationDirector): SensorEventListener{
 
-        var last_update=0
-        var last_movement=0
         var prevx=0F
         var prevy=0F
         var prevz=0F
-        var curx=0F
-        var cury=0F
-        var curz=0F
+        var axisX: Float = 10.0f
+        var axisY: Float = 10.0f
+        var axisZ: Float = 10.0f
+        // Create a constant to convert nanoseconds to seconds.
 
         override fun onSensorChanged(event: SensorEvent?) {
+
+
             synchronized (this) {
                 if (event != null) {
-                    if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
-
-                        if (event.values[0] == 0f) {
-                            this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SESSION)
-                        }
-                    }
 
                     if (event.sensor.type == Sensor.TYPE_ACCELEROMETER){
-
                         val x = event.values[0]
                         val y = event.values[1]
                         val z = event.values[2]
 
+                        // extension property to get screen orientation
                         val Xmovement: Double = Math.abs(x - prevx).toDouble()
+                        val Ymovement: Double = Math.abs(y - prevy).toDouble()
+                        val Zmovement: Double = Math.abs(z - prevz).toDouble()
+                        Log.d("Posicion", "z=" + z)
+
                         val mAccelCurrent: Double = Math.sqrt((x * x + y * y + z * z).toDouble())
 
-                        if (mAccelCurrent>=30 && Xmovement>=3F){
-                            this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
-                        }
+                            if (mAccelCurrent>=30 && Xmovement>=3F && z>=10){
+                                this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
+                            }
+
+
 
                         prevx =x
                         prevy =y
                         prevz =z
                     }
+
+                    if (event.sensor.type == Sensor.TYPE_ROTATION_VECTOR){
+                        axisX = event.values[0]
+                        axisY = event.values[1]
+                        axisZ = event.values[2]
+                        if (axisZ >=-0.2  && axisZ<=0.1 ){
+                            this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SESSION)
+                        }
+                    }
+
 
                 }
 
