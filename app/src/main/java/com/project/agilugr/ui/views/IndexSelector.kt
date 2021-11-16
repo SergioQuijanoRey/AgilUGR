@@ -26,11 +26,17 @@ import kotlin.random.Random
 
 
 /**
- * Esta clase representa la vista printipal en la que se selecciona
- * la funcionalidad
- *
+ * Esta clase representa la vista principal a traves de la cual navegamos hacia otras vistas de
+ * nuestras aplicaciones.
  */
-class IndexSelector (val indexApi : IndexAPI, val navController: NavController){
+class IndexSelector (
+    /** API que necesita este selector de indices para poder tomar la informacion necesaria en la vista */
+    val indexApi : IndexAPI,
+
+    /** Para poder controlar la navegacion hacia otras partes de la aplicacion */
+    val navController: NavController){
+
+    /** Devuelve la vista que representa esta clase */
     @Composable
     fun getView() {
 
@@ -91,7 +97,7 @@ class IndexSelector (val indexApi : IndexAPI, val navController: NavController){
 }
 
 @Composable
-/* Función que crea el botón-imagen que direcciona al modo focus */
+/** Función que crea el botón-imagen que direcciona al modo focus */
 fun FocusIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
@@ -104,7 +110,7 @@ fun FocusIcon(navController:NavController) {
 }
 
 @Composable
-/* Función que crea el botón-imagen que direcciona al calendario */
+/** Función que crea el botón-imagen que direcciona al calendario */
 fun CalendarIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
@@ -117,7 +123,7 @@ fun CalendarIcon(navController:NavController) {
 }
 
 @Composable
-/* Función que genera el botón-imagen que direcciona al perfil*/
+/** Función que genera el botón-imagen que direcciona al perfil */
 fun PerfilIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
@@ -131,7 +137,7 @@ fun PerfilIcon(navController:NavController) {
 
 
 @Composable
-/* Función que genera el botón-imagen que direcciona a las estadísticas*/
+/** Función que genera el botón-imagen que direcciona a las estadísticas */
 fun StatsIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
@@ -143,8 +149,10 @@ fun StatsIcon(navController:NavController) {
     }
 }
 
-/* Función que pone las alertas y avisos en la parte superior de la pantalla.
-*   Usa la API para tener los mensajes*/
+/**
+ * Función que pone las alertas y avisos en la parte superior de la pantalla.
+ * Usa la API para tener los mensajes
+ * */
 @Composable
 fun Alertas ( indexApi : IndexAPI, alerts : List<String>,
              /** Colores que vamos a usar en la card */

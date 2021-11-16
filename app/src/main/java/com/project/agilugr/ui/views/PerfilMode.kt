@@ -23,11 +23,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
- * Esta clase representa la vista printipal en la que se selecciona
- * la funcionalidad
- *
+ * Esta clase representa la vista en la que mostramos la informacion del perfil del usuario
  */
 class PerfilMode (){
+
+    /** Devuelve la vista que representa esta clase */
     @Composable
     fun getView() {
 
@@ -71,6 +71,7 @@ class PerfilMode (){
 
 }
 
+/** Componente icono de mail que nos lleva al mail web de la UGR */
 @Composable
 fun IconMail() {
     val context = LocalContext.current
@@ -84,6 +85,7 @@ fun IconMail() {
     }
 }
 
+/** Componente icono que nos lleva a la pagina web de PRADO, para acceder a contenidos universitarios */
 @Composable
 fun IconPrado() {
     val context = LocalContext.current
@@ -97,6 +99,8 @@ fun IconPrado() {
     }
 }
 
+
+/** Componente icono que nos lleva al acceso identificado de la UGR*/
 @Composable
 fun IconAccesoIdentificado() {
     val context = LocalContext.current
@@ -110,6 +114,7 @@ fun IconAccesoIdentificado() {
     }
 }
 
+/** Componente icono que nos lleva a la web del comedor de la UGR*/
 @Composable
 fun IconComedor() {
     val context = LocalContext.current
@@ -123,8 +128,10 @@ fun IconComedor() {
     }
 }
 
+/** Componente que nos muestra la tarjeta TUI, que vamos a usar para pagos y otras gestiones... */
 @Composable
 fun TuiCard(
+    /** Funcion que usamos para cambiar a la parte trasera de la TUI*/
     advance: ()-> Unit = {},
 ){
     val coroutineScope = rememberCoroutineScope()
@@ -150,9 +157,12 @@ fun TuiCard(
     }
 }
 
+/** Componente basica que usa la componente de la TUI */
 @Composable
 fun Card(
     id: Int,
+
+    /** Funcion que usamos para cambiar a la parte trasera de la TUI*/
     advance: ()-> Unit = {},
 ){
     val coroutineScope = rememberCoroutineScope()

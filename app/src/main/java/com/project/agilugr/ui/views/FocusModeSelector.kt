@@ -25,10 +25,15 @@ import com.project.agilugr.utils.MainBackground
 import com.project.agilugr.utils.events
 import com.project.agilugr.utils.headerBackground
 
-/** Clase que representa la vista de la pantalla desde la que, seleccionamos una configuracion
- * concreta de Focus Mode y entramos en una sesion de Focus Mode*/
+/**
+ * Clase que representa la vista de la pantalla desde la que, seleccionamos una configuracion
+ * concreta de Focus Mode y entramos en una sesion de Focus Mode
+ * */
 class FocusModeSelector(val focus_api: FocusAPI, val navController: NavController) {
 
+    /**
+     * Devuelve la vista que representa esta clase
+     * */
     @Composable
     fun getView(){
 
@@ -82,7 +87,11 @@ class FocusModeSelector(val focus_api: FocusAPI, val navController: NavControlle
 }
 
 
-//Función que genera las tarjetas con el scroller
+/**
+ * Función que genera las tarjetas con el scroller
+ * Cada tarjeta representa un focus mode config distinto que podemos seleccionar para entrar en
+ * modo focus
+ * */
 @Composable
 fun Cards(navController: NavController, focus_api: FocusAPI)
 {
@@ -114,6 +123,10 @@ fun Cards(navController: NavController, focus_api: FocusAPI)
 }
 
 
+/**
+ * Boton con el que el usuario puede definir un nuevo modo focus config
+ * Con esto, el usuario puede definir aspectos como cuanto tiempo quiere estudiar en esta sesion
+ * */
 @Composable
 fun GenerarEvento (){
 

@@ -1,5 +1,9 @@
 package com.project.agilugr.ui.views
 
+/**
+ * Paquete que incluye tanto la libreria de calendario que estamos usando, como la vista del calendario
+ * que definimos nosotros para mostrar
+ * */
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.gestures.DraggableState
@@ -124,11 +128,17 @@ data class CalposeProperties (
         val changeMonthSwipeTriggerVelocity: Int = 300
 )
 
-
+/**
+ * Calendario que vamos a mostrar en nuestra aplicacion. Usa la libreria de calendarios que hemos
+ * importado para renderizar el calendario. En esta clase definimos la aparencia pero, sobre todo,
+ * el comportamiento que queremos que tenga el calendario
+ * */
 class Calendario (val navController: NavController){
+
+    /** Devuelve la vista que representa esta clase */
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
-    fun getView() {
+    public fun getView() {
         var month by remember { mutableStateOf(YearMonth.now()) }
 
         Box(modifier = Modifier

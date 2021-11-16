@@ -31,8 +31,18 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavController) {
-    /** Devuelve los elementos de compose que componen esta vista */
+/**
+ * Vista que el usuario visualiza una vez que esta dentro del modo focus
+ * */
+class FocusModeSessionView(
+    /** API para tomar la sesion actual, la configuracion actual...*/
+    val focus_api: FocusAPI,
+
+    /** Controlador para poder navegar a otras vistas*/
+    val navController: NavController
+) {
+
+    /** Devuelve la vista que representa esta clase */
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun getView() {
@@ -65,6 +75,7 @@ class FocusModeSessionView(val focus_api: FocusAPI, val navController: NavContro
     }
 }
 
+/** Timer que muestra como va pasando el tiempo de estudio */
 @Composable
 fun Timer(
     // Tiempo del temporizador
