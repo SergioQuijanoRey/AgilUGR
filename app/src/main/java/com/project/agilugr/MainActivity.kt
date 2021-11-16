@@ -17,6 +17,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 
@@ -246,7 +247,8 @@ class MainActivity : AppCompatActivity() {
                         axisX = event.values[0]
                         axisY = event.values[1]
                         axisZ = event.values[2]
-                        if (axisZ >=-0.2  && axisZ<=0.1 && Math.abs(axisY)>=0.7){
+
+                        if (axisZ >=-0.2  && axisZ<=0.1 ){
                             this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SESSION)
                         }
 
