@@ -13,9 +13,13 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.text.style.TextAlign
 
-/** Componente para mostrar tarjetas*/
+/**
+ * Componente para mostrar tarjetas
+ *
+ * Ademas, podemos seleccionar distintos parametros que definen el comportamiento y aparencia del
+ * componente
+ * */
 class CardComponent(
     /** Texto que mostramos en la card */
     val text: String,
@@ -29,6 +33,10 @@ class CardComponent(
     val onClick: () -> Unit = {}
 ): ComponentAPI {
 
+    /**
+     * Funcion que devuelve la vista de la componente
+     * La vista en si es componible asi que puede ser reusada en otras vistas
+     * */
     @Composable
     override fun getComponent(){
 
@@ -41,7 +49,7 @@ class CardComponent(
                 // TODO -- no esta funcionando
                 // Bordes redondeados
                 .border(brush = SolidColor(backgroundColor), width =  5.dp, shape = RoundedCornerShape(10.dp))
-
+                .fillMaxWidth()
         ) {
             Row(
                 modifier = Modifier
@@ -65,6 +73,10 @@ class CardComponent(
     }
 }
 
+/**
+ * Funcion que devuelve un circulo de tamaño fijo
+ * Lo usamos en las cards a la izquierda para darle mas estilo a la card
+ * */
 @Composable
 fun circle(circleColor: Color){
     Canvas(

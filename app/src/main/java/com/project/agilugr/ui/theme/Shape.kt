@@ -1,3 +1,4 @@
+/** Modulo que define las distintas formas que podemos aplicar como modificadores */
 package com.project.agilugr.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape

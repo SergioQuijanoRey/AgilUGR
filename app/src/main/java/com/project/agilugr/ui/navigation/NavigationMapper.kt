@@ -1,16 +1,29 @@
 package com.project.agilugr.ui.navigation
 
-/** Enumerado para no tener que hardcodear todas las vistas con sus rutas en la base del codigo */
+/**
+ * Enumerado para no tener que hardcodear todas las vistas con sus rutas en la base del codigo
+ *
+ * Gracias a este enumerado evitamos errores al escribir el string que representa las rutas de las vistas
+ *
+ * Ademas, en [NavigationDirector] solo podemos usar este enumerado para la navegacion, forzando de
+ * esta forma evitar los fallos anteriormente descritos
+ * */
 enum class NavigationMapper(val route: String){
     FOCUS_MODE_SELECTOR(route = "focus_mode_selector_view"),
     FOCUS_MODE_SESSION(route = "focus_mode_session_view"),
     MAIN_VIEW(route="main_view"),
     PERFIL_MODE(route="perfil_view"),
+<<<<<<< HEAD
     TUI_VIEW(route = "tui_view"),
     STATS_VIEW(route = "stats_view")
+=======
+    CALENDAR(route="calendar_view"),
+    TUI_VIEW(route = "tui_view"),
+    STATS(route = "stats_view")
+
+>>>>>>> develop
 }
 
-// TODO -- Debe de haber alguna funcion de kotlin para hacer esto
 /**
  * Dado un string representando una ruta en la APP, devuelve el valor del enumerado asociado
  * Levanta una excepcion cuando no existe ningun valor del enumerado asociado a la ruta pasada

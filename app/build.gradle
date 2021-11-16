@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id("org.jetbrains.dokka") version "1.5.30"
 }
 
 android {
@@ -77,19 +78,19 @@ dependencies {
     // Para las animaciones en la navegacion
     implementation "com.google.accompanist:accompanist-navigation-animation:0.21.0-beta"
 
-//life cycle
+    //life cycle
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
 
-//runtime liveDate
+    //runtime liveDate
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
-//viewModel
+    //viewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha02"
 
-//view binding - added if you prefer to use viewBinding with compose
+    //view binding - added if you prefer to use viewBinding with compose
     implementation "androidx.compose.ui:ui-viewbinding:$compose_version"
 
-//konfetti
+    //konfetti
     implementation 'nl.dionsegijn:konfetti:1.2.6'
 
 
@@ -123,5 +124,22 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
+    // Dependencia necesaria para la visualización del calendario
+    // (es una herramienta para posicionar los elementos en la vista)
+    implementation "androidx.constraintlayout:constraintlayout:2.1.1"
+    // To use constraintlayout in compose
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01"
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.5.30")
+
+    dokkaHtml.configure {
+        dokkaSourceSets {
+            named("main") {
+                noAndroidSdkLink.set(false)
+                outputDirectory.set(buildDir.resolve("dokkaDocumentation"))
+            }
+        }
+        outputDirectory.set(file("./documentation/html"))
+
+    }
 
 }
