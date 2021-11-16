@@ -19,8 +19,8 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-
-
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 
 @ExperimentalTime
@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity() {
     private var accelerometerSensor: Sensor? = null
     private var orientationSensor:Sensor?=null
 
+    // Detector de posicion GPS
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     // Funcion principal
     @ExperimentalAnimationApi
     @RequiresApi(Build.VERSION_CODES.O)
@@ -51,6 +54,9 @@ class MainActivity : AppCompatActivity() {
         //Para que la app no se use en modo nocturno
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        // Inicializamos el detector de posicion GPS
+        // Lo hacemos aqui porque necesitamos este objeto para el navigation mapper
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // Establecemos la UI de la aplicacion
         // Esto tambien crea el director de navegacion
@@ -58,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             AgilUGRTheme {
 
                 // Usamos el director de navegacion para lanzar la interfaz grafica
-                navigation_director.buildNavigationAndStartUI()
+                navigation_director.buildNavigationAndStartUI(fusedLocationClient)
             }
         }
 
@@ -81,6 +87,7 @@ class MainActivity : AppCompatActivity() {
             accelerometerSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),accelerometerSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
         }
 
+        // Inicializamos el sensor de orientacion
         orientationSensor=sensorManager!!.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR).also {
                 orientationSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),orientationSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
         }
