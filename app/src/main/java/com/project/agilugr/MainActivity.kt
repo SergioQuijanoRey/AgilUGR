@@ -248,7 +248,7 @@ class MainActivity : AppCompatActivity() {
                         axisY = event.values[1]
                         axisZ = event.values[2]
 
-                        if (axisZ >=-0.2  && axisZ<=0.1 ){
+                        if (axisZ >=-0.2  && axisZ<=0.1 && Math.abs(axisY)>=0.6 ){
                             this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SESSION)
                         }
 
