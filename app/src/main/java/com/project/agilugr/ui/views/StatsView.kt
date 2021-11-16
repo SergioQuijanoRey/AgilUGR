@@ -60,8 +60,6 @@ class StatsView (val navController: NavController, var fusedLocationClient: Fuse
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(modifier = Modifier.height(70.dp))
-                Text(text = "Hola chicos")
-
 
                 var pos_got_ok = false
                 var got_location: Location? = null
@@ -76,6 +74,7 @@ class StatsView (val navController: NavController, var fusedLocationClient: Fuse
                     Text("Localizacion: ${got_location!!.getLatitude()}, ${got_location!!.getLongitude()}")
                 }else{
                     Text("No se obtuvo bien la posicion GPS")
+                    Text("No te olvides de darle permisos de ubicacion a la app")
                 }
             }
         }
