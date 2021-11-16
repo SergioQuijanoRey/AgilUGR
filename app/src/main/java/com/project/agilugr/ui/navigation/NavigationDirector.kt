@@ -17,7 +17,12 @@ import kotlin.time.ExperimentalTime
 import com.google.accompanist.navigation.animation.composable
 import com.project.agilugr.ui.views.*
 
-/** Clase que maneja toda la navegacion de nuestra aplicacion */
+/**
+ * Clase que maneja toda la navegacion de nuestra aplicacion
+ *
+ * Toda la navegacion que realizamos en la app la maneja esta clase. Con ello, unificamos toda
+ * la navegacion de la app
+ * */
 class NavigationDirector(val focus_api: FocusAPI){
 
     /** Variable que vamos a usar para navegar por las distintas vistas */

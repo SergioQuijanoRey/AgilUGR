@@ -18,11 +18,20 @@ import androidx.compose.ui.unit.sp
 import com.project.agilugr.R
 import com.project.agilugr.utils.headerBackground
 
-// TODO -- estaria bien poder incluir titulos para cada seccion
-/** Componente para mostrar la cabecera de la App*/
+/**
+ * Componente para mostrar la cabecera de la App. Esta cabecera se va a usar a lo largo de toda
+ * la app en la parte superior, y por tanto, quizas sea la componente mas reusada de nuestro sistema
+ *
+ * Ademas, podemos seleccionar distintos parametros que definen el comportamiento y aparencia del
+ * componente
+ * */
 class Header(
 ): ComponentAPI {
 
+    /**
+     * Funcion que devuelve la vista de la componente
+     * La vista en si es componible asi que puede ser reusada en otras vistas
+     * */
     @Composable
     override fun getComponent(){
         Row(
@@ -43,10 +52,19 @@ class Header(
     }
 }
 
-/** Componente para mostrar un header concreto para la vista del perfil*/
+/**
+ * Componente para mostrar un header concreto para la vista del perfil
+ *
+ * Ademas, podemos seleccionar distintos parametros que definen el comportamiento y aparencia del
+ * componente
+ * */
 class HeaderForProfile(
 ): ComponentAPI {
 
+    /**
+     * Funcion que devuelve la vista de la componente
+     * La vista en si es componible asi que puede ser reusada en otras vistas
+     * */
     @Composable
     override fun getComponent(){
 
@@ -96,6 +114,9 @@ class HeaderForProfile(
     }
 }
 
+/**
+ * Muestra el icono de perfil, con una imagen del usuario
+ * */
 @Composable
 fun ProfileIcon ( ) {
     return (
@@ -107,6 +128,9 @@ fun ProfileIcon ( ) {
             )
 }
 
+/**
+ * Muestra el icono de nuestra app con una imagen circular
+ * */
 @Composable
 fun AppIcon ( ) {
     return (

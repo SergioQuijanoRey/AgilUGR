@@ -1,3 +1,6 @@
+/**
+ * Fichero en el que guardamos los colores que vamos a usar en toda la app
+ * */
 package com.project.agilugr.utils
 
 const val lightGrey = 0xa0bdbdbd
