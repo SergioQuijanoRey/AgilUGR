@@ -2,9 +2,6 @@ package com.project.agilugr.ui.views
 
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.gestures.DraggableState
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -22,24 +19,30 @@ import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.consumeAllChanges
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.sp
 import com.project.agilugr.R
 import com.project.agilugr.ui.components.Header
 import com.project.agilugr.utils.MainBackground
+import com.project.agilugr.utils.events
 import com.project.agilugr.utils.headerBackground
 import com.project.agilugr.utils.lightGrey
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 
 const val WEIGHT_7DAY_WEEK = 1 / 7f
@@ -134,7 +137,7 @@ class Calendario (val navController: NavController){
         Box(modifier = Modifier
             .background(Color(MainBackground))
             .fillMaxSize()){
-            
+
             Spacer(modifier = Modifier.height(100.dp))
             Box(modifier = Modifier
                 .background(Color(headerBackground))
@@ -153,7 +156,7 @@ class Calendario (val navController: NavController){
 
                 }
             }
-            Column() {
+            Column {
                 DefaultCalendar(
                     month = month,
                     actions = CalposeActions(
@@ -161,6 +164,24 @@ class Calendario (val navController: NavController){
                         onClickedNextMonth = { month = month.plusMonths(1) }
                     )
                 )
+
+            }
+            Column(horizontalAlignment = Alignment.End) {
+                Spacer(Modifier.height(325.dp))
+                NuevoEvento()
+            }
+
+            Column {
+                Spacer(modifier = Modifier.height(400.dp))
+                IconoExamenDraggable()
+            }
+            Column {
+                Spacer(modifier=Modifier.height(500.dp))
+                IconoEventoDraggable()
+            }
+            Column {
+                Spacer(modifier=Modifier.height(600.dp))
+                IconoEntregaDraggable()
             }
 
         }
@@ -168,6 +189,123 @@ class Calendario (val navController: NavController){
     }
 
 }
+
+
+/**Creamos un icono que es draggable para poder desplazarlo por la pantalla*/
+@Composable
+fun IconoExamenDraggable() {
+    // actual composable state
+    Box(modifier = Modifier.fillMaxSize()
+    ) {
+        var offsetX by remember { mutableStateOf(0f) }
+        var offsetY by remember { mutableStateOf(0f) }
+
+        Box(
+            Modifier
+                .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+                .background(Color.White)
+                .size(70.dp)
+                .pointerInput(Unit) {
+                    detectDragGestures { change, dragAmount ->
+                        change.consumeAllChanges()
+                        offsetX += dragAmount.x
+                        offsetY += dragAmount.y
+                    }
+                }
+        ){
+            Column(modifier= Modifier.align(Alignment.Center)) {
+                Text(text = "Examen")
+                Image(modifier = Modifier.align(Alignment.CenterHorizontally),painter = painterResource(id = R.drawable.round_history_edu_black_48dp), contentDescription ="Examen")
+            }
+        }
+    }
+}
+
+/**Creamos un icono que es draggable para poder desplazarlo por la pantalla*/
+@Composable
+fun IconoEntregaDraggable() {
+    // actual composable state
+    Box(modifier = Modifier.fillMaxSize()) {
+        var offsetX3 by remember { mutableStateOf(0f) }
+        var offsetY3 by remember { mutableStateOf(0f) }
+
+        Box(
+            Modifier
+                .offset { IntOffset(offsetX3.roundToInt(), offsetY3.roundToInt()) }
+                .background(Color.White)
+                .clip(RoundedCornerShape(30.dp))
+                .size(70.dp)
+                .pointerInput(Unit) {
+                    detectDragGestures { change, dragAmount ->
+                        change.consumeAllChanges()
+                        offsetX3 += dragAmount.x
+                        offsetY3 += dragAmount.y
+                    }
+                }
+        ){
+            Column(modifier= Modifier.align(Alignment.Center)) {
+                Text(text = "Entrega")
+                Image(modifier = Modifier.align(Alignment.CenterHorizontally),painter = painterResource(id = R.drawable.round_computer_black_48dp), contentDescription ="Entrega")
+            }
+        }
+    }
+}
+
+/**Creamos un icono que es draggable para poder desplazarlo por la pantalla*/
+@Composable
+fun IconoEventoDraggable() {
+    // actual composable state
+    Box(modifier = Modifier.fillMaxSize()) {
+        var offsetX2 by remember { mutableStateOf(0f) }
+        var offsetY2 by remember { mutableStateOf(0f) }
+
+        Box(
+            Modifier
+                .offset { IntOffset(offsetX2.roundToInt(), offsetY2.roundToInt()) }
+                .background(Color.White)
+                .clip(RoundedCornerShape(30.dp))
+                .size(70.dp)
+                .pointerInput(Unit) {
+                    detectDragGestures { change, dragAmount ->
+                        change.consumeAllChanges()
+                        offsetX2 += dragAmount.x
+                        offsetY2 += dragAmount.y
+                    }
+                }
+        ){
+            Column(modifier= Modifier.align(Alignment.Center)) {
+                Text(text = "Evento")
+                Image(modifier = Modifier.align(Alignment.CenterHorizontally),painter = painterResource(id = R.drawable.round_info_black_48dp), contentDescription ="Evento")
+            }
+        }
+    }
+}
+
+@Composable
+fun NuevoEvento(){
+
+    Column(modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.End)
+    {
+        Button(
+            onClick = {},
+            modifier = Modifier
+                .padding(8.dp)
+                .size(250.dp, 300.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(events)),
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Text(text = "Nuevo Evento", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold)
+        }
+        Spacer(modifier = Modifier.size(width = 0.dp, height = 15.dp))
+
+    }
+}
+
+
+
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
