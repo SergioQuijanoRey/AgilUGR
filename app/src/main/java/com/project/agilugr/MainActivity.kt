@@ -1,6 +1,5 @@
 package com.project.agilugr
 
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.view.GestureDetector
@@ -18,12 +17,9 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
-import android.view.Display
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import android.view.WindowManager
-import android.content.res.Configuration
+
 
 
 

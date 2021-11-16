@@ -135,7 +135,7 @@ fun PerfilIcon(navController:NavController) {
 fun StatsIcon(navController:NavController) {
     IconButton(modifier = Modifier
         .padding(20.dp)
-        .size(70.dp), onClick = { navController.navigate(NavigationMapper.PERFIL_MODE.route)}
+        .size(70.dp), onClick = { navController.navigate(NavigationMapper.STATS.route)}
     ) {
         Column(){
             Image(painter = painterResource(id = R.drawable.round_query_stats_black_48dp), contentDescription ="iconoStats",Modifier.size(55.dp))

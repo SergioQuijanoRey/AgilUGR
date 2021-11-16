@@ -96,6 +96,14 @@ class NavigationDirector(val focus_api: FocusAPI){
                     }){
                 Calendario(navController = navController as NavHostController).getView()
             }
+
+            composable(route = NavigationMapper.STATS.route,
+                enterTransition = { _, _ ->
+                    // Let's make for a really long fade in
+                    fadeIn(animationSpec = tween(2000))
+                }){
+                StatsView(navController = navController as NavHostController).getView()
+            }
         }
     }
 
