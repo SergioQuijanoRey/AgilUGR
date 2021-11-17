@@ -25,27 +25,20 @@ class MockedProfile() : IndexAPI{
     /** Para que se muestren mejor cuando lo pasamos a string */
     override fun getAlert(): List<String> {
         val output= listOf<String>(
-            "Tomorrow you have your NPI project defense",
-            "But today you have a lovely day <3",
-            "Hola caracola",
-            "Qué pasa contigo",
-            "A ver si apruebas algo",
-            "Que ganas de vacaciones",
-            "Quiero comer algo",
-            "jejeje",
-            "Hola buenas",
-            "Tomorrow you have your NPI project defense",
-            "But today you have a lovely day <3",
-            "Hola caracola",
-            "Qué pasa contigo",
-            "A ver si apruebas algo",
-            "Que ganas de vacaciones",
-            "Quiero comer algo",
-            "jejeje",
-            "Hola buenas"
+            "Entrega de NPI",
+            "Examen de Análisis Matemático II",
+            "Entrega de PL",
+            "Examen de Estadística Multivariante",
+            "Exposición del trabajo de FR",
+            "Examen de Modelos Matemáticos II"
         )
         return output
     }
+
+    /**
+     * Companion object que nos permite tener un metodo estatico para generar facilmente una instancia
+     * del mock que poder consumir en otras partes con los datos ya rellenados
+     * */
     companion object {
         @kotlin.time.ExperimentalTime
         fun getMockIndexAPI (): IndexAPI {

@@ -6,11 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,46 +16,55 @@ import androidx.compose.ui.unit.sp
 
 /**  Funciones para poder trabajar con imágenes */
 import com.project.agilugr.R
+import com.project.agilugr.utils.headerBackground
 
-// TODO -- estaria bien poder incluir titulos para cada seccion
-/** Componente para mostrar la cabecera de la App*/
+/**
+ * Componente para mostrar la cabecera de la App. Esta cabecera se va a usar a lo largo de toda
+ * la app en la parte superior, y por tanto, quizas sea la componente mas reusada de nuestro sistema
+ *
+ * Ademas, podemos seleccionar distintos parametros que definen el comportamiento y aparencia del
+ * componente
+ * */
 class Header(
-    /** Colores que vamos a usar en el header */
-    val backgroundColor: Color,
-    val textColor: Color,
-    /** Funcion que llamamos cuando hacemos click en el banner. Por defecto no hacemos nada */
-    val onClick: () -> Unit = {}
 ): ComponentAPI {
 
+    /**
+     * Funcion que devuelve la vista de la componente
+     * La vista en si es componible asi que puede ser reusada en otras vistas
+     * */
     @Composable
     override fun getComponent(){
         Row(
             modifier = Modifier.padding(all = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
+            AppIcon()
+            Spacer(modifier = Modifier.width( 8.dp))
+            Text( text = ConstantsRepo.AppTitle.text,
+                fontWeight = FontWeight.Bold,
+                fontSize = 25.sp,
+                color = Color.White)
+            Spacer(modifier = Modifier.width( 55.dp))
             ProfileIcon()
             Spacer(modifier = Modifier.width( 8.dp))
-            Column (
-                horizontalAlignment = Alignment.CenterHorizontally
-                    ){
-                Text( text = ConstantsRepo.AppTitle.text,
-                    fontWeight = FontWeight.Bold,
-                fontSize = 30.sp)
-                Text(text = ConstantsRepo.ProfileName.text)
-            }
+            Text(text = ConstantsRepo.ProfileName.text,color = Color.White)
         }
     }
 }
 
-/** Componente para mostrar un header concreto para la vista del perfil*/
+/**
+ * Componente para mostrar un header concreto para la vista del perfil
+ *
+ * Ademas, podemos seleccionar distintos parametros que definen el comportamiento y aparencia del
+ * componente
+ * */
 class HeaderForProfile(
-    /** Colores que vamos a usar en el header */
-    val backgroundColor: Color,
-    val textColor: Color,
-    /** Funcion que llamamos cuando hacemos click en el banner. Por defecto no hacemos nada */
-    val onClick: () -> Unit = {}
 ): ComponentAPI {
 
+    /**
+     * Funcion que devuelve la vista de la componente
+     * La vista en si es componible asi que puede ser reusada en otras vistas
+     * */
     @Composable
     override fun getComponent(){
 
@@ -67,7 +74,7 @@ class HeaderForProfile(
                 modifier = Modifier
                     .matchParentSize()
                     .background(
-                        Color.LightGray,
+                        Color(headerBackground),
                         // rounded corner to match with the OutlinedTextField
                         shape = RoundedCornerShape(4.dp)
                     )
@@ -79,14 +86,26 @@ class HeaderForProfile(
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ){
+                    AppIcon()
                     Spacer(modifier = Modifier.width( 8.dp))
+                    Text( text = ConstantsRepo.AppTitle.text,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 25.sp,
+                        color = Color.White)
+                    Spacer(modifier = Modifier.width( 40.dp))
                     ProfileIcon()
                     Spacer(modifier = Modifier.width( 8.dp))
                     Column (
                     ){
-                        Text(text = ConstantsRepo.ProfileName.text)
-                        Text(text = ConstantsRepo.ProfileMail.text)
-                        Text(text = ConstantsRepo.Degree.text)
+                        Text(text = ConstantsRepo.ProfileName.text,
+                            fontSize = 15.sp,
+                            color = Color.White)
+                        Text(text = ConstantsRepo.ProfileMail.text,
+                            fontSize = 15.sp,
+                            color = Color.White)
+                        Text(text = ConstantsRepo.Degree.text,
+                            fontSize = 15.sp,
+                            color = Color.White)
                     }
                     Spacer(modifier = Modifier.width( 50.dp))
                 }
@@ -95,15 +114,30 @@ class HeaderForProfile(
     }
 }
 
+/**
+ * Muestra el icono de perfil, con una imagen del usuario
+ * */
 @Composable
 fun ProfileIcon ( ) {
     return (
             Image(
-                painter = painterResource(id = R.drawable.profile_icon),
-                contentDescription = "Profile picture",
-                modifier = Modifier
-                    .clip(CircleShape)
+                painter = painterResource(id = R.drawable.round_account_circle_white_48),
+                contentDescription = "Profile picture"
+            )
 
             )
+}
+
+/**
+ * Muestra el icono de nuestra app con una imagen circular
+ * */
+@Composable
+fun AppIcon ( ) {
+    return (
+            Image(
+                painter = painterResource(id = R.drawable.round_rocket_launch_white_48),
+                contentDescription = "Rocket picture"
+            )
+
             )
 }

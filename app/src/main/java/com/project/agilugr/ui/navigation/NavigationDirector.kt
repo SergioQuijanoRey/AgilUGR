@@ -12,13 +12,18 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.project.agilugr.FocusAPI
 import com.project.agilugr.MockFocusAPI
-import com.project.agilugr.backend.MockPerfilAPI
 import com.project.agilugr.backend.MockedProfile
 import kotlin.time.ExperimentalTime
 import com.google.accompanist.navigation.animation.composable
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.project.agilugr.ui.views.*
 
-/** Clase que maneja toda la navegacion de nuestra aplicacion */
+/**
+ * Clase que maneja toda la navegacion de nuestra aplicacion
+ *
+ * Toda la navegacion que realizamos en la app la maneja esta clase. Con ello, unificamos toda
+ * la navegacion de la app
+ * */
 class NavigationDirector(val focus_api: FocusAPI){
 
     /** Variable que vamos a usar para navegar por las distintas vistas */
@@ -37,7 +42,7 @@ class NavigationDirector(val focus_api: FocusAPI){
     @RequiresApi(Build.VERSION_CODES.O)
     @ExperimentalTime
     @Composable
-    fun buildNavigationAndStartUI(){
+    fun buildNavigationAndStartUI(fusedLocationProviderClient: FusedLocationProviderClient){
 
         // El controlador que necesitamos para controlar en detalle la navegacion
         // No estamos entrando en detalle, pero modificando esta variable podemos acceder a ello
@@ -62,7 +67,7 @@ class NavigationDirector(val focus_api: FocusAPI){
             // Vista del perfil
             composable(route = NavigationMapper.PERFIL_MODE.route) {
                 // TODO add MockedProfile correctly
-                PerfilMode( MockPerfilAPI.getMockPerfilAPI(), navController = navController as NavHostController).getView()
+                PerfilMode().getView()
             }
 
             // Vista del selector de configuraciones del focus mode
@@ -88,6 +93,22 @@ class NavigationDirector(val focus_api: FocusAPI){
                 fadeIn(animationSpec = tween(2000))
             }){
                 TuiView(navController = navController as NavHostController).getView()
+            }
+
+            composable(route = NavigationMapper.CALENDAR.route,
+                    enterTransition = { _, _ ->
+                        // Let's make for a really long fade in
+                        fadeIn(animationSpec = tween(2000))
+                    }){
+                Calendario(navController = navController as NavHostController).getView()
+            }
+
+            composable(route = NavigationMapper.STATS.route,
+                enterTransition = { _, _ ->
+                    // Let's make for a really long fade in
+                    fadeIn(animationSpec = tween(2000))
+                }){
+                StatsView(navController = navController as NavHostController, fusedLocationProviderClient).getView()
             }
         }
     }
