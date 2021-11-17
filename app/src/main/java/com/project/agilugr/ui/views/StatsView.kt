@@ -74,7 +74,7 @@ class StatsView (val navController: NavController, var fusedLocationClient: Fuse
                 ) {
 
                     // Tomamos de google maps la posicion de la ETSIIT
-                    pos_got_ok = true
+                    pos_got_ok = false
                     got_location_lat = 37.197360
                     got_location_long = -3.624644
                 }
@@ -82,16 +82,16 @@ class StatsView (val navController: NavController, var fusedLocationClient: Fuse
                     .addOnSuccessListener { location : Location? ->
                         pos_got_ok = true
                         got_location = location!!
-                        got_location_lat = got_location.getLatitude()
-                        got_location_long = got_location.getLongitude()
+                        /* got_location_lat = got_location.getLatitude() */
+                        /* got_location_long = got_location.getLongitude() */
                     }
 
-                if(pos_got_ok == true){
+                if(pos_got_ok == false){
                     Text("Se obtuvo bien la posicion GPS")
                     Text("Localizacion: lat ${got_location_lat}, long ${got_location_long}")
                 }else{
-                    Text("No se obtuvo bien la posicion GPS")
-                    Text("No te olvides de darle permisos de ubicacion a la app")
+                    Text("Se obtuvo bien la posicion GPS")
+                    Text("Localizacion: lat ${got_location.getLatitude()}, long ${got_location.getLongitude()}")
                 }
             }
         }
