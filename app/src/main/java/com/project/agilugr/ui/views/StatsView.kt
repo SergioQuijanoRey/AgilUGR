@@ -32,7 +32,6 @@ import com.project.agilugr.utils.headerBackground
  *
  */
 class StatsView (val navController: NavController, var fusedLocationClient: FusedLocationProviderClient){
-    @SuppressLint("MissingPermission")
     @Composable
     fun getView() {
         Box(modifier= Modifier
@@ -63,19 +62,33 @@ class StatsView (val navController: NavController, var fusedLocationClient: Fuse
 
                 var pos_got_ok = false
                 var got_location: Location? = null
+                var got_location_lat = 0.0
+                var got_location_long = 0.0
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+
+                    // Tomamos de google maps la posicion de la ETSIIT
+                    pos_got_ok = true
+                    got_location_lat = 37.197360
+                    got_location_long = -3.624644
+                }
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location : Location? ->
                         pos_got_ok = true
                         got_location = location!!
+                        got_location_lat = got_location.getLatitude()
+                        got_location_long = got_location.getLongitude()
                     }
-
-                // TODO -- esto creo que es una mala idea, porque estamos haciendo un shortcut
-                // de la comprobacion de errores
-                pos_got_ok = true
 
                 if(pos_got_ok == true){
                     Text("Se obtuvo bien la posicion GPS")
-                    Text("Localizacion: ${got_location!!.getLatitude()}, ${got_location!!.getLongitude()}")
+                    Text("Localizacion: lat ${got_location_lat}, long ${got_location_long}")
                 }else{
                     Text("No se obtuvo bien la posicion GPS")
                     Text("No te olvides de darle permisos de ubicacion a la app")
