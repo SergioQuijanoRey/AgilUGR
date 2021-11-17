@@ -15,6 +15,7 @@ import com.project.agilugr.MockFocusAPI
 import com.project.agilugr.backend.MockedProfile
 import kotlin.time.ExperimentalTime
 import com.google.accompanist.navigation.animation.composable
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.project.agilugr.ui.views.*
 
 /**
@@ -41,7 +42,7 @@ class NavigationDirector(val focus_api: FocusAPI){
     @RequiresApi(Build.VERSION_CODES.O)
     @ExperimentalTime
     @Composable
-    fun buildNavigationAndStartUI(){
+    fun buildNavigationAndStartUI(fusedLocationProviderClient: FusedLocationProviderClient){
 
         // El controlador que necesitamos para controlar en detalle la navegacion
         // No estamos entrando en detalle, pero modificando esta variable podemos acceder a ello
@@ -107,7 +108,7 @@ class NavigationDirector(val focus_api: FocusAPI){
                     // Let's make for a really long fade in
                     fadeIn(animationSpec = tween(2000))
                 }){
-                StatsView(navController = navController as NavHostController).getView()
+                StatsView(navController = navController as NavHostController, fusedLocationProviderClient).getView()
             }
         }
     }
