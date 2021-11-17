@@ -69,6 +69,10 @@ class StatsView (val navController: NavController, var fusedLocationClient: Fuse
                         got_location = location!!
                     }
 
+                // TODO -- esto creo que es una mala idea, porque estamos haciendo un shortcut
+                // de la comprobacion de errores
+                pos_got_ok = true
+
                 if(pos_got_ok == true){
                     Text("Se obtuvo bien la posicion GPS")
                     Text("Localizacion: ${got_location!!.getLatitude()}, ${got_location!!.getLongitude()}")
