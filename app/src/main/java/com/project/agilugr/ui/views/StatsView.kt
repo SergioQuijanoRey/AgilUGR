@@ -60,31 +60,26 @@ class StatsView (val navController: NavController, var fusedLocationClient: Fuse
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(modifier = Modifier.height(70.dp))
 
+                // Variables que vamos a usar para tomar la posicion GPS
                 var pos_got_ok = false
                 var got_location: Location? = null
                 var got_location_lat = 0.0
                 var got_location_long = 0.0
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
 
-                    // Tomamos de google maps la posicion de la ETSIIT
-                    pos_got_ok = false
-                    got_location_lat = 37.197360
-                    got_location_long = -3.624644
-                }
-                fusedLocationClient.lastLocation
-                    .addOnSuccessListener { location : Location? ->
-                        pos_got_ok = true
+                // Intentamos tomar la posicion GPS
+                fusedLocationClient.lastLocation.addOnSuccessListener { location : Location? ->
+                    pos_got_ok = true
                         got_location = location!!
                         /* got_location_lat = got_location.getLatitude() */
                         /* got_location_long = got_location.getLongitude() */
-                    }
+                }
+
+                // Si falla, devolvemos por defecto la posicion GPS de la ETSIIT
+                if(pos_got_ok == false){
+                    // Tomamos de google maps la posicion de la ETSIIT
+                    got_location_lat = 37.197360
+                    got_location_long = -3.624644
+                }
 
                 if(pos_got_ok == false){
                     Text("Se obtuvo bien la posicion GPS")
