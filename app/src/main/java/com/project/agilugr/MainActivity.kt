@@ -243,8 +243,6 @@ class MainActivity : AppCompatActivity() {
                                 this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
                             }
 
-
-
                         prevx =x
                         prevy =y
                         prevz =z

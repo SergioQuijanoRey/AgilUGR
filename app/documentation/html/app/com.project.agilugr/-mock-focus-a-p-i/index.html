@@ -22,7 +22,7 @@
           </div>
           <div class="cover ">
             <h1 class="cover"><span>Mock</span><wbr></wbr><span>Focus</span><wbr></wbr><span><span>API</span></span></h1>
-            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace">public final class <a href="index.html">MockFocusAPI</a> implements <a href="../-focus-a-p-i/index.html">FocusAPI</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">CLase que implementa la interfaz para ser una API de focus mode</p></div></div>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace">public final class <a href="index.html">MockFocusAPI</a> implements <a href="../-focus-a-p-i/index.html">FocusAPI</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Clase que representa una API de Focus Mode</p><p class="paragraph">Usamos este mock para no tener que conectarnos a una base de datos real, con todas las complicaciones que esto supone. Con esto simplemente estamos devolviendo datos fijados por nosotros para mostrarlos en la app</p></div></div>
           </div>
           <div class="tabbedcontent">
             <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
@@ -55,7 +55,7 @@
   <div>
     <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace">public class <a href="-companion/index.html">Companion</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
-</div>
+<div class="brief "><p class="paragraph">Objeto companion que se usa para lanzar metodos estaticos</p></div></div>
 </div>
                     </div>
                   </div>
@@ -74,7 +74,7 @@
   <div>
     <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace block"><a href="https://developer.android.com/reference/kotlin/java/util/List.html">List</a>&lt;<a href="../-focus-config/index.html">FocusConfig</a>&gt; <a href="get-all-configs.html">getAllConfigs</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
-<div class="brief "><p class="paragraph">Devuelve todas las configuraciones que tiene guardado el usuario</p></div></div>
+<div class="brief "><p class="paragraph">Toma todas las configuraciones de modo focus que tenemos disponibles para lanzar una sesion de modo focus</p></div></div>
 </div>
                     </div>
                   </div>
@@ -91,7 +91,7 @@
   <div>
     <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace block">final <a href="../-focus-session/index.html">FocusSession</a> <a href="get-current_focus_session.html">getCurrent_focus_session</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
-</div>
+<div class="brief "><p class="paragraph">Sesion de modo focus que estamos corriendo actualmente Puede ser null si en el momento actual no estamos corriendo ningun modo focus</p></div></div>
 </div>
                     </div>
                   </div>
@@ -108,7 +108,7 @@
   <div>
     <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace block">final <a href="https://developer.android.com/reference/kotlin/java/util/List.html">List</a>&lt;<a href="../-focus-config/index.html">FocusConfig</a>&gt; <a href="get-focus_configs.html">getFocus_configs</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
-</div>
+<div class="brief "><p class="paragraph">Listas de configuraciones disponibles para elegir a la hora de entrar en modo focus</p></div></div>
 </div>
                     </div>
                   </div>
@@ -125,7 +125,7 @@
   <div>
     <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace block"><a href="../-focus-config/index.html">FocusConfig</a> <a href="get-running-focus-config.html">getRunningFocusConfig</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
-<div class="brief "><p class="paragraph">Devuelve la configuracion actual del focus mode que estamos corriendo</p></div></div>
+<div class="brief "><p class="paragraph">Toma la configuracion de la sesion de focus que esta corriendo actualmente Puede ser null si no estamos ejecutando ningun modo focus</p></div></div>
 </div>
                     </div>
                   </div>
@@ -142,7 +142,7 @@
   <div>
     <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace block"><a href="../-focus-session/index.html">FocusSession</a> <a href="get-running-focus-mode.html">getRunningFocusMode</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
-<div class="brief "><p class="paragraph">Devuelve la sesion Focus Mode que esta corriendo actualmente</p></div></div>
+<div class="brief "><p class="paragraph">Devuelve el modo focus actual que se esta corriendo Puede ser null si no estamos ejecutando ningun modo focus</p></div></div>
 </div>
                     </div>
                   </div>
@@ -176,7 +176,7 @@
   <div>
     <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace block">final <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-current_focus_session.html">setCurrent_focus_session</a>(<a href="../-focus-session/index.html">FocusSession</a> current_focus_session)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
-</div>
+<div class="brief "><p class="paragraph">Sesion de modo focus que estamos corriendo actualmente Puede ser null si en el momento actual no estamos corriendo ningun modo focus</p></div></div>
 </div>
                     </div>
                   </div>
@@ -193,7 +193,7 @@
   <div>
     <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace block">final <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="set-focus_configs.html">setFocus_configs</a>(<a href="https://developer.android.com/reference/kotlin/java/util/List.html">List</a>&lt;<a href="../-focus-config/index.html">FocusConfig</a>&gt; focus_configs)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
-</div>
+<div class="brief "><p class="paragraph">Listas de configuraciones disponibles para elegir a la hora de entrar en modo focus</p></div></div>
 </div>
                     </div>
                   </div>
@@ -208,7 +208,7 @@
                         </span></span></div>
                     <div>
                       <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><a data-name="12941533%2FProperties%2F492899073" anchor-label="current_focus_session" id="12941533%2FProperties%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a><div class="symbol monospace block">private  <a href="../-focus-session/index.html">FocusSession</a> <a href="index.html#12941533%2FProperties%2F492899073">current_focus_session</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><a data-name="12941533%2FProperties%2F492899073" anchor-label="current_focus_session" id="12941533%2FProperties%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a><div class="symbol monospace block">private  <a href="../-focus-session/index.html">FocusSession</a> <a href="index.html#12941533%2FProperties%2F492899073">current_focus_session</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="12941533%2FProperties%2F492899073" anchor-label="current_focus_session" id="12941533%2FProperties%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a><p class="paragraph">Sesion de modo focus que estamos corriendo actualmente Puede ser null si en el momento actual no estamos corriendo ningun modo focus</p></div></div></div>
                       </div>
                     </div>
                   </div>
@@ -221,7 +221,7 @@
                         </span></span></div>
                     <div>
                       <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><a data-name="2087661020%2FProperties%2F492899073" anchor-label="focus_configs" id="2087661020%2FProperties%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a><div class="symbol monospace block">private  <a href="https://developer.android.com/reference/kotlin/java/util/List.html">List</a>&lt;<a href="../-focus-config/index.html">FocusConfig</a>&gt; <a href="index.html#2087661020%2FProperties%2F492899073">focus_configs</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":app:dokkaHtml/release"><a data-name="2087661020%2FProperties%2F492899073" anchor-label="focus_configs" id="2087661020%2FProperties%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a><div class="symbol monospace block">private  <a href="https://developer.android.com/reference/kotlin/java/util/List.html">List</a>&lt;<a href="../-focus-config/index.html">FocusConfig</a>&gt; <a href="index.html#2087661020%2FProperties%2F492899073">focus_configs</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="2087661020%2FProperties%2F492899073" anchor-label="focus_configs" id="2087661020%2FProperties%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a><p class="paragraph">Listas de configuraciones disponibles para elegir a la hora de entrar en modo focus</p></div></div></div>
                       </div>
                     </div>
                   </div>

@@ -50,7 +50,7 @@ $dokka.location:com.project.agilugr.ui.components/HyperlinksKt/PradoButton/#/Poi
 $dokka.location:com.project.agilugr.ui.navigation////PointingToDeclaration/app/com.project.agilugr.ui.navigation/index.html
 $dokka.location:com.project.agilugr.ui.navigation/NavigationDirector///PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-director/index.html
 $dokka.location:com.project.agilugr.ui.navigation/NavigationDirector/NavigationDirector/#com.project.agilugr.FocusAPI/PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-director/-navigation-director.html
-$dokka.location:com.project.agilugr.ui.navigation/NavigationDirector/buildNavigationAndStartUI/#/PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-director/build-navigation-and-start-u-i.html
+$dokka.location:com.project.agilugr.ui.navigation/NavigationDirector/buildNavigationAndStartUI/#com.google.android.gms.location.FusedLocationProviderClient/PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-director/build-navigation-and-start-u-i.html
 $dokka.location:com.project.agilugr.ui.navigation/NavigationDirector/getCurrentView1/#/PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-director/get-current-view1.html
 $dokka.location:com.project.agilugr.ui.navigation/NavigationDirector/getFocus_api/#/PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-director/get-focus_api.html
 $dokka.location:com.project.agilugr.ui.navigation/NavigationDirector/getNavController/#/PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-director/get-nav-controller.html
@@ -61,6 +61,7 @@ $dokka.location:com.project.agilugr.ui.navigation/NavigationMapper.FOCUS_MODE_SE
 $dokka.location:com.project.agilugr.ui.navigation/NavigationMapper.FOCUS_MODE_SESSION///PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-mapper/-f-o-c-u-s_-m-o-d-e_-s-e-s-s-i-o-n/index.html
 $dokka.location:com.project.agilugr.ui.navigation/NavigationMapper.MAIN_VIEW///PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-mapper/-m-a-i-n_-v-i-e-w/index.html
 $dokka.location:com.project.agilugr.ui.navigation/NavigationMapper.PERFIL_MODE///PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-mapper/-p-e-r-f-i-l_-m-o-d-e/index.html
+$dokka.location:com.project.agilugr.ui.navigation/NavigationMapper.STATS///PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-mapper/-s-t-a-t-s/index.html
 $dokka.location:com.project.agilugr.ui.navigation/NavigationMapper.TUI_VIEW///PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-mapper/-t-u-i_-v-i-e-w/index.html
 $dokka.location:com.project.agilugr.ui.navigation/NavigationMapper///PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-mapper/index.html
 $dokka.location:com.project.agilugr.ui.navigation/NavigationMapper/getRoute/#/PointingToDeclaration/app/com.project.agilugr.ui.navigation/-navigation-mapper/get-route.html
@@ -90,7 +91,11 @@ $dokka.location:com.project.agilugr.ui.views/CalendarKt/CurrentMonthPreview/#/Po
 $dokka.location:com.project.agilugr.ui.views/CalendarKt/DefaultCalendar/#java.time.YearMonth#com.project.agilugr.ui.views.CalposeActions/PointingToDeclaration/app/com.project.agilugr.ui.views/-calendar-kt/-default-calendar.html
 $dokka.location:com.project.agilugr.ui.views/CalendarKt/DefaultDay/#kotlin.String#androidx.compose.ui.Modifier#androidx.compose.ui.text.TextStyle/PointingToDeclaration/app/com.project.agilugr.ui.views/-calendar-kt/-default-day.html
 $dokka.location:com.project.agilugr.ui.views/CalendarKt/DefaultHeader/#java.time.YearMonth#java.time.YearMonth#com.project.agilugr.ui.views.CalposeActions/PointingToDeclaration/app/com.project.agilugr.ui.views/-calendar-kt/-default-header.html
+$dokka.location:com.project.agilugr.ui.views/CalendarKt/IconoEntregaDraggable/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-calendar-kt/-icono-entrega-draggable.html
+$dokka.location:com.project.agilugr.ui.views/CalendarKt/IconoEventoDraggable/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-calendar-kt/-icono-evento-draggable.html
+$dokka.location:com.project.agilugr.ui.views/CalendarKt/IconoExamenDraggable/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-calendar-kt/-icono-examen-draggable.html
 $dokka.location:com.project.agilugr.ui.views/CalendarKt/NonCurrentMonthPreview/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-calendar-kt/-non-current-month-preview.html
+$dokka.location:com.project.agilugr.ui.views/CalendarKt/NuevoEvento/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-calendar-kt/-nuevo-evento.html
 $dokka.location:com.project.agilugr.ui.views/CalendarKt/leftIcon/#com.project.agilugr.ui.views.CalposeActions/PointingToDeclaration/app/com.project.agilugr.ui.views/-calendar-kt/left-icon.html
 $dokka.location:com.project.agilugr.ui.views/CalendarKt/rightIcon/#com.project.agilugr.ui.views.CalposeActions/PointingToDeclaration/app/com.project.agilugr.ui.views/-calendar-kt/right-icon.html
 $dokka.location:com.project.agilugr.ui.views/Calendario///PointingToDeclaration/app/com.project.agilugr.ui.views/-calendario/index.html
@@ -158,6 +163,12 @@ $dokka.location:com.project.agilugr.ui.views/PerfilModeKt/IconComedor/#/Pointing
 $dokka.location:com.project.agilugr.ui.views/PerfilModeKt/IconMail/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-perfil-mode-kt/-icon-mail.html
 $dokka.location:com.project.agilugr.ui.views/PerfilModeKt/IconPrado/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-perfil-mode-kt/-icon-prado.html
 $dokka.location:com.project.agilugr.ui.views/PerfilModeKt/TuiCard/#kotlin.Function0[kotlin.Unit]/PointingToDeclaration/app/com.project.agilugr.ui.views/-perfil-mode-kt/-tui-card.html
+$dokka.location:com.project.agilugr.ui.views/StatsView///PointingToDeclaration/app/com.project.agilugr.ui.views/-stats-view/index.html
+$dokka.location:com.project.agilugr.ui.views/StatsView/StatsView/#androidx.navigation.NavController#com.google.android.gms.location.FusedLocationProviderClient/PointingToDeclaration/app/com.project.agilugr.ui.views/-stats-view/-stats-view.html
+$dokka.location:com.project.agilugr.ui.views/StatsView/getFusedLocationClient/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-stats-view/get-fused-location-client.html
+$dokka.location:com.project.agilugr.ui.views/StatsView/getNavController/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-stats-view/get-nav-controller.html
+$dokka.location:com.project.agilugr.ui.views/StatsView/getView/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-stats-view/get-view.html
+$dokka.location:com.project.agilugr.ui.views/StatsView/setFusedLocationClient/#com.google.android.gms.location.FusedLocationProviderClient/PointingToDeclaration/app/com.project.agilugr.ui.views/-stats-view/set-fused-location-client.html
 $dokka.location:com.project.agilugr.ui.views/TuiView///PointingToDeclaration/app/com.project.agilugr.ui.views/-tui-view/index.html
 $dokka.location:com.project.agilugr.ui.views/TuiView/TuiView/#androidx.navigation.NavController/PointingToDeclaration/app/com.project.agilugr.ui.views/-tui-view/-tui-view.html
 $dokka.location:com.project.agilugr.ui.views/TuiView/getNavController/#/PointingToDeclaration/app/com.project.agilugr.ui.views/-tui-view/get-nav-controller.html

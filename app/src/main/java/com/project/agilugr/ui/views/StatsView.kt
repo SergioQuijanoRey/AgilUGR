@@ -89,6 +89,22 @@ class StatsView (val navController: NavController, var fusedLocationClient: Fuse
                     Text("Localizacion: lat ${got_location!!.getLatitude()}, long ${got_location!!.getLongitude()}")
                 }
             }
+            Column(verticalArrangement = Arrangement.Center){
+                Spacer(modifier = Modifier.height(100.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(modifier = Modifier.size(400.dp),painter = painterResource(id = R.drawable.googlemaps), contentDescription = "Google Maps" )
+
+                }
+            }
+
+            Column(verticalArrangement = Arrangement.Center){
+                Spacer(modifier = Modifier.height(550.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(painter = painterResource(id = R.drawable.estadisticas), contentDescription = "Estadisticas" )
+
+                }
+            }
+
         }
 
     }
