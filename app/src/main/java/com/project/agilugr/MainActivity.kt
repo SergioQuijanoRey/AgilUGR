@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity() {
                         } else {
                             if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                                 if (diffY > 0) {
-                                    this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
+                                    this.navigationDirector.navigate(NavigationMapper.STATS)
                                 } else {
                                     this.navigationDirector.navigate(NavigationMapper.PERFIL_MODE)
                                 }
@@ -192,6 +192,15 @@ class MainActivity : AppCompatActivity() {
                     if (this.navigationDirector.getCurrentView() == NavigationMapper.CALENDAR) {
                         if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                             if (diffX > 0) {
+                                this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
+
+                            }
+                        }
+                    }
+
+                    if (this.navigationDirector.getCurrentView() == NavigationMapper.STATS) {
+                        if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffY < 0) {
                                 this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
 
                             }
