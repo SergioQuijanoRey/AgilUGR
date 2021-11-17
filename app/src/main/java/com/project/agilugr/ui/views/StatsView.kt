@@ -91,7 +91,7 @@ class StatsView (val navController: NavController, var fusedLocationClient: Fuse
                     Text("Localizacion: lat ${got_location_lat}, long ${got_location_long}")
                 }else{
                     Text("Se obtuvo bien la posicion GPS")
-                    Text("Localizacion: lat ${got_location.getLatitude()}, long ${got_location.getLongitude()}")
+                    Text("Localizacion: lat ${got_location!!.getLatitude()}, long ${got_location!!.getLongitude()}")
                 }
             }
         }
