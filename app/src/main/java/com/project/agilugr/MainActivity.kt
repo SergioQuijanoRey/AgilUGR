@@ -37,7 +37,7 @@ import com.google.android.gms.location.LocationServices
 
 
 @ExperimentalTime
-class MainActivity : AppCompatActivity(), RecognitionListener {
+class MainActivity : AppCompatActivity() {
 
     // APIs que vamos a consumir para tomar los datos del backend
     val focus_api = MockFocusAPI.getMockFocusAPI()
@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
 
         // Establecemos la UI de la aplicacion
         // Esto tambien crea el director de navegacion
-        /*
         setContent {
             AgilUGRTheme {
 
@@ -91,8 +90,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
                 navigation_director.buildNavigationAndStartUI(fusedLocationClient)
             }
         }
-        */
-        setContentView(R.layout.activity_tts)
+
         // Establecemos el detector de gestos
         mDetector = GestureDetectorCompat(this, MyGestureListener(navigation_director))
 
@@ -115,33 +113,6 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
         // Inicializamos el sensor de orientacion
         orientationSensor=sensorManager!!.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR).also {
                 orientationSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),orientationSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
-        }
-
-        returnedText = findViewById(R.id.textView)
-        progressBar = findViewById(R.id.progressBar)
-        toggleButton = findViewById(R.id.toggleButton)
-        progressBar.visibility = View.VISIBLE
-        speech = SpeechRecognizer.createSpeechRecognizer(this)
-        Log.i(logTag, "isRecognitionAvailable: " + SpeechRecognizer.isRecognitionAvailable(this))
-        speech.setRecognitionListener(this)
-        recognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "US-en")
-        recognizerIntent.putExtra(
-            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
-        toggleButton.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                progressBar.visibility = View.VISIBLE
-                progressBar.isIndeterminate = true
-                ActivityCompat.requestPermissions(this@MainActivity,
-                    arrayOf(Manifest.permission.RECORD_AUDIO),
-                    permission)
-            } else {
-                progressBar.isIndeterminate = false
-                progressBar.visibility = View.VISIBLE
-                speech.stopListening()
-            }
         }
     }
 
@@ -273,11 +244,11 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
     }
 
     /** Clase privada para la gestión de los sensores*/
-    private class MysensorListener (val navigationDirector: NavigationDirector): SensorEventListener{
+    private class MysensorListener (val navigationDirector: NavigationDirector): SensorEventListener {
 
-        var prevx=0F
-        var prevy=0F
-        var prevz=0F
+        var prevx = 0F
+        var prevy = 0F
+        var prevz = 0F
         var axisX: Float = 10.0f
         var axisY: Float = 10.0f
         var axisZ: Float = 10.0f
@@ -286,10 +257,10 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
         /** Función principal en la cual detectamos el tipo de sensor que realiza el evento y posteriormente se define la acción concreta que realiza
          * en el caso del sesnor de orientación, lo usamos para activar el modo focus, el acelerómetro para ir a la vista de la TUI*/
         override fun onSensorChanged(event: SensorEvent?) {
-            synchronized (this) {
+            synchronized(this) {
                 if (event != null) {
 
-                    if (event.sensor.type == Sensor.TYPE_ACCELEROMETER){
+                    if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
                         val x = event.values[0]
                         val y = event.values[1]
                         val z = event.values[2]
@@ -297,23 +268,24 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
                         // extension property to get screen orientation
                         val Xmovement: Double = Math.abs(x - prevx).toDouble()
 
-                        val mAccelCurrent: Double = Math.sqrt((x * x + y * y + z * z).toDouble())
+                        val mAccelCurrent: Double =
+                            Math.sqrt((x * x + y * y + z * z).toDouble())
 
-                            if (mAccelCurrent>=30 && Xmovement>=7F){
-                                this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
-                            }
+                        if (mAccelCurrent >= 30 && Xmovement >= 7F) {
+                            this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
+                        }
 
-                        prevx =x
-                        prevy =y
-                        prevz =z
+                        prevx = x
+                        prevy = y
+                        prevz = z
                     }
 
-                    if (event.sensor.type == Sensor.TYPE_ROTATION_VECTOR){
+                    if (event.sensor.type == Sensor.TYPE_ROTATION_VECTOR) {
                         axisX = event.values[0]
                         axisY = event.values[1]
                         axisZ = event.values[2]
 
-                        if (axisZ >=-0.2  && axisZ<=0.1 && Math.abs(axisY)>=0.6 ){
+                        if (axisZ >= -0.2 && axisZ <= 0.1 && Math.abs(axisY) >= 0.6) {
                             this.navigationDirector.navigate(NavigationMapper.FOCUS_MODE_SESSION)
                         }
 
@@ -321,7 +293,6 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
 
 
                 }
-
 
 
             }
@@ -332,93 +303,5 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
         }
 
     }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>,
-                                            grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            permission -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager
-                    .PERMISSION_GRANTED) {
-                speech.startListening(recognizerIntent)
-            } else {
-                Toast.makeText(this@MainActivity, "Permission Denied!",
-                    Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        speech.destroy()
-        Log.i(logTag, "destroy")
-    }
-
-    override fun onReadyForSpeech(params: Bundle?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onBeginningOfSpeech() {
-        Log.i(logTag, "onBeginningOfSpeech")
-        progressBar.isIndeterminate = false
-        progressBar.max = 10
-    }
-
-    override fun onRmsChanged(rmsdB: Float) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onBufferReceived(buffer: ByteArray?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onEndOfSpeech() {
-        progressBar.isIndeterminate = true
-        toggleButton.isChecked = false
-    }
-
-    override fun onError(error: Int) {
-        val errorMessage: String = getErrorText(error)
-        Log.d(logTag, "FAILED $errorMessage")
-        returnedText.text = errorMessage
-        toggleButton.isChecked = false
-    }
-
-    private fun getErrorText(error: Int): String {
-        var message = ""
-        message = when (error) {
-            SpeechRecognizer.ERROR_AUDIO -> "Audio recording error"
-            SpeechRecognizer.ERROR_CLIENT -> "Client side error"
-            SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
-            SpeechRecognizer.ERROR_NETWORK -> "Network error"
-            SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
-            SpeechRecognizer.ERROR_NO_MATCH -> "No match"
-            SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "RecognitionService busy"
-            SpeechRecognizer.ERROR_SERVER -> "error from server"
-            SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech input"
-            else -> "Didn't understand, please try again."
-        }
-        return message
-    }
-
-    override fun onResults(results: Bundle?) {
-        Log.i(logTag, "onResults")
-        val matches = results!!.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-        var text = ""
-        if (matches != null) {
-            for (result in matches) text = """
-          $result
-          """.trimIndent()
-        }
-        returnedText.text = text
-    }
-
-    override fun onPartialResults(partialResults: Bundle?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onEvent(eventType: Int, params: Bundle?) {
-        TODO("Not yet implemented")
-    }
-
 }
 
