@@ -1,5 +1,6 @@
 package com.project.agilugr.ui.views
 
+import android.widget.TextView
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.size
@@ -10,12 +11,15 @@ import com.project.agilugr.ui.navigation.NavigationMapper
 import androidx.navigation.NavController
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.project.agilugr.R
 import com.project.agilugr.backend.IndexAPI
 import com.project.agilugr.ui.components.Header
@@ -86,7 +90,6 @@ class IndexSelector (
                         }
 
                     }
-
 
                 }
 
@@ -176,7 +179,8 @@ fun Alertas ( indexApi : IndexAPI, alerts : List<String>,
                     Spacer(modifier = Modifier.height(0.dp))
                     androidx.compose.material.Card(
                         backgroundColor = cardBackgroundColor,
-                        modifier = Modifier .fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .padding(horizontal = 10.dp, vertical = 10.dp)
 
                     ) {
@@ -224,6 +228,3 @@ fun Alertas ( indexApi : IndexAPI, alerts : List<String>,
             }
         }
     }
-
-
-
