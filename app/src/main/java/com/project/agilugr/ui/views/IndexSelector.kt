@@ -1,6 +1,9 @@
 package com.project.agilugr.ui.views
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.size
@@ -16,10 +19,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.viewinterop.AndroidViewBinding
 import com.project.agilugr.R
 import com.project.agilugr.backend.IndexAPI
 import com.project.agilugr.ui.components.Header
@@ -43,11 +48,9 @@ class IndexSelector (
     /** Devuelve la vista que representa esta clase */
     @Composable
     fun getView() {
-
         Box(modifier= Modifier
             .background(Color(MainBackground))
             .fillMaxSize()){
-
             Box(modifier = Modifier
                 .background(Color(headerBackground))
                 .fillMaxWidth()
@@ -90,8 +93,10 @@ class IndexSelector (
                         }
 
                     }
-
+                    
+                    createAndroidViewForXMLLayout(R.layout.activity_tts)
                 }
+
 
         }
 
@@ -228,3 +233,13 @@ fun Alertas ( indexApi : IndexAPI, alerts : List<String>,
             }
         }
     }
+
+
+@Composable
+fun createAndroidViewForXMLLayout(@LayoutRes resId: Int) {
+    val context = LocalContext.current
+    val your_xml_Layout = remember(resId, context) {
+        LayoutInflater.from(context).inflate(resId,null)
+    }
+    AndroidView({ your_xml_Layout })
+}

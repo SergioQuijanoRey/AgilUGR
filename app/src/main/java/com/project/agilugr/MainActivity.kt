@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
 
         // Establecemos la UI de la aplicacion
         // Esto tambien crea el director de navegacion
-        /*
+
         setContent {
             AgilUGRTheme {
 
@@ -91,8 +91,6 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
                 navigation_director.buildNavigationAndStartUI(fusedLocationClient)
             }
         }
-        */
-        setContentView(R.layout.activity_tts)
         // Establecemos el detector de gestos
         mDetector = GestureDetectorCompat(this, MyGestureListener(navigation_director))
 
@@ -117,6 +115,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
                 orientationSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),orientationSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
         }
 
+        /*
         returnedText = findViewById(R.id.textView)
         progressBar = findViewById(R.id.progressBar)
         toggleButton = findViewById(R.id.toggleButton)
@@ -143,6 +142,8 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
                 speech.stopListening()
             }
         }
+        
+         */
     }
 
 
