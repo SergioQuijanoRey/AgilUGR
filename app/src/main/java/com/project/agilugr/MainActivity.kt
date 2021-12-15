@@ -31,13 +31,15 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.Composable
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
+import com.project.agilugr.ui.views.Chatbot
+import com.project.agilugr.ui.views.createAndroidViewForXMLLayout
 
 @ExperimentalTime
-class MainActivity : AppCompatActivity(), RecognitionListener {
+class MainActivity : AppCompatActivity(),RecognitionListener {
 
     // APIs que vamos a consumir para tomar los datos del backend
     val focus_api = MockFocusAPI.getMockFocusAPI()
@@ -83,13 +85,18 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
 
         // Establecemos la UI de la aplicacion
         // Esto tambien crea el director de navegacion
-
+        //val binding = ActivityTtsBinding.inflate(layoutInflater)
+        //returnedText = binding.textView
+        //progressBar = binding.progressBar
+        //toggleButton = binding.toggleButton
+        //returnedText.setText("Hola")
+        //toggleButton.setText("Adios")
         setContent {
             AgilUGRTheme {
-
                 // Usamos el director de navegacion para lanzar la interfaz grafica
                 navigation_director.buildNavigationAndStartUI(fusedLocationClient)
             }
+
         }
         // Establecemos el detector de gestos
         mDetector = GestureDetectorCompat(this, MyGestureListener(navigation_director))
@@ -107,7 +114,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
 
         //Sensor Acelerómetro
         accelerometerSensor=sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER).also {
-            accelerometerSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),accelerometerSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
+                accelerometerSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),accelerometerSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
         }
 
         // Inicializamos el sensor de orientacion
@@ -115,10 +122,9 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
                 orientationSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),orientationSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
         }
 
+        // TODO -- borrar -- no lo borramos ahora porque lo estamos usando de plantilla
+
         /*
-        returnedText = findViewById(R.id.textView)
-        progressBar = findViewById(R.id.progressBar)
-        toggleButton = findViewById(R.id.toggleButton)
         progressBar.visibility = View.VISIBLE
         speech = SpeechRecognizer.createSpeechRecognizer(this)
         Log.i(logTag, "isRecognitionAvailable: " + SpeechRecognizer.isRecognitionAvailable(this))
@@ -142,8 +148,8 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
                 speech.stopListening()
             }
         }
-        
          */
+
     }
 
 
@@ -215,7 +221,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
                         } else {
                             if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                                 if (diffY > 0) {
-                                    this.navigationDirector.navigate(NavigationMapper.STATS)
+                                    this.navigationDirector.navigate(NavigationMapper.ACADEMICBOT)
                                 } else {
                                     this.navigationDirector.navigate(NavigationMapper.PERFIL_MODE)
                                 }
@@ -250,7 +256,7 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
                         }
                     }
 
-                    if (this.navigationDirector.getCurrentView() == NavigationMapper.STATS) {
+                    if (this.navigationDirector.getCurrentView() == NavigationMapper.ACADEMICBOT) {
                         if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                             if (diffY < 0) {
                                 this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
@@ -300,9 +306,9 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
 
                         val mAccelCurrent: Double = Math.sqrt((x * x + y * y + z * z).toDouble())
 
-                            if (mAccelCurrent>=30 && Xmovement>=7F){
-                                this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
-                            }
+                        if (mAccelCurrent>=30 && Xmovement>=7F){
+                            this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
+                        }
 
                         prevx =x
                         prevy =y
@@ -422,4 +428,3 @@ class MainActivity : AppCompatActivity(), RecognitionListener {
     }
 
 }
-
