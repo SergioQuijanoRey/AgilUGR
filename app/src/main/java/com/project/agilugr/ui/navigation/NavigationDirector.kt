@@ -16,6 +16,7 @@ import com.project.agilugr.backend.MockedProfile
 import kotlin.time.ExperimentalTime
 import com.google.accompanist.navigation.animation.composable
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.project.agilugr.R
 import com.project.agilugr.ui.views.*
 
 /**
@@ -67,7 +68,7 @@ class NavigationDirector(val focus_api: FocusAPI){
             // Vista del perfil
             composable(route = NavigationMapper.PERFIL_MODE.route) {
                 // TODO add MockedProfile correctly
-                PerfilMode().getView()
+                R.layout.activity_tts
             }
 
             // Vista del selector de configuraciones del focus mode

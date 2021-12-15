@@ -1,6 +1,10 @@
 package com.project.agilugr.ui.views
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.View.inflate
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -18,11 +22,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.fragment.app.Fragment
 import com.project.agilugr.R
 import com.project.agilugr.backend.IndexAPI
 import com.project.agilugr.ui.components.Header

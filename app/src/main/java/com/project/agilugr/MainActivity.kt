@@ -36,6 +36,7 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.project.agilugr.ui.views.Chatbot
+import com.project.agilugr.ui.views.ComposeUIFragment
 import com.project.agilugr.ui.views.createAndroidViewForXMLLayout
 
 @ExperimentalTime
@@ -91,13 +92,25 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
         //toggleButton = binding.toggleButton
         //returnedText.setText("Hola")
         //toggleButton.setText("Adios")
+        /*
         setContent {
             AgilUGRTheme {
                 // Usamos el director de navegacion para lanzar la interfaz grafica
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.compose_view,ComposeUIFragment())
+                    .commit()
                 navigation_director.buildNavigationAndStartUI(fusedLocationClient)
             }
 
         }
+
+         */
+        setContentView(R.layout.activity_tts)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.compose_view,ComposeUIFragment())
+            .commit()
+
         // Establecemos el detector de gestos
         mDetector = GestureDetectorCompat(this, MyGestureListener(navigation_director))
 
