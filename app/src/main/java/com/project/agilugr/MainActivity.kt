@@ -1,58 +1,128 @@
-package com.project.agilugr
-
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
+import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import com.project.agilugr.databinding.ActivityMainBinding
+import androidx.core.app.ActivityCompat
 
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setSupportActionBar(binding.toolbar)
-
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
-    }
+class MainActivity : AppCompatActivity(), RecognitionListener {
+   private val permission = 100
+   private lateinit var returnedText: TextView
+   private lateinit var toggleButton: ToggleButton
+   private lateinit var progressBar: ProgressBar
+   private lateinit var speech: SpeechRecognizer
+   private lateinit var recognizerIntent: Intent
+   private var logTag = "VoiceRecognitionActivity"
+   override fun onCreate(savedInstanceState: Bundle?) {
+      super.onCreate(savedInstanceState)
+      setContentView(R.layout.activity_main)
+      title = "KotlinApp"
+      returnedText = findViewById(R.id.textView)
+      progressBar = findViewById(R.id.progressBar)
+      toggleButton = findViewById(R.id.toggleButton)
+      progressBar.visibility = View.VISIBLE
+      speech = SpeechRecognizer.createSpeechRecognizer(this)
+      Log.i(logTag, "isRecognitionAvailable: " + SpeechRecognizer.isRecognitionAvailable(this))
+      speech.setRecognitionListener(this)
+      recognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+      recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "US-en")
+      recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+      RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+      recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
+      toggleButton.setOnCheckedChangeListener { _, isChecked ->
+         if (isChecked) {
+            progressBar.visibility = View.VISIBLE
+            progressBar.isIndeterminate = true
+            ActivityCompat.requestPermissions(this@MainActivity,
+            arrayOf(Manifest.permission.RECORD_AUDIO),
+            permission)
+         } else {
+            progressBar.isIndeterminate = false
+            progressBar.visibility = View.VISIBLE
+            speech.stopListening()
+         }
+      }
+   }
+   override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>,
+   grantResults: IntArray) {
+      super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+      when (requestCode) {
+         permission -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager
+         .PERMISSION_GRANTED) {
+            speech.startListening(recognizerIntent)
+         } else {
+            Toast.makeText(this@MainActivity, "Permission Denied!",
+            Toast.LENGTH_SHORT).show()
+         }
+      }
+   }
+   override fun onStop() {
+      super.onStop()
+      speech.destroy()
+      Log.i(logTag, "destroy")
+   }
+   override fun onReadyForSpeech(params: Bundle?) {
+      TODO("Not yet implemented")
+   }
+   override fun onRmsChanged(rmsdB: Float) {
+      progressBar.progress = rmsdB.toInt()
+   }
+   override fun onBufferReceived(buffer: ByteArray?) {
+      TODO("Not yet implemented")
+   }
+   override fun onPartialResults(partialResults: Bundle?) {
+      TODO("Not yet implemented")
+   }
+   override fun onEvent(eventType: Int, params: Bundle?) {
+      TODO("Not yet implemented")
+   }
+   override fun onBeginningOfSpeech() {
+      Log.i(logTag, "onBeginningOfSpeech")
+      progressBar.isIndeterminate = false
+      progressBar.max = 10
+   }
+   override fun onEndOfSpeech() {
+      progressBar.isIndeterminate = true
+      toggleButton.isChecked = false
+   }
+   override fun onError(error: Int) {
+      val errorMessage: String = getErrorText(error)
+      Log.d(logTag, "FAILED $errorMessage")
+      returnedText.text = errorMessage
+      toggleButton.isChecked = false
+   }
+   private fun getErrorText(error: Int): String {
+      var message = ""
+      message = when (error) {
+         SpeechRecognizer.ERROR_AUDIO -> "Audio recording error"
+         SpeechRecognizer.ERROR_CLIENT -> "Client side error"
+         SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
+         SpeechRecognizer.ERROR_NETWORK -> "Network error"
+         SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
+         SpeechRecognizer.ERROR_NO_MATCH -> "No match"
+         SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "RecognitionService busy"
+         SpeechRecognizer.ERROR_SERVER -> "error from server"
+         SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech input"
+         else -> "Didn't understand, please try again."
+      }
+      return message
+   }
+   override fun onResults(results: Bundle?) {
+      Log.i(logTag, "onResults")
+      val matches = results!!.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+      var text = ""
+      for (result in matches) text = """
+      $result
+      """.trimIndent()
+      returnedText.text = text
+   }
 }
