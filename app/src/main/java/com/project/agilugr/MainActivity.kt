@@ -33,17 +33,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
 import androidx.core.app.ActivityCompat
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.project.agilugr.backend.MockedProfile
 import com.project.agilugr.ui.views.Chatbot
 import com.project.agilugr.ui.views.ComposeUIFragment
-import com.project.agilugr.ui.views.createAndroidViewForXMLLayout
+import com.project.agilugr.ui.views.UIFragmentIndex
 
 @ExperimentalTime
 class MainActivity : AppCompatActivity(),RecognitionListener {
 
     // APIs que vamos a consumir para tomar los datos del backend
     val focus_api = MockFocusAPI.getMockFocusAPI()
+    var navController: NavController? = null
 
     // Tomamos el director de navegacion para que lance la interfaz grafica
     val navigation_director = NavigationDirector(focus_api = focus_api)
@@ -92,25 +98,28 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
         //toggleButton = binding.toggleButton
         //returnedText.setText("Hola")
         //toggleButton.setText("Adios")
-        /*
+
         setContent {
             AgilUGRTheme {
                 // Usamos el director de navegacion para lanzar la interfaz grafica
+                //navigation_director.buildNavigationAndStartUI(fusedLocationClient)
+                setContentView(R.layout.index)
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.compose_view,ComposeUIFragment())
+                    .replace(R.id.main_nav_host_fragment,UIFragmentIndex())
                     .commit()
-                navigation_director.buildNavigationAndStartUI(fusedLocationClient)
             }
 
         }
 
-         */
+        /*
         setContentView(R.layout.activity_tts)
-
         supportFragmentManager.beginTransaction()
-            .replace(R.id.compose_view,ComposeUIFragment())
+            .replace(R.id.compose_view,UIFragmentIndex(MockedProfile.getMockIndexAPI(),
+                navController as NavHostController))
             .commit()
 
+
+         */
         // Establecemos el detector de gestos
         mDetector = GestureDetectorCompat(this, MyGestureListener(navigation_director))
 
@@ -165,13 +174,11 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
 
     }
 
-
     /**Detectamos los gestos usando la clase privada que hemos desarrollado */
     override fun onTouchEvent(event: MotionEvent): Boolean {
         mDetector.onTouchEvent(event)
         return super.onTouchEvent(event)
     }
-
 
     /** Clase para la gestión de los eventos generados por gestos*/
     private class MyGestureListener(val navigationDirector: NavigationDirector): GestureDetector.SimpleOnGestureListener() {

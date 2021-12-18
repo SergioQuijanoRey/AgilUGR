@@ -97,14 +97,6 @@ class ComposeUIFragment() : Fragment() {
             }
         }
         return view
-        /*
-        return inflater.inflate(R.layout.activity_tts, container, false).apply {
-            findViewById<ComposeView>(R.id.compose_view).setContent {
-                Text(text = "Ayudaaaa")
-            }
-        }
-
-         */
     }
 }
 
