@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Esta parte no viene en el tutorial, pero lo genera android studio y es necesario para que  -->
-<!-- la aplicacion compile hasta cierto punto -->
+<!-- Esta parte no viene en el tutorial, pero lo genera android studio y es necesario para que   -->
+<!-- la aplicacion compile hasta cierto punto  -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -34,7 +34,6 @@
         android:layout_marginBottom="16dp"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 <!-- Esto esta añadido para seguir el tutorial de kotlin + xml + voice -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android">
@@ -73,3 +72,5 @@
       android:layout_marginTop="26dp"
       android:text="ToggleButton" />
 </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
