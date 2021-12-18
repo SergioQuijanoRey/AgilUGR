@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
  */
 class PerfilMode (val perfilApi : PerfilAPI, val navController: NavController){
     @Composable
+
     fun getView() {
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {

@@ -20,6 +20,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +50,17 @@ class MainActivity : AppCompatActivity() {
     @ExperimentalAnimationApi
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+        // COMPROBAMSO QUE EL AUDIO FUNCIONA
+
+        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
+            Toast.makeText(
+                this,
+                "no funciona el reconocimento",
+                //R.string.no_recognition_available,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
         // Llamamos al onCreate del parent
         super.onCreate(savedInstanceState)
         //Para que la app no se use en modo nocturno
