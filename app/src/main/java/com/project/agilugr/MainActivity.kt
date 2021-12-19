@@ -41,6 +41,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import java.util.*
+import android.content.ComponentName
+import android.provider.CalendarContract
+
 
 @ExperimentalTime
 class MainActivity : AppCompatActivity(),RecognitionListener {
@@ -169,6 +172,22 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
 
     }
 
+    fun abrirCalendario(){
+
+        var calendarUri =
+            CalendarContract.CONTENT_URI
+                .buildUpon()
+            .appendPath("time")
+            .build();
+        Toast.makeText(
+            this,
+            "Calendario preparado",
+            Toast.LENGTH_LONG
+        ).show()
+        startActivity( Intent(Intent.ACTION_VIEW, calendarUri));
+
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -196,6 +215,13 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
                     else if( (result!!.get(0)).contains("focus")){
                         // se crea de un minuto para poder probarlo
                         createAlarm("Modo focus", 0, 1);
+                    }
+                    else if( (result!!.get(0)).contains("calendario")
+                        ||
+                        (result!!.get(0)).contains("evento")
+                    ){
+                        // se crea de un minuto para poder probarlo
+                        abrirCalendario();
                     }
                 }
             }
