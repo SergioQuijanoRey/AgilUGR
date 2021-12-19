@@ -1,6 +1,5 @@
 package com.project.agilugr
 
-import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import android.view.GestureDetector
@@ -21,27 +20,17 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.speech.RecognitionListener
-import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
-import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.runtime.Composable
-import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.project.agilugr.backend.MockedProfile
-import com.project.agilugr.ui.views.Chatbot
-import com.project.agilugr.ui.views.ComposeUIFragment
 import com.project.agilugr.ui.views.UIFragmentIndex
 
 @ExperimentalTime
@@ -103,10 +92,7 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
             AgilUGRTheme {
                 // Usamos el director de navegacion para lanzar la interfaz grafica
                 //navigation_director.buildNavigationAndStartUI(fusedLocationClient)
-                setContentView(R.layout.index)
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_nav_host_fragment,UIFragmentIndex())
-                    .commit()
+                setContentView(R.layout.activity_main)
             }
 
         }

@@ -274,7 +274,7 @@ class UIFragmentIndex() : Fragment() {
                             "Exposición del trabajo de FR",
                             "Examen de Modelos Matemáticos II"
                         ), Color(events), Color.Black, Color.White)
-                        Spacer(modifier = Modifier.size(50.dp))
+                        Spacer(modifier = Modifier.size(5.dp))
                         Box(modifier= Modifier
                             .clip(RoundedCornerShape(20.dp))
                             .background(

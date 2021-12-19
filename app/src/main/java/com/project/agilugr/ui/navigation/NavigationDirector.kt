@@ -1,17 +1,12 @@
 package com.project.agilugr.ui.navigation
 
 import android.os.Build
-import android.view.LayoutInflater
-import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -22,7 +17,6 @@ import com.project.agilugr.backend.MockedProfile
 import kotlin.time.ExperimentalTime
 import com.google.accompanist.navigation.animation.composable
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.project.agilugr.MainActivity
 import com.project.agilugr.R
 import com.project.agilugr.ui.views.*
 
@@ -129,7 +123,7 @@ class NavigationDirector(val focus_api: FocusAPI): AppCompatActivity(){
     fun navigate(destination: NavigationMapper){
         //Navegamos a esta vista
         if (destination.route==NavigationMapper.PERFIL_MODE.route){
-            setContentView(R.layout.activity_tts)
+            setContentView(R.layout.activity_main)
         }else{
             this.navController!!.navigate(destination.route)
         }

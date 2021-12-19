@@ -12,8 +12,10 @@
             android:id="@+id/viewIndex"
             app:destination="@id/composeUIFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/composeUIFragment"
         android:name="com.project.agilugr.ui.views.ComposeUIFragment"
-        android:label="ComposeUIFragment" />
+        android:label="ComposeUIFragment"
+        />
 </navigation>
