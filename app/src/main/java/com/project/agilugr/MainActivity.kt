@@ -91,8 +91,8 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
         setContent {
             AgilUGRTheme {
                 // Usamos el director de navegacion para lanzar la interfaz grafica
-                //navigation_director.buildNavigationAndStartUI(fusedLocationClient)
-                setContentView(R.layout.activity_main)
+                navigation_director.buildNavigationAndStartUI(fusedLocationClient)
+                //setContentView(R.layout.activity_main)
             }
 
         }

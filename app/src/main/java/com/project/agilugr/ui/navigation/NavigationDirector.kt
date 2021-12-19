@@ -114,7 +114,15 @@ class NavigationDirector(val focus_api: FocusAPI): AppCompatActivity(){
                     // Let's make for a really long fade in
                     fadeIn(animationSpec = tween(2000))
                 }){
-                Chatbot().getView()
+                AcademicBot().getView()
+            }
+
+            composable(route = NavigationMapper.EVENTBOT.route,
+                enterTransition = { _, _ ->
+                    // Let's make for a really long fade in
+                    fadeIn(animationSpec = tween(2000))
+                }){
+                EventBot().getView()
             }
         }
     }

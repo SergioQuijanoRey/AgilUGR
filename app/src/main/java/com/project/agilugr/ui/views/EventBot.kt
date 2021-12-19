@@ -27,34 +27,16 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
- * Esta clase representa la vista en la que mostramos la informacion del perfil del usuario
+ * Con esta clase creamos la vista del Chatbot de los eventos
  */
-class Chatbot (){
+class EventBot (){
 
     /** Devuelve la vista que representa esta clase */
     @Composable
     fun getView() {
-
-        WebPageScreen("https://console.dialogflow.com/api-client/demo/embedded/aa8d2a51-ae9c-49f3-b512-9326f6fea446")
+        //Misma función del fichero Academibot.kt,pero le pasamos la nueva URL
+        WebPageScreen("https://console.dialogflow.com/api-client/demo/embedded/ddf811ab-1d1a-489d-8ea1-a3c38ecf08d1")
 
     }
 
-}
-
-@SuppressLint("SetJavaScriptEnabled")
-@Composable
-fun WebPageScreen(urlToRender: String) {
-    AndroidView(factory = {
-        WebView(it).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            webViewClient = WebViewClient()
-            settings.javaScriptEnabled = true // <-- This line
-            loadUrl(urlToRender)
-        }
-    }, update = {
-        it.loadUrl(urlToRender)
-    })
 }
