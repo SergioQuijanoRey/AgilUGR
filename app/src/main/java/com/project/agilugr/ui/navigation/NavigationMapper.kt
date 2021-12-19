@@ -15,8 +15,9 @@ enum class NavigationMapper(val route: String){
     PERFIL_MODE(route="perfil_view"),
     CALENDAR(route="calendar_view"),
     TUI_VIEW(route = "tui_view"),
-    STATS(route = "stats_view")
-
+    STATS(route = "stats_view"),
+    ACADEMICBOT(route="academic"),
+    EVENTBOT(route = "eventbot")
 }
 
 /**

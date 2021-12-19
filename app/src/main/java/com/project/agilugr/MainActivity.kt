@@ -13,22 +13,40 @@ import com.project.agilugr.ui.navigation.NavigationMapper
 import com.project.agilugr.ui.theme.AgilUGRTheme
 import kotlin.time.ExperimentalTime
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.speech.RecognitionListener
+import android.speech.SpeechRecognizer
 import android.util.Log
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.NavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
+import android.Manifest
+import android.app.Activity
+import android.net.Uri
+import android.speech.RecognizerIntent
+import android.view.View
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
+import java.util.*
 
 @ExperimentalTime
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),RecognitionListener {
 
     // APIs que vamos a consumir para tomar los datos del backend
     val focus_api = MockFocusAPI.getMockFocusAPI()
+    var navController: NavController? = null
 
     // Tomamos el director de navegacion para que lance la interfaz grafica
     val navigation_director = NavigationDirector(focus_api = focus_api)
@@ -45,6 +63,16 @@ class MainActivity : AppCompatActivity() {
     // Detector de posicion GPS
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    // Integración voz
+    private val permission = 100
+    private lateinit var returnedText: TextView
+    private lateinit var toggleButton: ToggleButton
+    private lateinit var progressBar: ProgressBar
+    private lateinit var speech: SpeechRecognizer
+    private lateinit var recognizerIntent: Intent
+    private var logTag = "VoiceRecognitionActivity"
+
+
     // Funcion principal
     @ExperimentalAnimationApi
     @RequiresApi(Build.VERSION_CODES.O)
@@ -59,14 +87,29 @@ class MainActivity : AppCompatActivity() {
         // Lo hacemos aqui porque necesitamos este objeto para el navigation mapper
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        /**Descomentar para construir la app con normalidad*/
         // Establecemos la UI de la aplicacion
         // Esto tambien crea el director de navegacion
+        /*
         setContent {
             AgilUGRTheme {
-
                 // Usamos el director de navegacion para lanzar la interfaz grafica
-                navigation_director.buildNavigationAndStartUI(fusedLocationClient)
+                //navigation_director.buildNavigationAndStartUI(fusedLocationClient)
             }
+
+        }
+
+         */
+
+        /**Region del reconocimiento de voz*/
+        setContentView(R.layout.activity_main)
+        returnedText = findViewById(R.id.textView)
+        progressBar = findViewById(R.id.progressBar)
+        toggleButton = findViewById(R.id.toggleButton)
+        progressBar.visibility = View.VISIBLE
+
+        toggleButton.setOnClickListener {
+        speak()
         }
 
         // Establecemos el detector de gestos
@@ -85,14 +128,48 @@ class MainActivity : AppCompatActivity() {
 
         //Sensor Acelerómetro
         accelerometerSensor=sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER).also {
-            accelerometerSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),accelerometerSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
+                accelerometerSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),accelerometerSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
         }
 
         // Inicializamos el sensor de orientacion
         orientationSensor=sensorManager!!.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR).also {
                 orientationSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),orientationSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
         }
+
     }
+
+    /** Funciones clave para el reconocimiento de voz */
+     fun speak(){
+        val mIntent=Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        mIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        mIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        mIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla: ")
+        try {
+            startActivityForResult(mIntent,permission)
+        }catch (e: java.lang.Exception){
+            Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            permission-> {
+                if (resultCode == Activity.RESULT_OK && null != data){
+                    val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    val intentPrado = Intent(Intent.ACTION_VIEW, Uri.parse("https://pradogrado2122.ugr.es/"))
+
+                    if(result?.get(0)=="ve a Prado"){
+                        //TODO Hay que especificar aquí que cuando reconozca el texto haga la acción
+                        startActivity(intentPrado)
+                    }
+                }
+            }
+        }
+    }
+    /** Funciones clave para el reconocimiento de voz */
+
+
 
 
     /**Detectamos los gestos usando la clase privada que hemos desarrollado */
@@ -100,7 +177,6 @@ class MainActivity : AppCompatActivity() {
         mDetector.onTouchEvent(event)
         return super.onTouchEvent(event)
     }
-
 
     /** Clase para la gestión de los eventos generados por gestos*/
     private class MyGestureListener(val navigationDirector: NavigationDirector): GestureDetector.SimpleOnGestureListener() {
@@ -163,7 +239,7 @@ class MainActivity : AppCompatActivity() {
                         } else {
                             if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                                 if (diffY > 0) {
-                                    this.navigationDirector.navigate(NavigationMapper.STATS)
+                                    this.navigationDirector.navigate(NavigationMapper.ACADEMICBOT)
                                 } else {
                                     this.navigationDirector.navigate(NavigationMapper.PERFIL_MODE)
                                 }
@@ -198,7 +274,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
-                    if (this.navigationDirector.getCurrentView() == NavigationMapper.STATS) {
+                    if (this.navigationDirector.getCurrentView() == NavigationMapper.ACADEMICBOT) {
                         if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                             if (diffY < 0) {
                                 this.navigationDirector.navigate(NavigationMapper.MAIN_VIEW)
@@ -248,9 +324,9 @@ class MainActivity : AppCompatActivity() {
 
                         val mAccelCurrent: Double = Math.sqrt((x * x + y * y + z * z).toDouble())
 
-                            if (mAccelCurrent>=30 && Xmovement>=7F){
-                                this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
-                            }
+                        if (mAccelCurrent>=30 && Xmovement>=7F){
+                            this.navigationDirector.navigate(NavigationMapper.TUI_VIEW)
+                        }
 
                         prevx =x
                         prevy =y
@@ -282,5 +358,91 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-}
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            permission -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager
+                    .PERMISSION_GRANTED) {
+                speech.startListening(recognizerIntent)
+            } else {
+                Toast.makeText(this@MainActivity, "Permission Denied!",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
+    override fun onStop() {
+        super.onStop()
+        speech.destroy()
+        Log.i(logTag, "destroy")
+    }
+
+    override fun onReadyForSpeech(params: Bundle?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBeginningOfSpeech() {
+        Log.i(logTag, "onBeginningOfSpeech")
+        progressBar.isIndeterminate = false
+        progressBar.max = 10
+    }
+
+    override fun onRmsChanged(rmsdB: Float) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBufferReceived(buffer: ByteArray?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onEndOfSpeech() {
+        progressBar.isIndeterminate = true
+        toggleButton.isChecked = false
+    }
+
+    override fun onError(error: Int) {
+        val errorMessage: String = getErrorText(error)
+        Log.d(logTag, "FAILED $errorMessage")
+        returnedText.text = errorMessage
+        toggleButton.isChecked = false
+    }
+
+    private fun getErrorText(error: Int): String {
+        var message = ""
+        message = when (error) {
+            SpeechRecognizer.ERROR_AUDIO -> "Audio recording error"
+            SpeechRecognizer.ERROR_CLIENT -> "Client side error"
+            SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
+            SpeechRecognizer.ERROR_NETWORK -> "Network error"
+            SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
+            SpeechRecognizer.ERROR_NO_MATCH -> "No match"
+            SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "RecognitionService busy"
+            SpeechRecognizer.ERROR_SERVER -> "error from server"
+            SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech input"
+            else -> "Didn't understand, please try again."
+        }
+        return message
+    }
+
+    override fun onResults(results: Bundle?) {
+        Log.i(logTag, "onResults")
+        val matches = results!!.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+        var text = ""
+        if (matches != null) {
+            for (result in matches) text = """
+          $result
+          """.trimIndent()
+        }
+        returnedText.text = text
+    }
+
+    override fun onPartialResults(partialResults: Bundle?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onEvent(eventType: Int, params: Bundle?) {
+        TODO("Not yet implemented")
+    }
+
+}

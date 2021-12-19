@@ -3,11 +3,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.inflate
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.size
@@ -15,20 +11,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.project.agilugr.ui.navigation.NavigationMapper
-import androidx.navigation.NavController
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.project.agilugr.R
 import com.project.agilugr.backend.IndexAPI
 import com.project.agilugr.ui.components.Header
@@ -42,12 +36,7 @@ import kotlin.random.Random
  * Esta clase representa la vista principal a traves de la cual navegamos hacia otras vistas de
  * nuestras aplicaciones.
  */
-class IndexSelector(
-    /** API que necesita este selector de indices para poder tomar la informacion necesaria en la vista */
-    val indexApi : IndexAPI,
-
-    /** Para poder controlar la navegacion hacia otras partes de la aplicacion */
-    val navController: NavController){
+class NewIndexSelector(){
     /** Devuelve la vista que representa esta clase */
     @Composable
     fun getView() {
@@ -76,7 +65,14 @@ class IndexSelector(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Alertas(indexApi, indexApi.getAlert(), Color(events), Color.Black, Color.White)
+                Alertas2(listOf<String>(
+                    "Entrega de NPI",
+                    "Examen de Análisis Matemático II",
+                    "Entrega de PL",
+                    "Examen de Estadística Multivariante",
+                    "Exposición del trabajo de FR",
+                    "Examen de Modelos Matemáticos II"
+                ), Color(events), Color.Black, Color.White)
                 Spacer(modifier = Modifier.size(50.dp))
                 Box(modifier= Modifier
                     .clip(RoundedCornerShape(20.dp))
@@ -84,14 +80,14 @@ class IndexSelector(
                         Color.White
                     )){
                     Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
-                        PerfilIcon(navController = navController)
+                        PerfilIcon2()
                         Row() {
-                            FocusIcon(navController = navController)
+                            FocusIcon2()
                             Spacer(modifier = Modifier.size(30.dp))
-                            CalendarIcon(navController = navController)
+                            CalendarIcon2()
 
                         }
-                        StatsIcon(navController = navController)
+                        StatsIcon2()
 
                     }
 
@@ -104,12 +100,13 @@ class IndexSelector(
     }
 
 }
+
 @Composable
         /** Función que crea el botón-imagen que direcciona al modo focus */
-fun FocusIcon(navController:NavController) {
+fun FocusIcon2() {
     IconButton(modifier = Modifier
         .padding(20.dp)
-        .size(70.dp), onClick = { navController.navigate(NavigationMapper.FOCUS_MODE_SELECTOR.route)}
+        .size(70.dp), onClick = {}
     ) {
         Column(){
             Image(painter = painterResource(id = R.drawable.round_tungsten_black_48dp), contentDescription ="IconoFocus",Modifier.size(55.dp))
@@ -119,10 +116,10 @@ fun FocusIcon(navController:NavController) {
 
 @Composable
         /** Función que crea el botón-imagen que direcciona al calendario */
-fun CalendarIcon(navController:NavController) {
+fun CalendarIcon2() {
     IconButton(modifier = Modifier
         .padding(20.dp)
-        .size(70.dp), onClick = { navController.navigate(NavigationMapper.CALENDAR.route)}
+        .size(70.dp), onClick = {}
     ) {
         Column(){
             Image(painter = painterResource(id = R.drawable.round_edit_calendar_black_48dp), contentDescription ="IconoCalendario",Modifier.size(50.dp))
@@ -132,10 +129,10 @@ fun CalendarIcon(navController:NavController) {
 
 @Composable
         /** Función que genera el botón-imagen que direcciona al perfil */
-fun PerfilIcon(navController:NavController) {
+fun PerfilIcon2() {
     IconButton(modifier = Modifier
         .padding(20.dp)
-        , onClick = { navController.navigate(NavigationMapper.PERFIL_MODE.route)}
+        , onClick = {}
     ) {
         Column(){
             Image(painter = painterResource(id = R.drawable.round_school_black_48dp), contentDescription ="iconoPerfil",Modifier.size(55.dp))
@@ -146,10 +143,10 @@ fun PerfilIcon(navController:NavController) {
 
 @Composable
         /** Función que genera el botón-imagen que direcciona a las estadísticas */
-fun StatsIcon(navController:NavController) {
+fun StatsIcon2() {
     IconButton(modifier = Modifier
         .padding(20.dp)
-        .size(70.dp), onClick = { navController.navigate(NavigationMapper.ACADEMICBOT.route)}
+        .size(70.dp), onClick = {}
     ) {
         Column(){
             Image(painter = painterResource(id = R.drawable.outline_smart_toy_black_48dp), contentDescription ="iconoStats",Modifier.size(55.dp))
@@ -163,13 +160,12 @@ fun StatsIcon(navController:NavController) {
  * */
 @SuppressLint("ResourceType")
 @Composable
-fun Alertas ( indexApi : IndexAPI, alerts : List<String>,
+fun Alertas2(alerts : List<String>,
               /** Colores que vamos a usar en la card */
               cardBackgroundColor: Color,
               textColor: Color,
               encabezadoColor: Color )
 {
-    val alerts = indexApi.getAlert()
     val scrollState: ScrollState = rememberScrollState()
 
     //Listas de nombre de tarea y fecha que asignaremos aleatoriamente
@@ -232,5 +228,85 @@ fun Alertas ( indexApi : IndexAPI, alerts : List<String>,
                 }
             }
         }
+    }
+}
+
+class UIFragmentIndex() : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        val view = ComposeView(requireContext())
+        view.apply{
+            setContent {
+                Box(modifier= Modifier
+                    .background(Color(MainBackground))
+                    .fillMaxSize()){
+                    Box(modifier = Modifier
+                        .background(Color(headerBackground))
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .clip(
+                            RoundedCornerShape(20.dp)
+                        )) {
+                        Column(
+
+                            // Lo espaciamos algo respecto el extremo superior del telefono y respecto el borde izquierdo
+                            modifier = Modifier
+                                .padding(vertical = 0.dp, horizontal = 20.dp),
+                        ) {
+                            Header().getComponent()
+
+                        }
+                    }
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Alertas2(listOf<String>(
+                            "Entrega de NPI",
+                            "Examen de Análisis Matemático II",
+                            "Entrega de PL",
+                            "Examen de Estadística Multivariante",
+                            "Exposición del trabajo de FR",
+                            "Examen de Modelos Matemáticos II"
+                        ), Color(events), Color.Black, Color.White)
+                        Spacer(modifier = Modifier.size(5.dp))
+                        Box(modifier= Modifier
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(
+                                Color.White
+                            )){
+                            Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
+                                IconButton(modifier = Modifier
+                                    .padding(20.dp)
+                                    , onClick = {findNavController().navigate(R.id.viewIndex)}
+                                ) {
+                                    Column(){
+                                        Image(painter = painterResource(id = R.drawable.round_school_black_48dp), contentDescription ="iconoPerfil",Modifier.size(55.dp))
+                                    }
+                                }
+                                Row() {
+                                    FocusIcon2()
+                                    Spacer(modifier = Modifier.size(30.dp))
+                                    CalendarIcon2()
+
+                                }
+                                StatsIcon2()
+
+                            }
+
+                        }
+                    }
+
+
+                }
+
+            }
+        }
+        return view
     }
 }

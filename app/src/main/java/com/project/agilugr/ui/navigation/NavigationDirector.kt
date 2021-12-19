@@ -2,6 +2,7 @@ package com.project.agilugr.ui.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -16,6 +17,7 @@ import com.project.agilugr.backend.MockedProfile
 import kotlin.time.ExperimentalTime
 import com.google.accompanist.navigation.animation.composable
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.project.agilugr.R
 import com.project.agilugr.ui.views.*
 
 /**
@@ -24,7 +26,7 @@ import com.project.agilugr.ui.views.*
  * Toda la navegacion que realizamos en la app la maneja esta clase. Con ello, unificamos toda
  * la navegacion de la app
  * */
-class NavigationDirector(val focus_api: FocusAPI){
+class NavigationDirector(val focus_api: FocusAPI): AppCompatActivity(){
 
     /** Variable que vamos a usar para navegar por las distintas vistas */
     var navController: NavController? = null
@@ -65,10 +67,14 @@ class NavigationDirector(val focus_api: FocusAPI){
             }
 
             // Vista del perfil
+
             composable(route = NavigationMapper.PERFIL_MODE.route) {
                 // TODO add MockedProfile correctly
                 PerfilMode().getView()
+
+                //createAndroidViewForXMLLayout(resId = R.layout.activity_tts)
             }
+
 
             // Vista del selector de configuraciones del focus mode
             composable(
@@ -103,12 +109,20 @@ class NavigationDirector(val focus_api: FocusAPI){
                 Calendario(navController = navController as NavHostController).getView()
             }
 
-            composable(route = NavigationMapper.STATS.route,
+            composable(route = NavigationMapper.ACADEMICBOT.route,
                 enterTransition = { _, _ ->
                     // Let's make for a really long fade in
                     fadeIn(animationSpec = tween(2000))
                 }){
-                StatsView(navController = navController as NavHostController, fusedLocationProviderClient).getView()
+                AcademicBot().getView()
+            }
+
+            composable(route = NavigationMapper.EVENTBOT.route,
+                enterTransition = { _, _ ->
+                    // Let's make for a really long fade in
+                    fadeIn(animationSpec = tween(2000))
+                }){
+                EventBot().getView()
             }
         }
     }
@@ -116,8 +130,11 @@ class NavigationDirector(val focus_api: FocusAPI){
     /** Navega a un destino dado */
     fun navigate(destination: NavigationMapper){
         //Navegamos a esta vista
-        this.navController!!.navigate(destination.route)
-
+        if (destination.route==NavigationMapper.PERFIL_MODE.route){
+            setContentView(R.layout.activity_main)
+        }else{
+            this.navController!!.navigate(destination.route)
+        }
     }
 
     /** Tomamos el enumerado que representa la vista en la que nos encontramos actualmente */
@@ -131,4 +148,3 @@ class NavigationDirector(val focus_api: FocusAPI){
         return stringToEnum(current_route)
     }
 }
-

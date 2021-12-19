@@ -2,6 +2,10 @@ package com.project.agilugr.ui.views
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.IconButton
@@ -16,8 +20,13 @@ import com.project.agilugr.ui.components.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import com.project.agilugr.backend.IndexAPI
 import com.project.agilugr.utils.MainBackground
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -53,7 +62,9 @@ class PerfilMode (){
                 }
                 Spacer(modifier = Modifier.height(150.dp))
 
-                Box(modifier = Modifier.background(Color(0xFFC4D8E7)) .fillMaxWidth()){
+                Box(modifier = Modifier
+                    .background(Color(0xFFC4D8E7))
+                    .fillMaxWidth()){
                     Row(modifier=Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         IconMail()
                         IconPrado()
@@ -69,6 +80,24 @@ class PerfilMode (){
 
     }
 
+}
+
+
+class ComposeUIFragment() : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        val view = ComposeView(requireContext())
+        view.apply{
+            setContent {
+                PerfilMode().getView()
+            }
+        }
+        return view
+    }
 }
 
 /** Componente icono de mail que nos lleva al mail web de la UGR */

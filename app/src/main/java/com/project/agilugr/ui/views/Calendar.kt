@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.sp
 import com.project.agilugr.R
 import com.project.agilugr.ui.components.Header
+import com.project.agilugr.ui.navigation.NavigationMapper
 import com.project.agilugr.utils.MainBackground
 import com.project.agilugr.utils.events
 import com.project.agilugr.utils.headerBackground
@@ -178,7 +179,7 @@ class Calendario (val navController: NavController){
             }
             Column(horizontalAlignment = Alignment.End) {
                 Spacer(Modifier.height(325.dp))
-                NuevoEvento()
+                NuevoEvento(navController)
             }
 
             Column {
@@ -292,21 +293,21 @@ fun IconoEventoDraggable() {
 }
 
 @Composable
-fun NuevoEvento(){
+fun NuevoEvento(navController: NavController){
 
     Column(modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.End)
     {
         Button(
-            onClick = {},
+            onClick = {navController.navigate(NavigationMapper.EVENTBOT.route)},
             modifier = Modifier
                 .padding(8.dp)
                 .size(250.dp, 300.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(events)),
             shape = RoundedCornerShape(20.dp)
         ) {
-            Text(text = "Nuevo Evento", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold)
+            Text(text = "EventBot", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold)
         }
         Spacer(modifier = Modifier.size(width = 0.dp, height = 15.dp))
 
