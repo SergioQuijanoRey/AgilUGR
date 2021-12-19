@@ -159,9 +159,20 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
                     val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                     val intentPrado = Intent(Intent.ACTION_VIEW, Uri.parse("https://pradogrado2122.ugr.es/"))
 
-                    if(result?.get(0)=="ve a Prado"){
+                    // para ir a prado
+                    if((result!!.get(0)).contains("Prado")){
+                        // result?.get(0)=="ve a Prado"){
                         //TODO Hay que especificar aquí que cuando reconozca el texto haga la acción
                         startActivity(intentPrado)
+                    }
+                    // para ir al correo de la universidad
+                    else if((result!!.get(0)).contains("correo") ||
+                        (result!!.get(0)).contains("mensaje")
+                            ){
+                        startActivity(
+                            Intent(Intent.ACTION_VIEW,
+                                Uri.parse("https://serviciodecorreo.es/")))
+
                     }
                 }
             }
