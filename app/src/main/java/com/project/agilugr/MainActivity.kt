@@ -31,7 +31,15 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.project.agilugr.ui.views.UIFragmentIndex
+import android.Manifest
+import android.app.Activity
+import android.net.Uri
+import android.speech.RecognizerIntent
+import android.view.View
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
+import java.util.*
 
 @ExperimentalTime
 class MainActivity : AppCompatActivity(),RecognitionListener {
@@ -79,33 +87,31 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
         // Lo hacemos aqui porque necesitamos este objeto para el navigation mapper
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        /**Descomentar para construir la app con normalidad*/
         // Establecemos la UI de la aplicacion
         // Esto tambien crea el director de navegacion
-        //val binding = ActivityTtsBinding.inflate(layoutInflater)
-        //returnedText = binding.textView
-        //progressBar = binding.progressBar
-        //toggleButton = binding.toggleButton
-        //returnedText.setText("Hola")
-        //toggleButton.setText("Adios")
-
+        /*
         setContent {
             AgilUGRTheme {
                 // Usamos el director de navegacion para lanzar la interfaz grafica
-                navigation_director.buildNavigationAndStartUI(fusedLocationClient)
-                //setContentView(R.layout.activity_main)
+                //navigation_director.buildNavigationAndStartUI(fusedLocationClient)
             }
 
         }
 
-        /*
-        setContentView(R.layout.activity_tts)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.compose_view,UIFragmentIndex(MockedProfile.getMockIndexAPI(),
-                navController as NavHostController))
-            .commit()
-
-
          */
+
+        /**Region del reconocimiento de voz*/
+        setContentView(R.layout.activity_main)
+        returnedText = findViewById(R.id.textView)
+        progressBar = findViewById(R.id.progressBar)
+        toggleButton = findViewById(R.id.toggleButton)
+        progressBar.visibility = View.VISIBLE
+
+        toggleButton.setOnClickListener {
+        speak()
+        }
+
         // Establecemos el detector de gestos
         mDetector = GestureDetectorCompat(this, MyGestureListener(navigation_director))
 
@@ -130,35 +136,41 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
                 orientationSensor -> sensorManager!!.registerListener(MysensorListener(navigation_director),orientationSensor,SensorManager.SENSOR_DELAY_FASTEST,SensorManager.SENSOR_DELAY_FASTEST)
         }
 
-        // TODO -- borrar -- no lo borramos ahora porque lo estamos usando de plantilla
+    }
 
-        /*
-        progressBar.visibility = View.VISIBLE
-        speech = SpeechRecognizer.createSpeechRecognizer(this)
-        Log.i(logTag, "isRecognitionAvailable: " + SpeechRecognizer.isRecognitionAvailable(this))
-        speech.setRecognitionListener(this)
-        recognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "US-en")
-        recognizerIntent.putExtra(
-            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
-        toggleButton.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                progressBar.visibility = View.VISIBLE
-                progressBar.isIndeterminate = true
-                ActivityCompat.requestPermissions(this@MainActivity,
-                    arrayOf(Manifest.permission.RECORD_AUDIO),
-                    permission)
-            } else {
-                progressBar.isIndeterminate = false
-                progressBar.visibility = View.VISIBLE
-                speech.stopListening()
+    /** Funciones clave para el reconocimiento de voz */
+     fun speak(){
+        val mIntent=Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        mIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        mIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        mIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla: ")
+        try {
+            startActivityForResult(mIntent,permission)
+        }catch (e: java.lang.Exception){
+            Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            permission-> {
+                if (resultCode == Activity.RESULT_OK && null != data){
+                    val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    val intentPrado = Intent(Intent.ACTION_VIEW, Uri.parse("https://pradogrado2122.ugr.es/"))
+
+                    if(result?.get(0)=="ve a Prado"){
+                        //TODO Hay que especificar aquí que cuando reconozca el texto haga la acción
+                        startActivity(intentPrado)
+                    }
+                }
             }
         }
-         */
-
     }
+    /** Funciones clave para el reconocimiento de voz */
+
+
+
 
     /**Detectamos los gestos usando la clase privada que hemos desarrollado */
     override fun onTouchEvent(event: MotionEvent): Boolean {
