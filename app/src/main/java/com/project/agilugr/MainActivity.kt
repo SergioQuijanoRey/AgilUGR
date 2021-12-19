@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
         }
             Toast.makeText(
                 this,
-                "modo focus activado",
+                "Pulse iniciar para comenzar el modo focus",
                 Toast.LENGTH_LONG
             ).show()
             startActivity(intent)
