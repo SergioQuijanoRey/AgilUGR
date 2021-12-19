@@ -34,6 +34,7 @@ import com.google.android.gms.location.LocationServices
 import android.Manifest
 import android.app.Activity
 import android.net.Uri
+import android.provider.AlarmClock
 import android.speech.RecognizerIntent
 import android.view.View
 import androidx.compose.runtime.remember
@@ -151,6 +152,24 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
         }
     }
 
+    /** Función para poner una alarma, simula el modo focus **/
+    fun createAlarm(message: String, hour: Int, minutes: Int) {
+        val intent = Intent(AlarmClock.ACTION_SET_TIMER).apply {
+            putExtra(AlarmClock.EXTRA_MESSAGE, message)
+            putExtra(AlarmClock.EXTRA_HOUR, hour)
+            putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+        }
+            Toast.makeText(
+                this,
+                "modo focus activado",
+                Toast.LENGTH_LONG
+            ).show()
+            startActivity(intent)
+
+
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode){
@@ -173,6 +192,10 @@ class MainActivity : AppCompatActivity(),RecognitionListener {
                             Intent(Intent.ACTION_VIEW,
                                 Uri.parse("https://serviciodecorreo.es/")))
 
+                    }
+                    else if( (result!!.get(0)).contains("focus")){
+                        // se crea de un minuto para poder probarlo
+                        createAlarm("Modo focus", 0, 1);
                     }
                 }
             }
